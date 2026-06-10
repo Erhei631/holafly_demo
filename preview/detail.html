@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>日本eSIM · Holafly</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --font-mono:'JetBrains Mono','SF Mono','Menlo','Roboto Mono',monospace;
+      --rose-50:#ffefef; --rose-100:#ffe0e0; --rose-500:#e6485c;
+      --green-100:#d6ffe7; --green-500:#48ec86; --green-700:#179b50;
+      --blue-50:#edf9fe; --blue-100:#dcf4ff;
+      --neutral-50:#fff; --neutral-100:#f8f8fb; --neutral-200:#e4e6ea;
+      --neutral-400:#7b7c7e; --neutral-600:#56575a; --neutral-900:#272729;
+      --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
+    .preview-label{font-size:14px;color:var(--neutral-600);margin-bottom:16px}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:linear-gradient(127deg,#c8ebfe 2.09%,#fcecfc 15.98%,var(--rose-50) 35.2%,var(--neutral-50) 54.59%)}
+    .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
+    .detail-nav{position:absolute;top:47px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 7px;height:44px}
+    .detail-nav__back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0;flex-shrink:0}
+    .detail-nav__back img{width:9px;height:16.5px;display:block;flex-shrink:0}
+    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px}
+    .nav-capsule--support{width:30px}
+    .nav-capsule--menu{width:83px;gap:0;padding:0 10px}
+    .nav-capsule img{display:block}
+    .nav-capsule__icon{width:16px;height:16px}
+    .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
+    .detail-nav__right{display:flex;gap:6px}
+    .detail-scroll{position:absolute;top:91px;left:0;right:0;bottom:110px;overflow-y:auto;padding:4px 20px 24px}
+    .stack{display:flex;flex-direction:column;gap:16px}
+    .hero-card,.panel{background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
+    .hero-card{position:relative;overflow:hidden;min-height:122px}
+    .hero-card__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left center;pointer-events:none}
+    .hero-card__body{position:relative;z-index:1;padding:16px}
+    .hero-card__row{display:flex;align-items:center;gap:6px;position:relative;z-index:1}
+    .hero-card__flag{width:50px;height:50px;border-radius:50%;object-fit:cover}
+    .hero-card__title{font-size:20px;font-weight:500}
+    .hero-card__tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;position:relative;z-index:1}
+    .hero-card__tag{display:flex;align-items:center;gap:6px;padding:4px 8px;background:var(--rose-50);border-radius:6px;font-size:12px;font-weight:500;color:var(--rose-500)}
+    .hero-card__tag img{width:12px;height:12px}
+    .config-card{padding:10px;border-radius:24px;background:var(--blue-100);border:1px solid var(--green-500);box-shadow:0 15px 20px #ffece1}
+    .config-card__inner{background:#fff;border-radius:16px;padding:16px 16px 12px;display:flex;flex-direction:column;gap:24px}
+    .config-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .config-section--days{display:flex;flex-direction:column;gap:12px}
+    .config-section--days .config-head{margin-bottom:0}
+    .config-label-row{display:flex;align-items:center;gap:8px}
+    .config-label-row img{display:block;width:20px;height:20px;max-width:20px;max-height:20px;object-fit:contain;flex-shrink:0}
+    .config-label{font-size:15px;font-weight:500}
+    .config-badge{padding:4px 6px;background:var(--green-100);border-radius:4px;font-size:12px;color:var(--green-700)}
+    .day-grid{display:flex;gap:8px}
+    .day-chip{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 6px;box-sizing:border-box;background:#fff;border:1px solid var(--neutral-200);border-radius:10px;cursor:pointer}
+    .day-chip__label{font-size:16px;font-weight:500;line-height:24px;color:var(--neutral-600);white-space:nowrap}
+    .day-chip__price{font-size:11px;font-weight:400;line-height:16px;color:var(--rose-500);white-space:nowrap}
+    .day-chip__badge{display:flex;align-items:center;justify-content:center;max-width:100%;padding:2px 4px;border-radius:6px;background:linear-gradient(90deg,rgba(230,72,92,.25) 0%,rgba(255,239,239,0) 100%);white-space:nowrap}
+    .day-chip--active{background:var(--rose-50);border-color:var(--rose-500)}
+    .day-chip--active .day-chip__label{color:var(--rose-500)}
+    .day-custom{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:10px 16px;box-sizing:border-box;background:var(--neutral-100);border:1px solid var(--neutral-200);border-radius:10px;font-size:15px;font-weight:500;line-height:24px;color:var(--neutral-600);cursor:pointer;appearance:none;-webkit-appearance:none}
+    .day-custom--active{background:var(--rose-50);border-color:var(--rose-500);color:var(--rose-500)}
+    .date-sheet-mask{position:absolute;inset:0;z-index:40;background:rgba(0,0,0,.45);display:none;align-items:flex-end}
+    .date-sheet-mask.is-open{display:flex}
+    .date-sheet{width:100%;padding:16px 16px calc(16px + env(safe-area-inset-bottom,var(--safe-area-bottom)));background:#fff;border-radius:16px 16px 0 0;box-sizing:border-box}
+    .date-sheet__header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .date-sheet__title{font-size:16px;font-weight:500}
+    .date-sheet__close{border:none;background:transparent;font-size:24px;color:var(--neutral-400);cursor:pointer;padding:0 4px}
+    .date-picker-block+.date-picker-block{margin-top:12px}
+    .date-picker__label{display:block;margin-bottom:8px;font-size:15px;font-weight:500;color:var(--neutral-900);line-height:22px}
+    .date-wheel{position:relative;height:180px;overflow:hidden}
+    .date-wheel__cols{display:flex;height:100%}
+    .date-wheel__col{flex:1;height:100%;overflow-y:auto;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .date-wheel__col::-webkit-scrollbar{display:none}
+    .date-wheel__pad{height:72px;flex-shrink:0}
+    .date-wheel__item{height:36px;display:flex;align-items:center;justify-content:center;scroll-snap-align:center;font-size:14px;color:var(--neutral-400);line-height:20px}
+    .date-wheel__item.is-active{color:var(--neutral-900);font-weight:500}
+    .date-wheel__indicator{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:36px;border-top:1px solid var(--neutral-200);border-bottom:1px solid var(--neutral-200);pointer-events:none}
+    .date-sheet__hint{display:block;margin-top:8px;font-size:12px;color:var(--neutral-600);text-align:center}
+    .date-sheet__confirm{width:100%;height:48px;margin-top:16px;border:none;border-radius:10px;background:var(--green-500);font-size:16px;font-weight:500;cursor:pointer}
+    .day-custom img{width:20px;height:20px;object-fit:contain;flex-shrink:0}
+    .qty-stepper{display:flex;height:44px;border:1px solid var(--neutral-200);border-radius:10px;overflow:hidden}
+    .qty-stepper__btn{width:44px;display:flex;align-items:center;justify-content:center;background:#fff;border:none;border-right:1px solid var(--neutral-200);padding:0;appearance:none;-webkit-appearance:none;cursor:pointer}
+    .qty-stepper__btn:last-child{border:none;border-left:1px solid var(--neutral-200)}
+    .qty-stepper__btn img{width:24px;height:24px}
+    .qty-stepper__value{flex:1;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:500;color:var(--neutral-600)}
+    .price-row{display:flex;justify-content:flex-end;align-items:center;padding-top:16px;border-top:1px solid var(--neutral-200)}
+    .price-total{display:flex;align-items:center;gap:6px;color:var(--rose-500);font-weight:600}
+    .price-total__value{display:flex;align-items:center;gap:2px}
+    .price-total__currency{font-size:18px;font-weight:600;line-height:24px}
+    .price-total__amount{font-size:24px;font-weight:600;line-height:32px}
+    .price-side{text-align:right}
+    .price-daily{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--neutral-600)}
+    .price-daily__currency{font-size:18px;font-weight:600;line-height:24px;color:var(--rose-500)}
+    .price-daily__amount{font-size:30px;font-weight:600;line-height:1;color:var(--rose-500)}
+    .price-promo{margin-top:4px;display:flex;gap:12px;align-items:center;justify-content:flex-end}
+    .price-promo del{font-size:12px;color:var(--neutral-600);opacity:.7}
+    .price-promo span{padding:2px 4px;background:var(--rose-100);border-radius:4px;font-size:12px;color:var(--rose-500)}
+    .panel{padding:16px}
+    .panel__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .panel__title{font-size:16px;font-weight:500;line-height:24px}
+    .panel>.panel__title{display:block;margin-bottom:12px}
+    .panel__link{display:flex;align-items:center;gap:4px;font-size:14px;color:var(--neutral-400)}
+    .panel__link img{width:16px;height:16px}
+    .panel__divider{height:1px;background:var(--neutral-200);margin-bottom:12px}
+    .review-card{background:var(--neutral-100);border-radius:16px;padding:10px 16px}
+    .review-card+.review-card{margin-top:12px}
+    .review-card__head{display:flex;justify-content:space-between;align-items:center}
+    .review-card__badge{padding:2px 4px;background:var(--rose-100);border-radius:4px}
+    .review-card__badge-text{font-family:var(--font-mono);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--rose-500);line-height:1.33}
+    .review-card__text{margin-top:8px;font-size:15px;color:var(--neutral-600);line-height:1.47}
+    .review-card__meta{margin-top:8px;font-size:12px;color:var(--neutral-400)}
+    .faq-item{display:flex;flex-direction:column;padding:12px;border:1px solid var(--neutral-200);border-radius:10px;background:#fff}
+    .faq-item+.faq-item{margin-top:12px}
+    .faq-item__row{display:flex;align-items:center;gap:12px;width:100%;cursor:pointer}
+    .faq-item--highlight{background:linear-gradient(139deg,var(--blue-50) 11%,#ecfff4 89%);border-color:rgba(255,255,255,.9);padding:18px 12px 20px 8px}
+    .faq-item--open{padding-bottom:14px}
+    .faq-item__icon{width:40px;height:40px;flex-shrink:0}
+    .faq-item__content{flex:1;min-width:0}
+    .faq-item__title{display:block;font-size:14px;font-weight:400;line-height:20px}
+    .faq-item--highlight .faq-item__title{font-size:16px;font-weight:500;line-height:24px}
+    .faq-item__subtitle{display:block;margin-top:2px;font-size:12px;color:var(--neutral-600)}
+    .faq-item__arrow{width:16px;height:16px;flex-shrink:0;transition:transform .2s ease}
+    .faq-item__arrow--open{transform:rotate(90deg)}
+    .faq-item__answer{display:none;margin-top:8px;font-size:14px;color:var(--neutral-600);line-height:1.43}
+    .faq-item--open .faq-item__answer{display:block}
+    .compat-sheet-mask{position:absolute;inset:0;z-index:50;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .25s ease}
+    .compat-sheet-mask.is-open{opacity:1;pointer-events:auto}
+    .compat-sheet{position:absolute;left:0;right:0;bottom:0;z-index:51;width:100%;height:82%;display:flex;flex-direction:column;background:#fff;border-radius:24px 24px 0 0;padding-bottom:calc(24px + env(safe-area-inset-bottom,var(--safe-area-bottom)));box-sizing:border-box;transform:translateY(100%);transition:transform .28s cubic-bezier(.32,.72,0,1);pointer-events:none;will-change:transform}
+    .compat-sheet.is-open{transform:translateY(0);pointer-events:auto}
+    .compat-sheet__handle-wrap{display:flex;justify-content:center;padding:4px 0 8px}
+    .compat-sheet__handle{width:36px;height:4px;border-radius:999px;background:var(--neutral-200)}
+    .compat-sheet__header{display:flex;align-items:center;justify-content:space-between;padding:8px 20px;min-height:52px}
+    .compat-sheet__title{flex:1;font-size:18px;font-weight:500;line-height:24px}
+    .compat-sheet__close{border:none;background:transparent;padding:0;cursor:pointer;width:28px;height:28px}
+    .compat-sheet__close img{width:28px;height:28px;display:block}
+    .compat-sheet__scroll{flex:1;min-height:0;overflow-y:auto;padding-bottom:8px}
+    .compat-sheet__section{padding:0 20px 8px}
+    .compat-sheet__body{display:flex;flex-direction:column;gap:16px;padding:16px 20px 0}
+    .compat-sheet__label{display:block;font-size:12px;color:var(--neutral-400);line-height:16px}
+    .compat-version-row{display:flex;gap:8px;margin-top:8px}
+    .compat-version{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid var(--neutral-200);border-radius:16px;background:#fff;cursor:pointer}
+    .compat-version--active{background:var(--rose-50);border-color:var(--rose-500)}
+    .compat-version img{width:36px;height:36px;border-radius:50%;flex-shrink:0;object-fit:cover}
+    .compat-version__title{display:block;font-size:16px;font-weight:500;line-height:24px}
+    .compat-version__subtitle{display:block;font-size:12px;color:var(--neutral-400);line-height:16px}
+    .compat-segment{display:flex;gap:4px;padding:4px;background:var(--neutral-100);border-radius:12px}
+    .compat-segment__item{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 16px;border:none;border-radius:8px;background:transparent;font-size:14px;cursor:pointer}
+    .compat-segment__item--active{background:#fff;box-shadow:0 2px 8px -4px rgba(0,0,0,.2)}
+    .compat-search{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--neutral-100);border-radius:24px}
+    .compat-search img{width:16px;height:16px;flex-shrink:0}
+    .compat-search input{flex:1;min-width:0;border:none;background:transparent;font-size:14px;color:var(--neutral-900);outline:none}
+    .compat-search input::placeholder{color:var(--neutral-600)}
+    .compat-models{display:flex;flex-direction:column;gap:12px}
+    .compat-model{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--neutral-100)}
+    .compat-model:last-child{padding-bottom:0;border-bottom:none}
+    .compat-model__name{font-size:15px;font-weight:500;line-height:22px}
+    .compat-model__badge{display:flex;align-items:center;gap:4px;padding:4px 6px;background:var(--green-100);border-radius:4px;font-size:12px;color:var(--green-700);flex-shrink:0}
+    .compat-model__badge img{width:14px;height:14px}
+    .compat-dial{display:none;flex-direction:column;align-items:center;gap:8px;padding:24px 12px;background:var(--neutral-100);border-radius:16px;text-align:center}
+    .compat-dial.is-active{display:flex}
+    .compat-dial__code{font-size:24px;font-weight:600;letter-spacing:1px}
+    .compat-dial__hint{font-size:14px;color:var(--neutral-600);line-height:1.43}
+    .compat-model-panel{display:block}
+    .compat-model-panel.is-hidden{display:none}
+    .info-block{padding:12px 16px;background:var(--neutral-100);border-radius:10px}
+    .info-block+.info-block{margin-top:8px}
+    .info-block__head{display:flex;align-items:center;gap:8px}
+    .info-block__head img{width:16px;height:16px}
+    .info-block__label{font-size:15px;font-weight:500}
+    .info-block__text{display:block;margin-top:8px;font-size:14px;color:var(--neutral-600);line-height:1.43}
+    .app-row{display:flex;align-items:center;padding:8px 12px;background:var(--neutral-100);border-radius:10px;overflow:hidden}
+    .app-row__item{position:relative;flex-shrink:0;width:46px;height:46px;margin-right:-16px;border-radius:50%;border:2px solid #fff;background:#fff;overflow:hidden;z-index:1}
+    .app-row__item:nth-child(1){z-index:7}
+    .app-row__item:nth-child(2){z-index:6}
+    .app-row__item:nth-child(3){z-index:5}
+    .app-row__item:nth-child(4){z-index:4}
+    .app-row__item:nth-child(5){z-index:3}
+    .app-row__item:nth-child(6){z-index:2}
+    .app-row__item:last-child{margin-right:0;z-index:1}
+    .app-row__icon{position:absolute;left:50%;top:50%;width:64%;height:64%;transform:translate(-50%,-50%);object-fit:contain;display:block}
+    .promise-grid{display:flex;justify-content:space-between;width:100%}
+    .promise-item{width:74px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+    .promise-item img{width:32px;height:32px;flex-shrink:0;object-fit:contain}
+    .promise-item__text{display:flex;flex-direction:column;align-items:center;font-size:12px;color:var(--neutral-600);line-height:16px}
+    .promise-item__text span{display:block;line-height:16px}
+    .detail-footer{position:absolute;left:0;right:0;bottom:0;z-index:30;background:rgba(248,248,248,.8);backdrop-filter:blur(30px);box-shadow:0 -2px 12px rgba(0,0,0,.04);padding:16px 20px calc(16px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
+    .detail-footer__inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .detail-footer__price{display:flex;align-items:baseline;color:var(--rose-500);font-weight:600}
+    .detail-footer__price strong{font-size:24px;font-weight:500}
+    .detail-footer__meta{margin-left:6px;font-size:14px;color:var(--neutral-600);font-weight:400}
+    .detail-footer__cta{flex:1;max-width:246px;height:48px;border:none;border-radius:10px;background:var(--green-500);font-size:16px;font-weight:500;cursor:pointer;box-shadow:0 10px 20px rgba(57,224,57,.35)}
+  </style>
+</head>
+<body>
+  <p class="preview-label">日本eSIM 详情 · Figma 144:147</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <div class="detail-nav">
+      <button class="detail-nav__back" type="button" onclick="location.href='index.html'"><img src="images/detail/nav-back.svg" alt="" /></button>
+      <div class="detail-nav__right">
+        <button class="nav-capsule nav-capsule--support"><img class="nav-capsule__icon" src="images/detail/nav-support.svg" alt="" /></button>
+        <div class="nav-capsule nav-capsule--menu">
+          <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
+          <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
+          <img class="nav-capsule__icon" src="images/detail/nav-close.svg" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="detail-scroll">
+      <div class="stack" id="content"></div>
+    </div>
+    <div class="detail-footer">
+      <div class="detail-footer__inner">
+        <div class="detail-footer__price" id="footer-price"><span>¥</span><strong id="footer-amount">63</strong><span class="detail-footer__meta" id="footer-meta">/ 7天</span></div>
+        <button class="detail-footer__cta" type="button">去结算</button>
+      </div>
+    </div>
+    <div class="compat-sheet-mask" id="compat-sheet-mask"></div>
+    <div class="compat-sheet" id="compat-sheet" onclick="event.stopPropagation()">
+        <div class="compat-sheet__handle-wrap"><div class="compat-sheet__handle"></div></div>
+        <div class="compat-sheet__header">
+          <span class="compat-sheet__title">检查我的手机是否支持 eSIM</span>
+          <button class="compat-sheet__close" type="button" id="compat-sheet-close" aria-label="关闭"><img src="images/compat/close.svg" alt="" /></button>
+        </div>
+        <div class="compat-sheet__scroll">
+          <div class="compat-sheet__section">
+            <span class="compat-sheet__label">您的手机是哪个版本</span>
+            <div class="compat-version-row" id="compat-version-row"></div>
+          </div>
+          <div class="compat-sheet__body">
+            <span class="compat-sheet__label">选择查询方式</span>
+            <div class="compat-segment" id="compat-segment"></div>
+            <div class="compat-model-panel" id="compat-model-panel">
+              <div class="compat-search">
+                <img src="images/compat/search.svg" alt="" />
+                <input type="search" id="compat-search" placeholder="搜索手机品牌或型号" />
+              </div>
+              <div class="compat-models">
+                <span class="compat-sheet__label">热门机型</span>
+                <div id="compat-models-list"></div>
+              </div>
+            </div>
+            <div class="compat-dial" id="compat-dial-panel">
+              <span class="compat-dial__code">*#06#</span>
+              <span class="compat-dial__hint">在拨号界面输入 *#06#，若出现 EID 号码则通常支持 eSIM。不同版本机型结果可能不同，建议结合机型列表核对。</span>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="date-sheet-mask" id="date-sheet-mask">
+      <div class="date-sheet" onclick="event.stopPropagation()">
+        <div class="date-sheet__header">
+          <span class="date-sheet__title">选择出行日期</span>
+          <button class="date-sheet__close" type="button" id="date-sheet-close" aria-label="关闭">×</button>
+        </div>
+        <div class="date-picker-block">
+          <span class="date-picker__label" id="sheet-start-label">去：</span>
+          <div class="date-wheel" id="sheet-start-wheel"></div>
+        </div>
+        <div class="date-picker-block">
+          <span class="date-picker__label" id="sheet-end-label">返：</span>
+          <div class="date-wheel" id="sheet-end-wheel"></div>
+        </div>
+        <p class="date-sheet__hint" id="sheet-days-hint"></p>
+        <button class="date-sheet__confirm" type="button" id="date-sheet-confirm">确定</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const PLAN = {
+      title:'日本eSIM', flag:'images/detail/flag-jp.png', hero:'images/detail/hero-jp.png',
+      prices:{1:15,3:35,5:48,7:63,10:85,15:120}, originalDaily:15,
+      features:[
+        {label:'无限流量',icon:'images/detail/tag-data.svg'},
+        {label:'高速稳网',icon:'images/detail/tag-speed.svg'},
+        {label:'无漫游费',icon:'images/detail/tag-roam.svg'},
+      ],
+      network:[
+        {label:'网速',icon:'images/detail/icon-network.svg',text:'我们的日本国际 eSIM 提供高速 4G LTE 与 5G 网路服务（视当地覆盖情况而定）'},
+        {label:'覆盖范围',icon:'images/detail/icon-coverage.svg',text:'您可在市区享有良好的讯号涵盖率，然而在山区、沙漠或森林地区，可能会有讯号不稳定的情况。'},
+        {label:'网络运营商',icon:'images/detail/icon-carrier.svg',text:'KDDI / Softbank'},
+      ],
+      faq:[
+        {id:'compat',type:'highlight',action:'compat',title:'我的手机手机是否支持 eSIM？',subtitle:'支持大陆版与国际版机型查询'},
+        {id:'install',title:'eSIM 如何安装, 到了会自动连接吗？',answer:'建议出发前在有 Wi-Fi 的环境扫码安装 eSIM。抵达日本后开启蜂窝数据与数据漫游，系统会自动连接当地网络，无需手动选运营商。'},
+        {id:'hotspot',title:'可以热点共享给其他设备吗？',answer:'支持。安装并激活后，可在手机设置中开启个人热点，将流量共享给平板、电脑或其他设备（具体入口因机型系统略有差异）。'},
+        {id:'refund',title:'购买后可以退款吗？',answer:'未安装或未激活的订单可申请全额退款；已激活订单将按平台退款政策处理，详情可联系 7×24 小时在线客服。'},
+      ],
+      compatVersions:[
+        {id:'cn',title:'中国大陆版',subtitle:'国货·行货',icon:'images/compat/flag-cn.png'},
+        {id:'global',title:'海外/港版',subtitle:'国际版·全球版',icon:'images/compat/flag-global.png'},
+      ],
+      compatMethods:[{id:'model',label:'按机型'},{id:'dial',label:'拨号检查'}],
+      compatModels:[
+        {id:'iphone-17e',name:'iPhone 17e',supported:true},
+        {id:'iphone-air',name:'iPhone Air',supported:true},
+        {id:'galaxy-s26',name:'Galaxy S26 / S26+ / S26 Ultra',supported:true},
+        {id:'oppo-x9',name:'OPPO Find X9',supported:true},
+      ],
+      promises:[
+        {icon:'images/detail/promise-1.svg',lines:['未激活','全额退款']},
+        {icon:'images/detail/promise-2.svg',lines:['7×24','小时客服']},
+        {icon:'images/detail/promise-3.svg',lines:['全程加密','保护隐私']},
+        {icon:'images/detail/promise-4.svg',lines:['下单后','支持开票']},
+      ],
+    };
+    const DAYS=[1,3,5,7,10,15];
+    let selectedDays=7, quantity=1, isCustomDays=false, customDaysLabel='', expandedFaqId='', compatVersion='global', compatMethod='model', compatSearch='';
+    function pad(n){return n<10?`0${n}`:`${n}`;}
+    function formatDateStr(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;}
+    function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
+    function addYears(d,n){const x=new Date(d);x.setFullYear(x.getFullYear()+n);return x;}
+    function tripDays(start,end){return Math.round((new Date(end)-new Date(start))/86400000)+1;}
+    function formatShortLabel(s){if(!s)return '请选择';const p=s.split('-').map(Number);return `${p[1]}月${p[2]}日`;}
+    function formatRangeLabel(start,end){return `${formatShortLabel(start)} — ${formatShortLabel(end)}`;}
+    function getDefaultDates(days){const t=new Date();return {start:formatDateStr(t),end:formatDateStr(addDays(t,days-1))};}
+    function calcTotal(days,qty){return (PLAN.prices[days]||Math.round(PLAN.prices[7]/7*days))*qty;}
+    function formatChipDaily(daily){const r=Math.round(daily*10)/10;return Number.isInteger(r)?String(r):r.toFixed(1);}
+    function getDayChipPrice(days){
+      const total=PLAN.prices[days];
+      const daily=total/days;
+      if(days===1) return {label:`¥${total.toFixed(2)}/天`,badge:false};
+      return {label:`低至¥${formatChipDaily(daily)}/天`,badge:true};
+    }
+    function renderDayChip(days){
+      const p=getDayChipPrice(days);
+      return `<button type="button" class="day-chip" data-days="${days}"><span class="day-chip__label">${days}天</span>${p.badge?`<span class="day-chip__badge"><span class="day-chip__price">${p.label}</span></span>`:`<span class="day-chip__price">${p.label}</span>`}</button>`;
+    }
+    function buildLoginUrl(){
+      const unitPrice=PLAN.prices[selectedDays]||Math.round(PLAN.prices[7]/7*selectedDays);
+      const total=calcTotal(selectedDays,quantity);
+      const q=new URLSearchParams({redirect:'checkout',destination:'日本',days:String(selectedDays),quantity:String(quantity),unitPrice:String(unitPrice),totalPrice:String(total)});
+      return `login.html?${q}`;
+    }
+    function mountContent(){
+      document.getElementById('content').innerHTML=`
+        <div class="hero-card">
+          <img class="hero-card__bg" src="${PLAN.hero}?v=3" alt="" />
+          <div class="hero-card__body">
+            <div class="hero-card__row"><img class="hero-card__flag" src="${PLAN.flag}" alt="" /><div class="hero-card__title">${PLAN.title}</div></div>
+            <div class="hero-card__tags">${PLAN.features.map(f=>`<span class="hero-card__tag"><img src="${f.icon}" alt="" />${f.label}</span>`).join('')}</div>
+          </div>
+        </div>
+        <div class="config-card"><div class="config-card__inner">
+          <div class="config-section--days"><div class="config-head"><div class="config-label-row"><img src="images/detail/icon-calendar.svg" alt="" /><span class="config-label">使用天数</span></div><span class="config-badge">多天更划算</span></div>
+          <div class="day-grid">${DAYS.slice(0,3).map(renderDayChip).join('')}</div>
+          <div class="day-grid">${DAYS.slice(3).map(renderDayChip).join('')}</div>
+          <button type="button" class="day-custom" id="day-custom-btn"><img src="images/detail/icon-calendar-edit.svg" alt="" /><span id="day-custom-label">自定义</span></button></div>
+          <div><div class="config-label-row" style="margin-bottom:12px"><img src="images/detail/icon-esim.svg?v=2" alt="" /><span class="config-label">eSIM数量</span></div>
+          <div class="qty-stepper"><button type="button" class="qty-stepper__btn" id="qty-minus"><img src="images/detail/icon-minus.svg" alt="" /></button><div class="qty-stepper__value" id="qty-value">1</div><button type="button" class="qty-stepper__btn" id="qty-plus"><img src="images/detail/icon-plus.svg" alt="" /></button></div></div>
+          <div class="price-row"><div class="price-total">合计 <span class="price-total__value"><span class="price-total__currency">¥</span><strong class="price-total__amount" id="price-total-amount">63</strong></span></div></div>
+        </div></div>
+        <div class="panel"><div class="panel__head"><span class="panel__title">用户评价</span><span class="panel__link">查看全部 <img src="images/detail/icon-arrow-right.svg" alt="" /></span></div><div class="panel__divider"></div>
+          <div class="review-card"><div class="review-card__head"><strong>Tina</strong><span class="review-card__badge"><span class="review-card__badge-text">4.7</span></span></div><p class="review-card__text">到机场出关 30 秒装好就有信号，比租 Wifi 划算太多了，客服回得也快！</p><p class="review-card__meta">6小时前 | 日本7天</p></div>
+          <div class="review-card"><div class="review-card__head"><strong>Tina</strong><span class="review-card__badge"><span class="review-card__badge-text">4.7</span></span></div><p class="review-card__text">到机场出关 30 秒装好就有信号，比租 Wifi 划算太多了，客服回得也快！</p><p class="review-card__meta">6小时前 | 日本7天</p></div>
+        </div>
+        <div class="panel" id="faq-panel"><span class="panel__title">常见问题</span>
+          ${PLAN.faq.map(f=>`<div class="faq-item ${f.type==='highlight'?'faq-item--highlight':''} ${expandedFaqId===f.id?'faq-item--open':''}" data-faq-id="${f.id}" data-faq-action="${f.action||''}"><div class="faq-item__row">${f.type==='highlight'?'<img class="faq-item__icon" src="images/detail/icon-compat.svg" alt="" />':''}<div class="faq-item__content"><span class="faq-item__title">${f.title}</span>${f.subtitle?`<span class="faq-item__subtitle">${f.subtitle}</span>`:''}</div><img class="faq-item__arrow ${expandedFaqId===f.id?'faq-item__arrow--open':''}" src="images/detail/icon-arrow-right.svg" alt="" /></div>${f.answer?`<p class="faq-item__answer">${f.answer}</p>`:''}</div>`).join('')}
+        </div>
+        <div class="panel"><span class="panel__title">网络服务 & 运营商</span>
+          ${PLAN.network.map(n=>`<div class="info-block"><div class="info-block__head"><img src="${n.icon}" alt="" /><span class="info-block__label">${n.label}</span></div><span class="info-block__text">${n.text}</span></div>`).join('')}
+        </div>
+        <div class="panel"><span class="panel__title">畅连国内外APP</span><div class="app-row">${[1,2,3,4,5,6,7].map(i=>`<div class="app-row__item"><img class="app-row__icon" src="images/detail/app-${i}.png?v=2" alt="" /></div>`).join('')}</div></div>
+        <div class="panel"><span class="panel__title">Holafly服务承诺</span><div class="promise-grid">${PLAN.promises.map(p=>`<div class="promise-item"><img src="${p.icon}" alt="" /><div class="promise-item__text"><span>${p.lines[0]}</span><span>${p.lines[1]}</span></div></div>`).join('')}</div></div>`;
+    }
+    function updateUI(){
+      const total=calcTotal(selectedDays,quantity);
+      document.getElementById('footer-amount').textContent=total;
+      document.getElementById('footer-meta').textContent=`/ ${selectedDays}天`;
+      document.getElementById('price-total-amount').textContent=total;
+      document.getElementById('qty-value').textContent=quantity;
+      document.querySelectorAll('.day-chip').forEach(btn=>{
+        btn.classList.toggle('day-chip--active',!isCustomDays&&Number(btn.dataset.days)===selectedDays);
+      });
+      const customBtn=document.getElementById('day-custom-btn');
+      customBtn.classList.toggle('day-custom--active',isCustomDays);
+      document.getElementById('day-custom-label').textContent=customDaysLabel||'自定义';
+      const customIcon=customBtn.querySelector('img');
+      if(customIcon) customIcon.src=isCustomDays?'images/detail/icon-calendar-edit-active.svg':'images/detail/icon-calendar-edit.svg';
+    }
+    function renderFaq(){
+      const panel=document.getElementById('faq-panel');
+      if(!panel) return;
+      panel.innerHTML=`<span class="panel__title">常见问题</span>${PLAN.faq.map(f=>`<div class="faq-item ${f.type==='highlight'?'faq-item--highlight':''} ${expandedFaqId===f.id?'faq-item--open':''}" data-faq-id="${f.id}" data-faq-action="${f.action||''}"><div class="faq-item__row">${f.type==='highlight'?'<img class="faq-item__icon" src="images/detail/icon-compat.svg" alt="" />':''}<div class="faq-item__content"><span class="faq-item__title">${f.title}</span>${f.subtitle?`<span class="faq-item__subtitle">${f.subtitle}</span>`:''}</div><img class="faq-item__arrow ${expandedFaqId===f.id?'faq-item__arrow--open':''}" src="images/detail/icon-arrow-right.svg" alt="" /></div>${f.answer?`<p class="faq-item__answer">${f.answer}</p>`:''}</div>`).join('')}`;
+    }
+    function mountCompatSheet(){
+      document.getElementById('compat-version-row').innerHTML=PLAN.compatVersions.map(v=>`<button type="button" class="compat-version" data-version="${v.id}"><img src="${v.icon}" alt="" /><span><span class="compat-version__title">${v.title}</span><span class="compat-version__subtitle">${v.subtitle}</span></span></button>`).join('');
+      document.getElementById('compat-segment').innerHTML=PLAN.compatMethods.map(m=>`<button type="button" class="compat-segment__item" data-method="${m.id}">${m.label}</button>`).join('');
+      updateCompatSheetUI();
+    }
+    function updateCompatModelsList(){
+      const keyword=compatSearch.trim().toLowerCase();
+      const models=keyword?PLAN.compatModels.filter(m=>m.name.toLowerCase().includes(keyword)):PLAN.compatModels;
+      document.getElementById('compat-models-list').innerHTML=models.map(m=>`<div class="compat-model"><span class="compat-model__name">${m.name}</span>${m.supported?`<span class="compat-model__badge"><img src="images/compat/check.svg" alt="" />支持</span>`:''}</div>`).join('');
+    }
+    function updateCompatSheetUI(){
+      document.querySelectorAll('[data-version]').forEach(btn=>btn.classList.toggle('compat-version--active',btn.dataset.version===compatVersion));
+      document.querySelectorAll('[data-method]').forEach(btn=>btn.classList.toggle('compat-segment__item--active',btn.dataset.method===compatMethod));
+      updateCompatModelsList();
+      document.getElementById('compat-model-panel').classList.toggle('is-hidden',compatMethod!=='model');
+      document.getElementById('compat-dial-panel').classList.toggle('is-active',compatMethod==='dial');
+    }
+    function openCompatSheet(){
+      updateCompatSheetUI();
+      document.getElementById('compat-sheet-mask').classList.add('is-open');
+      document.getElementById('compat-sheet').classList.add('is-open');
+    }
+    function closeCompatSheet(){
+      document.getElementById('compat-sheet-mask').classList.remove('is-open');
+      document.getElementById('compat-sheet').classList.remove('is-open');
+    }
+    function bindEvents(){
+      document.getElementById('content').addEventListener('click',(e)=>{
+        const faqRow=e.target.closest('.faq-item__row');
+        if(faqRow){
+          const item=faqRow.closest('.faq-item');
+          if(item?.dataset.faqAction==='compat'){openCompatSheet();return;}
+          const id=item?.dataset.faqId;
+          expandedFaqId=expandedFaqId===id?'':id;
+          renderFaq();
+          return;
+        }
+        const chip=e.target.closest('.day-chip');
+        if(chip){
+          selectedDays=Number(chip.dataset.days);
+          isCustomDays=false;
+          customDaysLabel='';
+          updateUI();
+          return;
+        }
+        if(e.target.closest('#day-custom-btn')){openDateSheet();return;}
+        if(e.target.closest('#qty-minus')){if(quantity>1){quantity--;updateUI();}return;}
+        if(e.target.closest('#qty-plus')){if(quantity<9){quantity++;updateUI();}return;}
+      });
+      document.getElementById('compat-sheet-mask').addEventListener('click',closeCompatSheet);
+      document.getElementById('compat-sheet-close').addEventListener('click',closeCompatSheet);
+      document.getElementById('compat-version-row').addEventListener('click',(e)=>{
+        const btn=e.target.closest('[data-version]');
+        if(!btn) return;
+        compatVersion=btn.dataset.version;
+        updateCompatSheetUI();
+      });
+      document.getElementById('compat-segment').addEventListener('click',(e)=>{
+        const btn=e.target.closest('[data-method]');
+        if(!btn) return;
+        compatMethod=btn.dataset.method;
+        updateCompatSheetUI();
+      });
+      document.getElementById('compat-search').addEventListener('input',(e)=>{
+        compatSearch=e.target.value;
+        updateCompatModelsList();
+      });
+      document.querySelector('.detail-footer__cta')?.addEventListener('click',()=>{
+        location.href=buildLoginUrl();
+      });
+    }
+    const sheetMask=document.getElementById('date-sheet-mask');
+    const sheetStartLabel=document.getElementById('sheet-start-label');
+    const sheetEndLabel=document.getElementById('sheet-end-label');
+    const sheetHint=document.getElementById('sheet-days-hint');
+    const ITEM_H=36;
+    const PAD_H=72;
+    let sheetMinDate=formatDateStr(new Date());
+    let sheetMaxDate=formatDateStr(addYears(new Date(),1));
+    let sheetStartDate='';
+    let sheetEndDate='';
+    const dateWheels={start:null,end:null};
+
+    function formatLongLabel(dateStr){
+      if(!dateStr) return '请选择';
+      const [y,m,d]=dateStr.split('-').map(Number);
+      return `${y}年${m}月${d}日`;
+    }
+    function buildYears(minDate,maxDate){
+      const minY=parseDateStr(minDate).getFullYear();
+      const maxY=parseDateStr(maxDate).getFullYear();
+      const years=[];
+      for(let y=minY;y<=maxY;y++) years.push(y);
+      return years;
+    }
+    function buildMonths(){return Array.from({length:12},(_,i)=>i+1);}
+    function buildDays(year,month){return Array.from({length:new Date(year,month,0).getDate()},(_,i)=>i+1);}
+    function parseDateStr(dateStr){const [y,m,d]=dateStr.split('-').map(Number);return new Date(y,m-1,d);}
+    function compareDateStr(a,b){return parseDateStr(a)-parseDateStr(b);}
+    function dateFromWheel(years,months,days,yi,mi,di){
+      const y=years[yi]||years[0];
+      const m=months[mi]||1;
+      const day=days[di]||days[days.length-1];
+      return formatDateStr(new Date(y,m-1,day));
+    }
+    function clampDate(dateStr,minDate,maxDate){
+      if(compareDateStr(dateStr,minDate)<0) return minDate;
+      if(compareDateStr(dateStr,maxDate)>0) return maxDate;
+      return dateStr;
+    }
+
+    function createDateWheel(el,kind){
+      const state={kind,years:[],months:buildMonths(),days:[],indices:[0,0,0],cols:[]};
+      function render(){
+        el.innerHTML=`<div class="date-wheel__indicator"></div><div class="date-wheel__cols">
+          ${state.cols.map((col,i)=>`<div class="date-wheel__col" data-col="${i}">
+            <div class="date-wheel__pad"></div>
+            ${col.items.map((item,j)=>`<div class="date-wheel__item${j===state.indices[i]?' is-active':''}" data-index="${j}">${item}</div>`).join('')}
+            <div class="date-wheel__pad"></div>
+          </div>`).join('')}
+        </div>`;
+        state.cols.forEach((col,ci)=>{
+          const colEl=el.querySelector(`[data-col="${ci}"]`);
+          colEl.scrollTop=state.indices[ci]*ITEM_H;
+          colEl.addEventListener('scroll',()=>{
+            const idx=Math.round(colEl.scrollTop/ITEM_H);
+            if(idx===state.indices[ci]) return;
+            state.indices[ci]=Math.max(0,Math.min(col.items.length-1,idx));
+            colEl.querySelectorAll('.date-wheel__item').forEach((node,j)=>{
+              node.classList.toggle('is-active',j===state.indices[ci]);
+            });
+            onWheelChange(kind);
+          },{passive:true});
+        });
+      }
+      state.setDate=(dateStr,minDate,maxDate)=>{
+        state.years=buildYears(minDate,maxDate);
+        const d=parseDateStr(clampDate(dateStr,minDate,maxDate));
+        const yi=Math.max(0,state.years.indexOf(d.getFullYear()));
+        const mi=d.getMonth();
+        state.days=buildDays(state.years[yi],mi+1);
+        const di=Math.min(d.getDate()-1,state.days.length-1);
+        state.indices=[yi,mi,di];
+        state.cols=[
+          {items:state.years.map(y=>`${y}年`)},
+          {items:state.months.map(m=>`${m}月`)},
+          {items:state.days.map(day=>`${day}日`)},
+        ];
+        render();
+      };
+      state.getDate=()=>dateFromWheel(state.years,state.months,state.days,...state.indices);
+      return state;
+    }
+
+    function onWheelChange(kind){
+      if(kind==='start'){
+        sheetStartDate=dateWheels.start.getDate();
+        sheetStartDate=clampDate(sheetStartDate,sheetMinDate,sheetMaxDate);
+        dateWheels.start.setDate(sheetStartDate,sheetMinDate,sheetMaxDate);
+        if(!sheetEndDate||compareDateStr(sheetEndDate,sheetStartDate)<0){
+          sheetEndDate=sheetStartDate;
+        }
+        dateWheels.end.setDate(sheetEndDate,sheetStartDate,sheetMaxDate);
+      }else{
+        sheetEndDate=dateWheels.end.getDate();
+        sheetEndDate=clampDate(sheetEndDate,sheetStartDate,sheetMaxDate);
+        dateWheels.end.setDate(sheetEndDate,sheetStartDate,sheetMaxDate);
+      }
+      sheetStartLabel.textContent=`去：${formatLongLabel(sheetStartDate)}`;
+      sheetEndLabel.textContent=`返：${formatLongLabel(sheetEndDate)}`;
+      if(sheetStartDate&&sheetEndDate&&compareDateStr(sheetEndDate,sheetStartDate)>=0){
+        sheetHint.textContent=`共 ${tripDays(sheetStartDate,sheetEndDate)} 天`;
+      }else sheetHint.textContent='';
+    }
+
+    function updateSheetHint(){onWheelChange('start');}
+
+    function openDateSheet(){
+      const d=getDefaultDates(selectedDays);
+      sheetMinDate=formatDateStr(new Date());
+      sheetMaxDate=formatDateStr(addYears(new Date(),1));
+      sheetStartDate=d.start;
+      sheetEndDate=d.end;
+      if(!dateWheels.start){
+        dateWheels.start=createDateWheel(document.getElementById('sheet-start-wheel'),'start');
+        dateWheels.end=createDateWheel(document.getElementById('sheet-end-wheel'),'end');
+      }
+      dateWheels.start.setDate(sheetStartDate,sheetMinDate,sheetMaxDate);
+      dateWheels.end.setDate(sheetEndDate,sheetStartDate,sheetMaxDate);
+      updateSheetHint();
+      sheetMask.classList.add('is-open');
+    }
+    function closeDateSheet(){sheetMask.classList.remove('is-open');}
+    document.getElementById('date-sheet-close').addEventListener('click',closeDateSheet);
+    sheetMask.addEventListener('click',closeDateSheet);
+    document.getElementById('date-sheet-confirm').addEventListener('click',()=>{
+      if(!sheetStartDate||!sheetEndDate){alert('请选择出发与返回日期');return;}
+      if(compareDateStr(sheetEndDate,sheetStartDate)<0){alert('返回日期不能早于出发');return;}
+      selectedDays=tripDays(sheetStartDate,sheetEndDate);
+      isCustomDays=true;
+      customDaysLabel=formatRangeLabel(sheetStartDate,sheetEndDate);
+      closeDateSheet();
+      updateUI();
+    });
+    mountContent();
+    mountCompatSheet();
+    bindEvents();
+    updateUI();
+  </script>
+</body>
+</html>

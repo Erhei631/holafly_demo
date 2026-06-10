@@ -1,0 +1,25 @@
+<view class="page" style="padding-top: {{statusBarHeight}}px; padding-bottom: {{safeBottom}}px;">
+  <view class="subpage-nav">
+    <view class="subpage-nav__back" bindtap="onBack">
+      <text class="subpage-nav__back-icon">‹</text>
+    </view>
+    <text class="subpage-nav__title">退款说明</text>
+    <view class="subpage-nav__spacer" />
+  </view>
+
+  <scroll-view class="subpage-body" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="article__section">
+      <text class="article__heading">未安装 / 未激活</text>
+      <text class="article__p">若 eSIM 尚未安装或未激活，可在订单详情中申请全额退款，客服将在 1–3 个工作日内处理。</text>
+    </view>
+    <view class="article__section">
+      <text class="article__heading">已激活套餐</text>
+      <text class="article__p">已激活并开始计费的订单，按已使用天数扣费后退还剩余金额；具体以客服审核为准。</text>
+    </view>
+    <view class="article__section">
+      <text class="article__heading">设备不兼容</text>
+      <text class="article__p">若购买前未完成兼容检测导致无法安装，请提供机型与系统版本，我们将协助退款或更换方案。</text>
+    </view>
+    <button class="article__cta btn-outline-brand" bindtap="onRefundRequest">申请退款</button>
+  </scroll-view>
+</view>

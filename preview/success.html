@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>支付成功 · Holafly</title>
+  <style>
+    :root {
+      --rose-500:#e6485c;
+      --green-50:#ecfff4; --green-500:#48ec86; --green-600:#23c967;
+      --blue-100:#dcf4ff;
+      --yellow-50:#fff8e7; --yellow-700:#b45309;
+      --neutral-50:#fff; --neutral-100:#f8f8fb; --neutral-200:#e4e6ea;
+      --neutral-600:#56575a; --neutral-900:#272729;
+      --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
+    .preview-label{font-size:14px;color:var(--neutral-600);margin-bottom:16px}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:linear-gradient(149.7deg,#c8ebfe 2.09%,var(--green-50) 35.2%,#fff 54.59%)}
+    .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
+    .success-nav{position:absolute;top:47px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 7px;height:44px}
+    .success-nav__back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0;flex-shrink:0}
+    .success-nav__back img{width:9px;height:16.5px;display:block}
+    .success-nav__title{position:absolute;left:50%;transform:translateX(-50%);text-align:center;font-size:16px;font-weight:500;line-height:24px;pointer-events:none;white-space:nowrap}
+    .success-nav__right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px}
+    .nav-capsule--support{width:30px}
+    .nav-capsule--menu{width:83px;padding:0 10px}
+    .nav-capsule img{display:block}
+    .nav-capsule__icon{width:16px;height:16px}
+    .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
+    .success-scroll{position:absolute;top:91px;left:0;right:0;bottom:0;overflow-y:auto;padding-bottom:calc(20px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
+    .success-hero{display:flex;flex-direction:column;align-items:center;gap:0;padding:16px 20px 20px}
+    .success-hero__icon{width:163px;height:163px;display:block;flex-shrink:0}
+    .success-hero__title{margin-top:-32px;font-size:20px;font-weight:500;line-height:28px;text-align:center}
+    .success-stack{display:flex;flex-direction:column;gap:16px;padding:0 20px 20px}
+    .success-esim-card{padding:10px;border-radius:24px;background:var(--blue-100);border:1px solid var(--green-500);box-shadow:0 15px 20px #e1fff7}
+    .success-esim-card__inner{padding:20px 16px;background:#fff;border-radius:16px;display:flex;flex-direction:column;align-items:center;width:100%}
+    .success-esim-state{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%}
+    .success-esim-state[hidden]{display:none!important}
+    .success-esim-top{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+    .success-esim-head{display:flex;flex-direction:column;align-items:center;gap:4px}
+    .success-esim-head__status{font-size:12px;color:var(--yellow-700);line-height:16px}
+    .success-esim-head__plan{font-size:16px;font-weight:500;line-height:24px}
+    .success-esim-qr{width:164px;height:165px;border:1px solid var(--neutral-200);border-radius:16px;background:var(--neutral-100);display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .success-esim-qr--ready{background:#fff;cursor:default}
+    .success-esim-qr__spinner{width:52px;height:52px;display:block;animation:esim-spin 1.2s linear infinite}
+    .success-esim-qr__image{width:164px;height:165px;display:block;object-fit:cover}
+    .success-esim-head__status--ready{color:var(--rose-500)}
+    .success-esim-actions{display:flex;gap:12px;width:100%}
+    .success-esim-actions__btn{flex:1;padding:12px 24px;border-radius:10px;font-size:15px;font-weight:500;line-height:22px;cursor:pointer}
+    .success-esim-actions__btn--ghost{background:#fff;color:var(--neutral-400);border:1px solid var(--neutral-200)}
+    .success-esim-actions__btn--primary{background:var(--rose-500);color:#fff;border:none}
+    @keyframes esim-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    .success-notice{width:100%;padding:16px;background:var(--yellow-50);border-radius:10px}
+    .success-notice__text{font-size:14px;color:var(--yellow-700);line-height:20px}
+    .success-divider{width:100%;height:1px;background:var(--neutral-200)}
+    .success-notify-btn{width:100%;height:44px;border:none;border-radius:10px;background:var(--green-600);color:#fff;font-size:15px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+    .success-notify-btn img{width:20px;height:20px}
+    .success-reward-card{padding:6px 16px 16px;background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
+    .success-reward-head{display:flex;align-items:center;gap:8px;padding:4px 0 8px}
+    .success-reward-head__icon-wrap{width:44px;height:44px;flex-shrink:0;overflow:hidden;position:relative}
+    .success-reward-head__icon{position:absolute;width:90.31px;height:90.31px;left:-23.16px;top:-23.16px;display:block}
+    .success-reward-head__title{font-size:16px;font-weight:500;line-height:24px}
+    .success-reward-body{padding:16px;background:var(--neutral-100);border-radius:10px}
+    .success-reward-body__text{font-size:15px;color:var(--neutral-600);line-height:22px}
+    .success-reward-body__brand{font-size:15px;font-weight:600;color:var(--rose-500);line-height:22px}
+    .success-reward-grid{display:flex;justify-content:space-between;margin-top:16px}
+    .success-reward-item{width:74px;display:flex;flex-direction:column;align-items:center;gap:8px}
+    .success-reward-item img{width:32px;height:32px}
+    .success-reward-item span{font-size:12px;color:var(--neutral-600);line-height:16px;text-align:center}
+    .success-toast{position:absolute;left:50%;top:54%;z-index:100;transform:translate(-50%,-50%) scale(.96);padding:12px 20px;background:rgba(41,43,46,.88);color:#fff;font-size:14px;line-height:1.43;border-radius:10px;text-align:center;max-width:280px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+    .success-toast.is-show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  </style>
+</head>
+<body>
+  <p class="preview-label">支付成功 · Figma 344:1784</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <div class="success-nav">
+      <button class="success-nav__back" type="button" id="success-back"><img src="images/detail/nav-back.svg" alt="" /></button>
+      <h1 class="success-nav__title">支付成功</h1>
+      <div class="success-nav__right">
+        <div class="nav-capsule nav-capsule--support"><img class="nav-capsule__icon" src="images/detail/nav-support.svg" alt="" /></div>
+        <div class="nav-capsule nav-capsule--menu">
+          <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
+          <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
+          <img class="nav-capsule__icon" src="images/detail/nav-close.svg" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="success-scroll">
+      <div class="success-hero">
+        <img class="success-hero__icon" src="images/success/icon-success.svg" alt="" />
+        <p class="success-hero__title" id="success-title">支付成功 ¥63</p>
+      </div>
+      <div class="success-stack">
+        <section class="success-esim-card">
+          <div class="success-esim-card__inner" id="esim-card-inner">
+            <div id="esim-loading" class="success-esim-state">
+              <div class="success-esim-top">
+                <div class="success-esim-head">
+                  <p class="success-esim-head__status">正在为您准备 eSIM</p>
+                  <p class="success-esim-head__plan" id="plan-label">日本eSIM·7天</p>
+                </div>
+                <div class="success-esim-qr" id="esim-qr-loading">
+                  <img class="success-esim-qr__spinner" src="images/success/esim-spinner.svg" alt="" />
+                </div>
+              </div>
+              <div class="success-notice">
+                <p class="success-notice__text">eSIM 正在向运营商申请开通，通常需要 1–3 分钟。准备就绪后会通过微信通知您，无需停留在本页。</p>
+              </div>
+              <div class="success-divider"></div>
+              <button class="success-notify-btn" type="button" id="notify-btn">
+                <img src="images/success/icon-wechat-notify.svg" alt="" />
+                开启微信通知
+              </button>
+            </div>
+            <div id="esim-ready" class="success-esim-state" hidden>
+              <div class="success-esim-top">
+                <div class="success-esim-head">
+                  <p class="success-esim-head__status success-esim-head__status--ready">您的eSIM已就绪</p>
+                  <p class="success-esim-head__plan" id="plan-label-ready">日本eSIM·7天</p>
+                </div>
+                <div class="success-esim-qr success-esim-qr--ready">
+                  <img class="success-esim-qr__image" src="images/success/esim-qr.png" alt="eSIM 二维码" />
+                </div>
+              </div>
+              <div class="success-divider"></div>
+              <div class="success-esim-actions">
+                <button class="success-esim-actions__btn success-esim-actions__btn--ghost" type="button" id="save-qr-btn">保存到相册</button>
+                <button class="success-esim-actions__btn success-esim-actions__btn--primary" type="button" id="install-guide-btn">查看安装教程</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="success-reward-card">
+          <div class="success-reward-head">
+            <div class="success-reward-head__icon-wrap">
+              <img class="success-reward-head__icon" src="images/success/icon-holacoin.png" alt="" />
+            </div>
+            <p class="success-reward-head__title">恭喜您获得50HolaCoin</p>
+          </div>
+          <div class="success-reward-body">
+            <span class="success-reward-body__text">每一笔Holafly消费都可以获得HolaCoin，下载</span><span class="success-reward-body__brand">Holafly APP</span><span class="success-reward-body__text">兑换以下权益：</span>
+            <div class="success-reward-grid">
+              <div class="success-reward-item"><img src="images/success/benefit-esim.svg" alt="" /><span>免费eSIM</span></div>
+              <div class="success-reward-item"><img src="images/success/benefit-discount.svg" alt="" /><span>折扣优惠</span></div>
+              <div class="success-reward-item"><img src="images/success/benefit-gift.svg" alt="" /><span>更多好礼</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="success-toast" id="success-toast" role="status" aria-live="polite"></div>
+  </div>
+  <script>
+    const params=new URLSearchParams(location.search);
+    const days=Math.max(1,Number(params.get('days'))||7);
+    const total=Number(params.get('totalPrice'))||(days===7?63:days*9);
+    const totalLabel=params.get('totalPriceLabel')||`¥${total}`;
+    document.getElementById('success-title').textContent=`支付成功 ${totalLabel}`;
+    const planLabel=`日本eSIM·${days}天`;
+    document.getElementById('plan-label').textContent=planLabel;
+    document.getElementById('plan-label-ready').textContent=planLabel;
+    let toastTimer=null;
+    function showToast(message){
+      const toast=document.getElementById('success-toast');
+      toast.textContent=message;
+      toast.classList.add('is-show');
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>toast.classList.remove('is-show'),2000);
+    }
+    document.getElementById('success-back').addEventListener('click',()=>{location.href='orders.html';});
+    document.getElementById('notify-btn').addEventListener('click',()=>showToast('已开启微信通知'));
+    document.getElementById('esim-qr-loading').addEventListener('click',()=>{
+      document.getElementById('esim-loading').hidden=true;
+      document.getElementById('esim-ready').hidden=false;
+    });
+    document.getElementById('save-qr-btn').addEventListener('click',()=>showToast('已保存到相册'));
+    document.getElementById('install-guide-btn').addEventListener('click',()=>{location.href='index.html';});
+    if(params.get('ready')==='1'){
+      document.getElementById('esim-loading').hidden=true;
+      document.getElementById('esim-ready').hidden=false;
+    }
+  </script>
+</body>
+</html>

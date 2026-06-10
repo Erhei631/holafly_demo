@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>短信验证码登录 · Holafly</title>
+  <style>
+    :root {
+      --rose-50:#ffefef; --rose-500:#e6485c;
+      --neutral-50:#fff; --neutral-200:#e4e6ea;
+      --neutral-400:#7b7c7e; --neutral-600:#56575a; --neutral-900:#272729;
+      --blue-600:#0d8cc2;
+      --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
+    .preview-label{font-size:14px;color:var(--neutral-400);margin-bottom:16px}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:linear-gradient(180deg,var(--rose-50) 6.5%,var(--neutral-50) 100%)}
+    .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
+    .login-nav{position:absolute;top:47px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 7px;height:44px}
+    .login-nav__back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0}
+    .login-nav__back img{width:9px;height:16.5px;display:block}
+    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px}
+    .nav-capsule--menu{width:83px;padding:0 10px}
+    .nav-capsule img{display:block}
+    .nav-capsule__icon{width:16px;height:16px}
+    .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
+    .login-body{position:absolute;top:91px;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;padding:30px 26px calc(24px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
+    .login-brand{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%}
+    .login-brand__logo{width:92px;height:92px}
+    .login-brand__text{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+    .login-brand__title{font-size:24px;font-weight:500;line-height:32px}
+    .login-brand__subtitle{font-size:14px;color:var(--neutral-600);line-height:20px}
+    .login-phone{width:100%;margin-top:39px;display:flex;align-items:center;gap:16px;padding:12px 16px;background:#fff;border-radius:10px}
+    .login-phone__code{font-size:15px;font-weight:500;color:var(--neutral-600);line-height:24px;flex-shrink:0}
+    .login-phone__divider{width:1px;height:16px;background:var(--neutral-200);flex-shrink:0}
+    .login-phone__input{flex:1;min-width:0;border:none;background:transparent;font-size:15px;color:var(--neutral-900);outline:none;line-height:22px}
+    .login-phone__input::placeholder{color:var(--neutral-400)}
+    .login-actions{width:100%;margin-top:34px;display:flex;flex-direction:column;align-items:center;gap:24px}
+    .login-btn{width:100%;max-width:293px;height:48px;border:none;border-radius:10px;font-size:16px;font-weight:500;cursor:pointer}
+    .login-btn--primary{background:var(--rose-500);color:#fff;box-shadow:0 10px 20px rgba(230,72,92,.35)}
+    .login-btn--ghost{margin-top:auto;background:#fff;color:var(--neutral-400);border:1px solid var(--neutral-200)}
+    .login-agree{display:flex;align-items:center;justify-content:center;gap:6px;width:100%}
+    .login-agree__check{width:18px;height:18px;border:1px solid var(--neutral-200);border-radius:50%;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
+    .login-agree__check--on{background:var(--rose-500);border-color:var(--rose-500)}
+    .login-agree__text{font-size:14px;color:var(--neutral-400);line-height:20px;white-space:nowrap}
+    .login-agree__link{color:var(--blue-600)}
+    .login-toast{position:absolute;left:50%;top:54%;z-index:100;transform:translate(-50%,-50%) scale(.96);padding:12px 20px;background:rgba(41,43,46,.88);color:#fff;font-size:14px;line-height:1.43;border-radius:10px;text-align:center;max-width:280px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+    .login-toast.is-show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  </style>
+</head>
+<body>
+  <p class="preview-label">短信验证码登录 · Figma 344:2709</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <div class="login-nav">
+      <button class="login-nav__back" type="button" id="login-back"><img src="images/detail/nav-back.svg" alt="" /></button>
+      <div class="nav-capsule nav-capsule--menu">
+        <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
+        <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
+        <img class="nav-capsule__icon" src="images/detail/nav-close.svg" alt="" />
+      </div>
+    </div>
+    <div class="login-body">
+      <div class="login-brand">
+        <img class="login-brand__logo" src="images/auth/logo.svg" alt="Holafly" />
+        <div class="login-brand__text">
+          <h1 class="login-brand__title">欢迎使用Holafly</h1>
+          <p class="login-brand__subtitle">输入手机号，获取短信验证码</p>
+        </div>
+      </div>
+      <div class="login-phone">
+        <span class="login-phone__code">+86</span>
+        <span class="login-phone__divider"></span>
+        <input class="login-phone__input" id="login-phone" type="tel" inputmode="numeric" maxlength="11" placeholder="请输入手机号" />
+      </div>
+      <div class="login-actions">
+        <button class="login-btn login-btn--primary" type="button" id="login-sms-submit">获取短信验证码</button>
+        <label class="login-agree" id="login-agree">
+          <span class="login-agree__check" id="login-check"></span>
+          <span class="login-agree__text">我已阅读并同意<span class="login-agree__link">服务协议</span>及<span class="login-agree__link">隐私协议</span></span>
+        </label>
+      </div>
+      <button class="login-btn login-btn--ghost" type="button" id="login-return">返回</button>
+    </div>
+    <div class="login-toast" id="login-toast" role="status" aria-live="polite"></div>
+  </div>
+  <script>
+    const params=new URLSearchParams(location.search);
+    let agreed=false;
+    let toastTimer=null;
+    function showToast(message){
+      const toast=document.getElementById('login-toast');
+      toast.textContent=message;
+      toast.classList.add('is-show');
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>toast.classList.remove('is-show'),2000);
+    }
+    document.getElementById('login-back').addEventListener('click',()=>history.back());
+    document.getElementById('login-return').addEventListener('click',()=>history.back());
+    document.getElementById('login-agree').addEventListener('click',()=>{
+      agreed=!agreed;
+      document.getElementById('login-check').classList.toggle('login-agree__check--on',agreed);
+      document.getElementById('login-check').textContent=agreed?'✓':'';
+    });
+    document.getElementById('login-phone').addEventListener('input',(e)=>{
+      e.target.value=e.target.value.replace(/\D/g,'').slice(0,11);
+    });
+    document.getElementById('login-sms-submit').addEventListener('click',()=>{
+      const phone=document.getElementById('login-phone').value.trim();
+      if(!/^1\d{10}$/.test(phone)){showToast('请输入正确的手机号');return;}
+      if(!agreed){showToast('请先阅读并同意服务协议及隐私协议');return;}
+      const next=new URLSearchParams(params);
+      next.set('phone',phone);
+      location.href=`login-verify.html?${next.toString()}`;
+    });
+  </script>
+</body>
+</html>

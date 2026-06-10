@@ -1,0 +1,53 @@
+<view class="page" style="padding-top: {{statusBarHeight}}px; padding-bottom: {{safeBottom}}px;">
+  <view class="subpage-nav">
+    <view class="subpage-nav__back" bindtap="onBack">
+      <text class="subpage-nav__back-icon">‹</text>
+    </view>
+    <text class="subpage-nav__title">安装教程</text>
+    <view class="subpage-nav__spacer" />
+  </view>
+
+  <scroll-view class="subpage-body" scroll-y enhanced show-scrollbar="{{false}}">
+    <text class="article__title">出发前安装 eSIM</text>
+    <text class="article__lead">安装 ≠ 立即开始使用流量。请在有网络时完成安装，抵达目的地后再开启数据漫游。</text>
+
+    <view class="install-tabs">
+      <view
+        class="install-tabs__item {{platform === 'ios' ? 'install-tabs__item--active' : ''}}"
+        data-platform="ios"
+        bindtap="onPlatformChange"
+      >
+        iOS
+      </view>
+      <view
+        class="install-tabs__item {{platform === 'android' ? 'install-tabs__item--active' : ''}}"
+        data-platform="android"
+        bindtap="onPlatformChange"
+      >
+        Android
+      </view>
+    </view>
+
+    <view class="article__section" wx:if="{{platform === 'ios'}}">
+      <text class="article__heading">iPhone 安装步骤</text>
+      <view class="article__steps">
+        <text class="article__step">1. 打开「设置」→「蜂窝网络」→「添加 eSIM」</text>
+        <text class="article__step">2. 选择「使用二维码」或手动输入激活信息</text>
+        <text class="article__step">3. 按提示完成安装，将 Holafly 线路标记为「出境流量」</text>
+        <text class="article__step">4. 抵达目的地后，在「蜂窝网络」中开启该 eSIM 的数据漫游</text>
+      </view>
+    </view>
+
+    <view class="article__section" wx:else>
+      <text class="article__heading">Android 安装步骤</text>
+      <view class="article__steps">
+        <text class="article__step">1. 打开「设置」→「网络与互联网」→「SIM 卡管理」</text>
+        <text class="article__step">2. 添加 eSIM / 下载 SIM，扫描二维码或输入激活码</text>
+        <text class="article__step">3. 启用 Holafly eSIM，建议关闭自动切换主卡数据</text>
+        <text class="article__step">4. 抵达后开启移动数据与数据漫游（如机型需要）</text>
+      </view>
+    </view>
+
+    <button class="article__cta btn-outline-brand" bindtap="onSupport">安装遇到问题？联系客服</button>
+  </scroll-view>
+</view>

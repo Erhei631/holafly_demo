@@ -1,0 +1,7 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame">
+<path id="Vector" d="M30 31V9C30 7.34315 28.6569 6 27 6H13C11.3431 6 10 7.34315 10 9V31C10 32.6569 11.3431 34 13 34H27C28.6569 34 30 32.6569 30 31Z" stroke="var(--stroke-0, #1EA7E1)" stroke-width="1.5"/>
+<path id="Vector_2" d="M25 21V13C25 12.4477 24.5523 12 24 12H16C15.4477 12 15 12.4477 15 13V21C15 21.5523 15.4477 22 16 22H24C24.5523 22 25 21.5523 25 21Z" fill="var(--fill-0, #FFEAC0)" stroke="var(--stroke-0, #1EA7E1)"/>
+<path id="Vector_3" d="M23 14V20M20 14V18M17 14V20" stroke="var(--stroke-0, #1EA7E1)" stroke-width="0.8" stroke-linecap="round"/>
+</g>
+</svg>

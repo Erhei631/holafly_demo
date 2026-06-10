@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>订单详情 · Holafly</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rose-50:#ffefef; --rose-500:#e6485c;
+      --green-500:#48ec86;
+      --blue-100:#dcf4ff;
+      --yellow-100:#ffeac0; --yellow-800:#92400e;
+      --green-100:#d6ffe7; --green-700:#179b50;
+      --neutral-50:#fff; --neutral-100:#f8f8fb; --neutral-200:#e4e6ea;
+      --neutral-400:#7b7c7e; --neutral-600:#56575a; --neutral-900:#272729;
+      --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
+    .preview-label{font-size:14px;color:var(--neutral-600);margin-bottom:16px}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:linear-gradient(180deg,var(--rose-50) 6.5%,#fff 100%)}
+    .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
+    .detail-nav{position:absolute;top:47px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 7px;height:44px}
+    .detail-nav__back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0;flex-shrink:0}
+    .detail-nav__back img{width:9px;height:16.5px;display:block}
+    .detail-nav__title{position:absolute;left:50%;transform:translateX(-50%);font-size:16px;font-weight:500;line-height:24px;pointer-events:none;white-space:nowrap}
+    .detail-nav__right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px}
+    .nav-capsule--support{width:30px}
+    .nav-capsule--menu{width:83px;padding:0 10px}
+    .nav-capsule img{display:block}
+    .nav-capsule__icon{width:16px;height:16px}
+    .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
+    .detail-scroll{position:absolute;top:91px;left:0;right:0;bottom:0;overflow-y:auto;padding:0 20px calc(20px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
+    .detail-tip{display:flex;align-items:flex-start;gap:6px;padding:12px;background:var(--blue-100);border-radius:10px;margin-bottom:16px}
+    .detail-tip__icon{width:20px;height:20px;flex-shrink:0}
+    .detail-tip__text{flex:1;font-size:14px;line-height:20px}
+    .detail-stack{display:flex;flex-direction:column;gap:16px}
+    .detail-order-card{background:#fff;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.05);overflow:hidden}
+    .detail-order-card__head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--neutral-200)}
+    .detail-order-card__no{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--neutral-400)}
+    .detail-order-card__badge{padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500}
+    .detail-order-card__badge--pending{background:var(--yellow-100);color:var(--yellow-800)}
+    .detail-order-card__badge--active{background:var(--green-100);color:var(--green-700)}
+    .detail-order-card__badge--done{background:var(--neutral-200);color:var(--neutral-400)}
+    .detail-order-card__body{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px}
+    .detail-order-card__left{display:flex;align-items:center;gap:6px}
+    .detail-order-card__flag{width:46px;height:46px;border-radius:50%;object-fit:cover}
+    .detail-order-card__name{font-size:16px;font-weight:500;line-height:22px}
+    .detail-order-card__price-wrap{text-align:right}
+    .detail-order-card__price{font-size:16px;font-weight:500;line-height:24px}
+    .detail-order-card__qty{font-size:12px;color:var(--neutral-400);line-height:16px}
+    .detail-qr-panel{padding:6px 16px 12px}
+    .detail-qr-panel__content{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%}
+    .detail-qr-panel__frame{border:1px solid var(--neutral-200);border-radius:16px;padding:10px}
+    .detail-qr-panel__image{width:164px;height:165px;border-radius:12px;object-fit:cover;display:block;transition:opacity .2s ease}
+    .detail-qr-panel__image--used{opacity:.28}
+    .detail-qr-panel__hint{font-size:12px;color:var(--neutral-400);line-height:16px;text-align:center}
+    .detail-qr-panel__badge{margin-top:2px;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500}
+    .detail-qr-panel__badge.detail-order-card__badge--pending{background:var(--yellow-100);color:var(--yellow-800)}
+    .detail-qr-panel__badge.detail-order-card__badge--active{background:var(--green-100);color:var(--green-700)}
+    .detail-qr-panel__badge.detail-order-card__badge--installed{background:var(--green-100);color:var(--green-700)}
+    .detail-qr-panel__badge.detail-order-card__badge--done{background:var(--neutral-200);color:var(--neutral-400)}
+    .detail-qr-panel__pager{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:10px}
+    .detail-qr-panel__pager-btn{width:35px;height:35px;border-radius:9999px;border:1px solid var(--neutral-200);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0}
+    .detail-qr-panel__pager-btn--muted{background:var(--neutral-100)}
+    .detail-qr-panel__pager-btn:disabled{opacity:.45;cursor:not-allowed}
+    .detail-qr-panel__pager-btn img{width:16px;height:16px;display:block}
+    .detail-qr-panel__pager-count{font-size:16px;line-height:24px;color:var(--neutral-400);white-space:nowrap}
+    .detail-qr-panel__pager-current{font-size:18px;font-weight:500;color:var(--neutral-900)}
+    .detail-qr-panel__divider{height:1px;background:var(--neutral-200);margin:16px 0 0}
+    .detail-qr-panel__actions{display:flex;gap:12px;width:100%;margin-top:16px}
+    .detail-qr-panel__btn{flex:1;min-width:0;height:44px;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;padding:12px 24px}
+    .detail-qr-panel__btn--ghost{border:1px solid var(--neutral-200);background:#fff;color:var(--neutral-400)}
+    .detail-qr-panel__btn--primary{border:none;background:var(--rose-500);color:#fff}
+    .detail-info-panel{padding:16px;background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
+    .detail-info-panel__title{display:block;font-size:16px;font-weight:500;line-height:24px;margin-bottom:12px}
+    .detail-info-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 0}
+    .detail-info-row+.detail-info-row{border-top:1px solid var(--neutral-200)}
+    .detail-info-row__label{font-size:15px;color:var(--neutral-600);line-height:22px}
+    .detail-info-row__value{font-size:15px;line-height:22px}
+    .detail-info-row__value--strong{font-weight:500}
+    .detail-info-row__right{display:flex;align-items:center;gap:6px}
+    .detail-info-row__copy{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0}
+    .detail-info-row__copy img{width:16px;height:16px}
+    .detail-info-row--link{cursor:pointer}
+    .detail-info-row__arrow{width:16px;height:16px}
+    .detail-refund{display:flex;justify-content:center;padding:0}
+    .detail-refund__btn{border:none;background:transparent;font-size:14px;font-weight:400;line-height:20px;cursor:pointer;padding:0}
+    .detail-refund__prefix{color:var(--neutral-400)}
+    .detail-refund__link{color:#1ea7e1}
+    .detail-toast{position:absolute;left:50%;top:54%;z-index:100;transform:translate(-50%,-50%) scale(.96);padding:12px 20px;background:rgba(41,43,46,.88);color:#fff;font-size:14px;line-height:1.43;border-radius:10px;text-align:center;max-width:280px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+    .detail-toast.is-show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  </style>
+</head>
+<body>
+  <p class="preview-label">订单详情 · Figma 259:1050</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <div class="detail-nav">
+      <button class="detail-nav__back" type="button" id="detail-back"><img src="images/detail/nav-back.svg" alt="" /></button>
+      <h1 class="detail-nav__title">订单详情</h1>
+      <div class="detail-nav__right">
+        <div class="nav-capsule nav-capsule--support"><img class="nav-capsule__icon" src="images/detail/nav-support.svg" alt="" /></div>
+        <div class="nav-capsule nav-capsule--menu">
+          <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
+          <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
+          <img class="nav-capsule__icon" src="images/detail/nav-close.svg" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="detail-scroll">
+      <div class="detail-tip">
+        <img class="detail-tip__icon" src="images/orders/icon-wifi-tip.svg" alt="" />
+        <p class="detail-tip__text">降落后，请连接机场 Wi-Fi 进行安装激活。</p>
+      </div>
+      <div class="detail-stack">
+        <section class="detail-order-card">
+          <div class="detail-order-card__head">
+            <span class="detail-order-card__no" id="order-no">HF20260520183829</span>
+            <span class="detail-order-card__badge detail-order-card__badge--pending" id="order-badge" hidden>待激活</span>
+          </div>
+          <div class="detail-order-card__body">
+            <div class="detail-order-card__left">
+              <img class="detail-order-card__flag" id="order-flag" src="images/orders/flag-jp.png" alt="" />
+              <span class="detail-order-card__name" id="order-name">日本eSIM·7天</span>
+            </div>
+            <div class="detail-order-card__price-wrap">
+              <div class="detail-order-card__price" id="order-price">¥63.00</div>
+              <div class="detail-order-card__qty" id="order-qty">共 1 张</div>
+            </div>
+          </div>
+          <div class="detail-qr-panel" id="qr-section">
+            <div class="detail-qr-panel__content">
+              <div class="detail-qr-panel__frame">
+                <img class="detail-qr-panel__image" id="qr-image" src="images/orders/esim-qr.png?v=2" alt="eSIM 二维码" />
+              </div>
+              <p class="detail-qr-panel__hint">一张 eSIM 仅限一台设备安装</p>
+              <span class="detail-qr-panel__badge" id="qr-badge">待激活</span>
+            </div>
+            <div class="detail-qr-panel__pager" id="qr-pager" hidden>
+              <button class="detail-qr-panel__pager-btn detail-qr-panel__pager-btn--muted" type="button" id="qr-prev" aria-label="上一张">
+                <img src="images/orders/icon-qr-prev.svg" alt="" />
+              </button>
+              <span class="detail-qr-panel__pager-count"><span class="detail-qr-panel__pager-current" id="qr-index">1</span><span id="qr-total">/3</span></span>
+              <button class="detail-qr-panel__pager-btn" type="button" id="qr-next" aria-label="下一张">
+                <img src="images/orders/icon-qr-next.svg" alt="" />
+              </button>
+            </div>
+            <div class="detail-qr-panel__divider"></div>
+            <div class="detail-qr-panel__actions">
+              <button class="detail-qr-panel__btn detail-qr-panel__btn--ghost" type="button" id="save-qr-btn">保存到相册</button>
+              <button class="detail-qr-panel__btn detail-qr-panel__btn--primary" type="button" id="install-guide-btn">查看安装教程</button>
+            </div>
+          </div>
+        </section>
+        <section class="detail-info-panel">
+          <h2 class="detail-info-panel__title">订单信息</h2>
+          <div class="detail-info-row">
+            <span class="detail-info-row__label">实付款</span>
+            <span class="detail-info-row__value detail-info-row__value--strong" id="info-price">¥63.00</span>
+          </div>
+          <div class="detail-info-row">
+            <span class="detail-info-row__label">订单号</span>
+            <div class="detail-info-row__right">
+              <span class="detail-info-row__value" id="info-order-no">HF20260520183829</span>
+              <button class="detail-info-row__copy" type="button" id="copy-btn" aria-label="复制订单号">
+                <img src="images/orders/icon-copy.svg" alt="" />
+              </button>
+            </div>
+          </div>
+          <div class="detail-info-row">
+            <span class="detail-info-row__label">下单时间</span>
+            <span class="detail-info-row__value" id="info-created">2026-05-20 18:38</span>
+          </div>
+          <div class="detail-info-row">
+            <span class="detail-info-row__label">支付时间</span>
+            <span class="detail-info-row__value" id="info-paid">2026-05-20 18:38</span>
+          </div>
+          <div class="detail-info-row">
+            <span class="detail-info-row__label">支付方式</span>
+            <span class="detail-info-row__value">微信支付</span>
+          </div>
+          <div class="detail-info-row detail-info-row--link" id="invoice-row">
+            <span class="detail-info-row__label">申请开票</span>
+            <img class="detail-info-row__arrow" src="images/detail/icon-arrow-right.svg" alt="" />
+          </div>
+        </section>
+        <div class="detail-refund">
+          <button class="detail-refund__btn" type="button" id="refund-btn"><span class="detail-refund__prefix">未激活？</span><span class="detail-refund__link">申请退款</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="detail-toast" id="toast" role="status"></div>
+  </div>
+  <script>
+    const PREVIEW_ORDERS = {
+      HF20260520183829: {
+        orderNo: 'HF20260520183829',
+        badge: '待激活',
+        badgeTone: 'pending',
+        name: '日本eSIM·7天',
+        price: '¥63.00',
+        qty: 1,
+        flag: 'images/orders/flag-jp.png',
+        createdAt: '2026-05-20 18:38',
+        showQr: true,
+      },
+      HF20260520183830: {
+        orderNo: 'HF20260520183830',
+        badge: '已激活',
+        badgeTone: 'active',
+        name: '泰国eSIM·5天',
+        price: '¥45.00',
+        qty: 3,
+        flag: 'images/orders/flag-th.png',
+        createdAt: '2026-05-18 09:15',
+        showQr: true,
+        esimSlots: [
+          { label: '待激活', tone: 'pending', used: false },
+          { label: '已激活', tone: 'installed', used: true },
+          { label: '待激活', tone: 'pending', used: false },
+        ],
+      },
+      HF20260520183831: {
+        orderNo: 'HF20260520183831',
+        badge: '已完成',
+        badgeTone: 'done',
+        name: '日本eSIM·7天',
+        price: '¥63.00',
+        qty: 1,
+        flag: 'images/orders/flag-jp.png',
+        createdAt: '2026-04-10 12:00',
+        showQr: false,
+      },
+    };
+
+    const params = new URLSearchParams(location.search);
+    const orderNo = params.get('orderNo') || 'HF20260520183829';
+    const order = PREVIEW_ORDERS[orderNo] || PREVIEW_ORDERS.HF20260520183829;
+
+    const toast = document.getElementById('toast');
+    let toastTimer;
+    function showToast(msg) {
+      clearTimeout(toastTimer);
+      toast.textContent = msg;
+      toast.classList.add('is-show');
+      toastTimer = setTimeout(() => toast.classList.remove('is-show'), 1800);
+    }
+
+    document.getElementById('order-no').textContent = order.orderNo;
+    document.getElementById('info-order-no').textContent = order.orderNo;
+    document.getElementById('order-name').textContent = order.name;
+    document.getElementById('order-price').textContent = order.price;
+    document.getElementById('info-price').textContent = order.price;
+    document.getElementById('order-qty').textContent = `共 ${order.qty} 张`;
+    document.getElementById('info-created').textContent = order.createdAt;
+    document.getElementById('info-paid').textContent = order.createdAt;
+    document.getElementById('order-flag').src = order.flag;
+
+    const badge = document.getElementById('order-badge');
+    const qrSection = document.getElementById('qr-section');
+    const qrBadge = document.getElementById('qr-badge');
+    const qrPager = document.getElementById('qr-pager');
+    const qrIndexEl = document.getElementById('qr-index');
+    const qrTotalEl = document.getElementById('qr-total');
+    const qrPrev = document.getElementById('qr-prev');
+    const qrNext = document.getElementById('qr-next');
+    const qrImage = document.getElementById('qr-image');
+    let esimIndex = 1;
+
+    function getEsimSlot(index) {
+      if (order.esimSlots && order.esimSlots[index - 1]) {
+        return order.esimSlots[index - 1];
+      }
+      return { label: order.badge, tone: order.badgeTone, used: false };
+    }
+
+    function syncEsimView() {
+      const slot = getEsimSlot(esimIndex);
+      qrBadge.textContent = slot.label;
+      qrBadge.className = `detail-qr-panel__badge detail-order-card__badge--${slot.tone}`;
+      qrImage.classList.toggle('detail-qr-panel__image--used', Boolean(slot.used));
+    }
+
+    function syncQrPager() {
+      const total = order.qty || 1;
+      qrIndexEl.textContent = String(esimIndex);
+      qrTotalEl.textContent = `/${total}`;
+      qrPrev.disabled = esimIndex <= 1;
+      qrNext.disabled = esimIndex >= total;
+      syncEsimView();
+    }
+
+    badge.textContent = order.badge;
+    badge.className = `detail-order-card__badge detail-order-card__badge--${order.badgeTone}`;
+    if (order.showQr) {
+      qrSection.hidden = false;
+      badge.hidden = true;
+      if (order.qty > 1) {
+        qrPager.hidden = false;
+        syncQrPager();
+      } else {
+        qrPager.hidden = true;
+        syncEsimView();
+      }
+    } else {
+      qrSection.hidden = true;
+      badge.hidden = false;
+      qrPager.hidden = true;
+    }
+
+    qrPrev.addEventListener('click', () => {
+      if (esimIndex <= 1) return;
+      esimIndex -= 1;
+      syncQrPager();
+    });
+
+    qrNext.addEventListener('click', () => {
+      if (esimIndex >= (order.qty || 1)) return;
+      esimIndex += 1;
+      syncQrPager();
+    });
+
+    document.getElementById('detail-back').addEventListener('click', () => {
+      history.length > 1 ? history.back() : (location.href = 'orders.html');
+    });
+
+    document.getElementById('copy-btn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(order.orderNo);
+        showToast('已复制');
+      } catch {
+        showToast('复制失败');
+      }
+    });
+
+    document.getElementById('save-qr-btn').addEventListener('click', () => {
+      showToast('已保存到相册');
+    });
+
+    document.getElementById('install-guide-btn').addEventListener('click', () => {
+      showToast('安装教程（待开发）');
+    });
+
+    document.getElementById('invoice-row').addEventListener('click', () => {
+      showToast('申请开票（待开发）');
+    });
+
+    document.getElementById('refund-btn').addEventListener('click', () => {
+      showToast('退款申请（待开发）');
+    });
+  </script>
+</body>
+</html>

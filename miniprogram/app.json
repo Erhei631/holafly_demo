@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/orders/index",
+    "pages/orders/detail",
+    "pages/profile/index",
+    "pages/search/result",
+    "pages/auth/login",
+    "pages/auth/login-sms",
+    "pages/auth/login-verify",
+    "pages/plans/monthly",
+    "pages/order/checkout",
+    "pages/order/success",
+    "pages/guide/install",
+    "pages/support/index",
+    "pages/support/refund",
+    "pages/faq/index"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "backgroundColor": "#ffffff",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#7b7c7e",
+    "selectedColor": "#272729",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/orders/index",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

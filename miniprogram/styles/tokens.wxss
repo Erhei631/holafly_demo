@@ -1,0 +1,201 @@
+/* Holafly Design Tokens — export2.json / style-guide v3 */
+
+page {
+  /* Color Scheme — neutral */
+  --neutral-50: #ffffff;
+  --neutral-100: #f8f8fb;
+  --neutral-200: #e4e6ea;
+  --neutral-300: #ccd0d7;
+  --neutral-400: #7b7c7e;
+  --neutral-500: #56575a;
+  --neutral-600: #56575a;
+  --neutral-700: #414144;
+  --neutral-800: #292b2e;
+  --neutral-900: #272729;
+
+  /* Color Scheme — rose (brand) */
+  --rose-50: #ffefef;
+  --rose-100: #ffe0e0;
+  --rose-200: #ffc4c5;
+  --rose-300: #ff9fa2;
+  --rose-400: #f2747c;
+  --rose-500: #e6485c;
+  --rose-600: #e12b57;
+  --rose-700: #c8094e;
+  --rose-800: #8a2b37;
+  --rose-900: #791433;
+
+  /* Color Scheme — green (conversion / secondary) */
+  --green-50: #ecfff4;
+  --green-100: #d6ffe7;
+  --green-200: #adffd0;
+  --green-300: #7bfcb2;
+  --green-400: #5af39a;
+  --green-500: #48ec86;
+  --green-600: #23c967;
+  --green-700: #179b50;
+  --green-800: #126f3d;
+  --green-900: #0f4d2d;
+
+  /* Color Scheme — blue */
+  --blue-50: #edf9fe;
+  --blue-100: #dcf4ff;
+  --blue-200: #b8e9ff;
+  --blue-300: #85d8ff;
+  --blue-400: #4fc1f5;
+  --blue-500: #1ea7e1;
+  --blue-600: #0d8cc2;
+  --blue-700: #0870a0;
+  --blue-800: #075b82;
+  --blue-900: #0b4967;
+
+  /* Color Scheme — yellow */
+  --yellow-50: #fff8e7;
+  --yellow-100: #ffeac0;
+  --yellow-200: #ffd98a;
+  --yellow-300: #ffc657;
+  --yellow-400: #ffb326;
+  --yellow-500: #f59e0b;
+  --yellow-600: #d97706;
+  --yellow-700: #b45309;
+  --yellow-800: #92400e;
+  --yellow-900: #78350f;
+
+  /* Color Scheme — peach */
+  --peach-50: #fff5ef;
+  --peach-100: #ffe6d8;
+  --peach-200: #ffccb0;
+  --peach-300: #ffb18a;
+  --peach-400: #ff9463;
+  --peach-500: #f9733d;
+  --peach-600: #e65a24;
+  --peach-700: #c9461a;
+  --peach-800: #9f3517;
+  --peach-900: #7a2a15;
+
+  /* Semantic Color — Brand */
+  --color-primary: var(--rose-500);
+  --color-primary-hover: var(--rose-600);
+  --color-primary-pressed: var(--rose-700);
+  --color-secondary: var(--green-500);
+  --color-secondary-hover: var(--green-600);
+  --color-secondary-pressed: var(--green-700);
+
+  /* Semantic Color — Text */
+  --color-text-primary: var(--neutral-900);
+  --color-text-secondary: var(--neutral-700);
+  --color-text-tertiary: var(--neutral-600);
+  --color-text-quaternary: var(--neutral-500);
+  --color-text-on-primary: var(--neutral-50);
+  --color-text-brand: var(--rose-500);
+
+  /* Semantic Color — Background */
+  --color-bg-base: var(--neutral-50);
+  --color-bg-subtle: var(--neutral-100);
+  --color-bg-muted: var(--neutral-100);
+  --color-bg-inverse: var(--neutral-900);
+  --color-bg-mask: rgba(0, 0, 0, 0.6);
+
+  /* Semantic Color — Border */
+  --color-border-base: var(--neutral-300);
+  --color-border-strong: var(--neutral-400);
+  --color-border-focus: var(--blue-500);
+  --color-border-error: var(--rose-500);
+  --color-divider: var(--neutral-200);
+
+  /* Semantic Color — Button */
+  --color-button-primary-bg: var(--rose-500);
+  --color-button-primary-bg-hover: var(--rose-600);
+  --color-button-primary-fg: var(--neutral-50);
+  --color-button-conversion-bg: var(--green-500);
+  --color-button-conversion-bg-hover: var(--green-600);
+  --color-button-conversion-fg: var(--neutral-900);
+
+  /* Legacy aliases (pages still reference these) */
+  --brand-primary: var(--color-primary);
+  --brand-magenta-start: var(--rose-600);
+  --brand-magenta-end: var(--rose-700);
+  --action-primary: var(--color-secondary);
+  --action-primary-hover: var(--color-secondary-hover);
+  --action-primary-pressed: var(--color-secondary-pressed);
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-tertiary: var(--color-text-tertiary);
+  --text-on-action: var(--color-text-on-primary);
+  --text-brand: var(--color-text-brand);
+  --surface-page: var(--color-bg-base);
+  --surface-muted: var(--color-bg-subtle);
+  --surface-baby-blue: var(--blue-50);
+  --surface-brand-yellow: var(--yellow-50);
+  --border-subtle: var(--color-border-base);
+  --border-neutral: var(--neutral-300);
+
+  /* Marketing gradients (palette-based) */
+  --gradient-featured-start: var(--blue-300);
+  --gradient-featured-mid: var(--rose-50);
+  --gradient-featured-end: var(--peach-200);
+  --gradient-plan-light-start: var(--yellow-50);
+  --gradient-plan-light-mid: var(--blue-50);
+  --gradient-plan-light-end: var(--blue-300);
+  --gradient-banner-start: var(--blue-300);
+  --gradient-banner-mid: var(--rose-50);
+  --gradient-banner-end: var(--peach-200);
+
+  /* Hero page background — soft peach → rose → white */
+  --gradient-hero-bg: linear-gradient(
+    180deg,
+    var(--peach-50) 0%,
+    var(--rose-50) 22%,
+    var(--neutral-50) 54%
+  );
+
+  /* Radius — export2 (px × 2 → rpx) */
+  --radius-sm: 16rpx;
+  --radius-md: 20rpx;
+  --radius-lg: 24rpx;
+  --radius-xl: 32rpx;
+  --radius-2xl: 48rpx;
+  --radius-3xl: 64rpx;
+  --radius-full: 9999rpx;
+
+  /* Gap / spacing */
+  --space-1: 8rpx;
+  --space-2: 16rpx;
+  --space-3: 24rpx;
+  --space-4: 32rpx;
+  --space-5: 40rpx;
+  --space-6: 48rpx;
+  --space-8: 64rpx;
+
+  /* Shadow */
+  --shadow-soft-md: 0 8rpx 16rpx rgba(41, 43, 46, 0.12);
+
+  /* Typography — 1px = 2rpx，小程序最大字号为 h3（24px） */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Roboto Mono', monospace;
+  --font-size-info: 20rpx;
+  --font-size-caption: 24rpx;
+  --font-size-note: 28rpx;
+  --font-size-body: 32rpx;
+  --font-size-subtitle-2: 36rpx;
+  --font-size-subtitle-1: 40rpx;
+  --font-size-h3: 48rpx;
+  /* 语义别名（兼容旧 token 名） */
+  --font-size-sm: var(--font-size-note);
+  --font-size-base: var(--font-size-body);
+  --font-size-lg: var(--font-size-subtitle-2);
+  --font-size-xl: var(--font-size-subtitle-1);
+  --font-size-2xl: var(--font-size-h3);
+
+  /* Button height */
+  --button-height-md: 96rpx;
+
+  /* Custom tab bar — content area (不含底部安全区) */
+  --tab-bar-height: 112rpx;
+
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  font-family: var(--font-family-base);
+}

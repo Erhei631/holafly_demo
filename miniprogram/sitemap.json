@@ -1,0 +1,9 @@
+{
+  "desc": "Holafly mini program sitemap",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "*"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 300" fill="none" aria-hidden="true">
+  <defs>
+    <pattern id="wm-dot" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="1.35" fill="#E5A3AB"/>
+    </pattern>
+  </defs>
+  <g opacity="0.55" fill="url(#wm-dot)">
+    <ellipse cx="168" cy="108" rx="78" ry="88"/>
+    <ellipse cx="142" cy="188" rx="42" ry="58"/>
+    <ellipse cx="208" cy="168" rx="28" ry="38"/>
+    <ellipse cx="372" cy="98" rx="52" ry="62"/>
+    <ellipse cx="358" cy="168" rx="48" ry="72"/>
+    <ellipse cx="418" cy="128" rx="32" ry="40"/>
+    <ellipse cx="548" cy="102" rx="88" ry="68"/>
+    <ellipse cx="598" cy="158" rx="52" ry="48"/>
+    <ellipse cx="632" cy="208" rx="34" ry="26"/>
+    <ellipse cx="518" cy="198" rx="38" ry="32"/>
+  </g>
+</svg>

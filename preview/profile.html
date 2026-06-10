@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的 · Holafly</title>
+  <style>
+    :root {
+      --rose-500:#e6485c;
+      --neutral-600:#56575a;
+      --neutral-900:#272729;
+      --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
+      --tab-bar-content:56px;
+      --tab-bar:calc(var(--tab-bar-content) + env(safe-area-inset-bottom, var(--safe-area-bottom)));
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
+    .preview-label{font-size:14px;color:var(--neutral-600);margin-bottom:16px}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:#fff}
+    .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
+    .profile-map{position:absolute;top:0;left:0;width:100%;height:140px;object-fit:cover;pointer-events:none}
+    .profile-scroll{position:absolute;top:47px;left:0;right:0;bottom:var(--tab-bar);overflow-y:auto}
+    .profile-user{display:flex;align-items:center;gap:16px;padding:24px 24px 0;margin-top:20px}
+    .profile-user__avatar{width:68px;height:68px;border-radius:12px;object-fit:cover;flex-shrink:0;display:block}
+    .profile-user__phone{font-size:18px;font-weight:500;line-height:24px;color:var(--neutral-900)}
+    .profile-menu{margin-top:24px}
+    .profile-menu__item{display:flex;align-items:center;justify-content:space-between;min-height:44px;padding:12px 32px;background:#fff;cursor:pointer}
+    .profile-menu__left{display:flex;align-items:center;gap:8px;min-width:0}
+    .profile-menu__icon-wrap{width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .profile-menu__icon{width:16px;height:16px;object-fit:contain;display:block}
+    .profile-menu__label{font-size:15px;line-height:22px;color:var(--neutral-900)}
+    .profile-menu__arrow{width:16px;height:16px;object-fit:contain;flex-shrink:0}
+    .tab-bar{position:absolute;left:0;right:0;bottom:0;z-index:10;display:flex;flex-direction:column;background:rgba(248,248,248,.8);backdrop-filter:blur(30px);box-shadow:0 -2px 12px rgba(0,0,0,.04)}
+    .tab-bar__inner{display:flex;min-height:var(--tab-bar-content);flex-shrink:0}
+    .tab-bar__safe{flex-shrink:0;width:100%;height:env(safe-area-inset-bottom,var(--safe-area-bottom));background:inherit}
+    .tab-bar__item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 0 4px;text-decoration:none;color:var(--neutral-600)}
+    .tab-bar__icon-wrap{width:28px;height:28px;display:flex;align-items:center;justify-content:center}
+    .tab-bar__icon{width:17px;height:19px;object-fit:contain}
+    .tab-bar__text{font-size:10px;color:var(--neutral-600)}
+    .tab-bar__item--active .tab-bar__text{color:var(--rose-500);font-weight:500}
+  </style>
+</head>
+<body>
+  <p class="preview-label">个人中心 · Figma 353:3617</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <img class="profile-map" src="images/profile/map-header.png" alt="" />
+    <div class="profile-scroll">
+      <div class="profile-user" id="profile-user">
+        <img class="profile-user__avatar" src="images/profile/avatar.png?v=3" alt="" />
+        <span class="profile-user__phone" id="profile-phone">138****8888</span>
+      </div>
+      <nav class="profile-menu" id="profile-menu"></nav>
+    </div>
+    <nav class="tab-bar">
+      <div class="tab-bar__inner">
+        <a class="tab-bar__item" href="index.html">
+          <div class="tab-bar__icon-wrap"><img class="tab-bar__icon" src="images/home/tab-home-inactive.svg" alt="" /></div>
+          <span class="tab-bar__text">首页</span>
+        </a>
+        <a class="tab-bar__item" href="orders.html">
+          <div class="tab-bar__icon-wrap"><img class="tab-bar__icon" src="images/home/tab-orders.svg" alt="" /></div>
+          <span class="tab-bar__text">订单</span>
+        </a>
+        <a class="tab-bar__item tab-bar__item--active" href="profile.html">
+          <div class="tab-bar__icon-wrap"><img class="tab-bar__icon" src="images/home/tab-profile-active.svg" alt="" /></div>
+          <span class="tab-bar__text">我的</span>
+        </a>
+      </div>
+      <div class="tab-bar__safe" aria-hidden="true"></div>
+    </nav>
+  </div>
+  <script>
+    const MENU = [
+      { id: 'info', label: '个人信息', icon: 'images/profile/icon-profile.svg', href: 'login.html' },
+      { id: 'orders', label: '订单', icon: 'images/profile/icon-orders.svg', href: 'orders.html' },
+      { id: 'support', label: '联系客服', icon: 'images/profile/icon-support.svg?v=2', href: 'login.html' },
+      { id: 'terms', label: '服务条款', icon: 'images/profile/icon-terms.svg' },
+      { id: 'privacy', label: '隐私政策', icon: 'images/profile/icon-privacy.svg' },
+    ];
+    document.getElementById('profile-menu').innerHTML = MENU.map((item) => `
+      <div class="profile-menu__item" data-href="${item.href || ''}" data-id="${item.id}">
+        <div class="profile-menu__left">
+          <div class="profile-menu__icon-wrap">
+            <img class="profile-menu__icon" src="${item.icon}" alt="" />
+          </div>
+          <span class="profile-menu__label">${item.label}</span>
+        </div>
+        <img class="profile-menu__arrow" src="images/detail/icon-arrow-right.svg" alt="" />
+      </div>
+    `).join('');
+    document.getElementById('profile-menu').addEventListener('click', (e) => {
+      const row = e.target.closest('.profile-menu__item');
+      if (!row) return;
+      const { href, id } = row.dataset;
+      if (href) { location.href = href; return; }
+      if (id === 'terms') { alert('服务条款（待上线）'); return; }
+      if (id === 'privacy') alert('隐私政策（待上线）');
+    });
+    document.getElementById('profile-user').addEventListener('click', () => {
+      location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>

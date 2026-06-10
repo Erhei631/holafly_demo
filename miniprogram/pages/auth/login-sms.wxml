@@ -1,0 +1,52 @@
+<view class="login-page" style="padding-top: {{statusBarHeight}}px; padding-bottom: {{safeBottom}}px;">
+  <view class="login-nav">
+    <view class="login-nav__back" bindtap="onBack" aria-label="返回">
+      <image class="login-nav__back-icon" src="/images/detail/nav-back.svg" mode="aspectFit" />
+    </view>
+    <view class="login-nav__right">
+      <view class="nav-capsule nav-capsule--menu">
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-share.svg" mode="aspectFit" />
+        <image class="nav-capsule__sep" src="/images/detail/nav-divider.svg" mode="aspectFit" />
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-close.svg" mode="aspectFit" />
+      </view>
+    </view>
+  </view>
+
+  <view class="login-body login-body--sms">
+    <view class="login-brand login-brand--sms">
+      <image class="login-brand__logo" src="/images/auth/logo.svg" mode="aspectFit" />
+      <view class="login-brand__text">
+        <text class="login-brand__title">欢迎使用Holafly</text>
+        <text class="login-brand__subtitle">输入手机号，获取短信验证码</text>
+      </view>
+    </view>
+
+    <view class="login-phone">
+      <text class="login-phone__code">+86</text>
+      <view class="login-phone__divider"></view>
+      <input
+        class="login-phone__input"
+        type="number"
+        maxlength="11"
+        placeholder="请输入手机号"
+        placeholder-class="login-phone__placeholder"
+        value="{{phone}}"
+        bindinput="onPhoneInput"
+      />
+    </view>
+
+    <view class="login-actions login-actions--sms">
+      <button class="login-btn login-btn--primary" bindtap="onGetSmsCode">获取短信验证码</button>
+      <view class="login-agree" bindtap="onToggleAgree">
+        <view class="login-agree__check {{agreed ? 'login-agree__check--on' : ''}}">
+          <text wx:if="{{agreed}}" class="login-agree__tick">✓</text>
+        </view>
+        <text class="login-agree__text">
+          我已阅读并同意<text class="login-agree__link">服务协议</text>及<text class="login-agree__link">隐私协议</text>
+        </text>
+      </view>
+    </view>
+
+    <button class="login-btn login-btn--ghost" bindtap="onBack">返回</button>
+  </view>
+</view>

@@ -1,0 +1,65 @@
+<view class="page" style="padding-top: {{statusBarHeight}}px; padding-bottom: {{safeBottom}}px;">
+  <view class="page__bg" aria-hidden="true" />
+
+  <view class="nav">
+    <view class="nav__back" bindtap="onBack">
+      <text class="nav__back-icon">‹</text>
+    </view>
+    <view class="nav__brand">
+      <text class="nav__brand-holafly">Holafly</text>
+      <text class="nav__brand-plans"> Plans</text>
+    </view>
+    <view class="nav__avatar">👤</view>
+  </view>
+
+  <view class="hero">
+    <text class="hero__title">选择套餐</text>
+    <text class="hero__subtitle">畅享全球网络覆盖</text>
+    <text class="hero__tagline">零漫游费，省心无忧</text>
+  </view>
+
+  <swiper
+    class="plan-swiper"
+    current="{{currentIndex}}"
+    bindchange="onSwiperChange"
+    previous-margin="48rpx"
+    next-margin="48rpx"
+    circular="{{false}}"
+  >
+    <swiper-item wx:for="{{plans}}" wx:key="id" class="plan-swiper__item">
+      <view class="plan-card plan-card--{{item.id}}">
+        <view class="plan-card__head plan-card__head--{{item.id}}">
+          <view wx:if="{{item.popular}}" class="plan-card__popular">
+            <text class="plan-card__popular-icon">⚡</text>
+            <text>{{item.popularLabel}}</text>
+          </view>
+          <text class="plan-card__name">{{item.name}}</text>
+          <view class="plan-card__promo">
+            <text class="plan-card__promo-icon">🏷</text>
+            <text>{{item.badge}}</text>
+          </view>
+        </view>
+
+        <view class="plan-card__body">
+          <text class="plan-card__headline">{{item.headline}}</text>
+          <text class="plan-card__services">{{item.services}}</text>
+          <view class="plan-card__features">
+            <view wx:for="{{item.features}}" wx:for-item="feat" wx:key="*this" class="plan-card__feature">
+              <text class="plan-card__check">✓</text>
+              <text class="plan-card__feat-text">{{feat}}</text>
+            </view>
+          </view>
+          <view class="plan-card__price-row">
+            <text class="plan-card__price">{{item.price}}</text>
+            <text class="plan-card__period">/ 月</text>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <view class="footer">
+    <text class="footer__hint">计划长期旅居海外？</text>
+    <button class="footer__cta btn-primary" bindtap="onBuy">{{footerCta}}</button>
+  </view>
+</view>

@@ -1,0 +1,110 @@
+<view class="checkout-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="checkout-nav">
+    <view class="checkout-nav__back" bindtap="onBack" aria-label="返回">
+      <image class="checkout-nav__back-icon" src="/images/detail/nav-back.svg" mode="aspectFit" />
+    </view>
+    <text class="checkout-nav__title">确认订单</text>
+    <view class="checkout-nav__right">
+      <view class="nav-capsule nav-capsule--menu">
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-share.svg" mode="aspectFit" />
+        <image class="nav-capsule__sep" src="/images/detail/nav-divider.svg" mode="aspectFit" />
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-close.svg" mode="aspectFit" />
+      </view>
+    </view>
+  </view>
+
+  <scroll-view
+    class="checkout-scroll"
+    scroll-y
+    enhanced
+    show-scrollbar="{{false}}"
+    style="padding-bottom: calc(160rpx + {{safeBottom}}px);"
+  >
+    <view class="checkout-stack">
+      <view class="checkout-panel">
+        <text class="checkout-panel__title">订单摘要</text>
+        <view class="checkout-summary">
+          <view class="checkout-product">
+            <image class="checkout-product__flag" src="{{productFlag}}" mode="aspectFill" />
+            <text class="checkout-product__name">{{productTitle}}</text>
+          </view>
+          <view class="checkout-row">
+            <view class="checkout-row__left">
+              <image class="checkout-row__icon" src="/images/detail/icon-calendar.svg" mode="aspectFit" />
+              <text class="checkout-row__label">使用天数</text>
+            </view>
+            <view class="checkout-row__right">
+              <text class="checkout-row__value">{{days}}天</text>
+            </view>
+          </view>
+          <view class="checkout-row">
+            <view class="checkout-row__left">
+              <image class="checkout-row__icon" src="/images/detail/icon-esim.svg" mode="aspectFit" />
+              <text class="checkout-row__label">eSIM数量</text>
+            </view>
+            <text class="checkout-row__qty">× {{quantity}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="checkout-panel">
+        <text class="checkout-panel__title">价格明细</text>
+        <view class="checkout-price-list">
+          <view class="checkout-price-row">
+            <text class="checkout-price-row__label">商品总价</text>
+            <text class="checkout-price-row__value">{{originalTotalLabel}}</text>
+          </view>
+          <view class="checkout-price-row checkout-price-row--link" bindtap="onPromoTap">
+            <text class="checkout-price-row__label">折扣码</text>
+            <view class="checkout-price-row__right">
+              <image class="checkout-row__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
+            </view>
+          </view>
+        </view>
+        <view class="checkout-divider"></view>
+        <view class="checkout-price-row checkout-price-row--total">
+          <text class="checkout-price-row__label checkout-price-row__label--strong">合计</text>
+          <text class="checkout-price-row__total">{{totalPriceLabel}}</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="checkout-footer" style="padding-bottom: calc(32rpx + {{safeBottom}}px);">
+    <button class="checkout-footer__pay btn-primary" bindtap="onConfirmPay">{{payLabel}}</button>
+  </view>
+
+  <view
+    class="promo-mask {{showPromoDrawer ? 'promo-mask--show' : ''}}"
+    bindtap="closePromoDrawer"
+    catchtouchmove="noop"
+  >
+    <view class="promo-drawer" catchtap="noop">
+      <view class="promo-drawer__handle-wrap">
+        <view class="promo-drawer__handle" />
+      </view>
+      <view class="promo-drawer__header">
+        <text class="promo-drawer__title">折扣码</text>
+        <view class="promo-drawer__close" bindtap="closePromoDrawer" aria-label="关闭">
+          <image class="promo-drawer__close-icon" src="/images/checkout/promo-close.svg" mode="aspectFit" />
+        </view>
+      </view>
+      <view class="promo-drawer__body">
+        <input
+          class="promo-drawer__input"
+          type="text"
+          placeholder="请输入折扣码"
+          placeholder-class="promo-drawer__input-placeholder"
+          value="{{promoCode}}"
+          bindinput="onPromoInput"
+          confirm-type="done"
+          bindconfirm="onApplyPromo"
+        />
+        <image class="promo-drawer__illus" src="/images/checkout/promo-illustration.png" mode="widthFix" />
+      </view>
+      <view class="promo-drawer__footer">
+        <button class="promo-drawer__apply btn-primary" bindtap="onApplyPromo">立即使用</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,102 @@
+@import './styles/tokens.wxss';
+@import './styles/tab-page.wxss';
+
+page {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 品牌主按钮 — rose / Semantic Button primary */
+.btn-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--button-height-md);
+  padding: 0 var(--space-5);
+  font-family: var(--font-family-base);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(
+    105deg,
+    var(--color-primary-hover) 0%,
+    var(--color-primary-pressed) 97%
+  );
+  color: var(--color-button-primary-fg);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  border: none;
+}
+
+.btn-brand::after {
+  border: none;
+}
+
+.btn-brand--solid {
+  background: var(--color-button-primary-bg);
+}
+
+/* 转化主按钮 — green / Brand secondary */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--button-height-md);
+  padding: 0 var(--space-5);
+  font-family: var(--font-family-base);
+  border-radius: var(--radius-xl);
+  background: var(--color-button-conversion-bg);
+  color: var(--color-button-conversion-fg);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  border: none;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+/* 描边品牌按钮 */
+.btn-outline-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--button-height-md);
+  padding: 0 var(--space-5);
+  font-family: var(--font-family-base);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-base);
+  color: var(--color-primary-hover);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  border: 2rpx solid var(--color-button-primary-bg);
+}
+
+.btn-outline-brand::after {
+  border: none;
+}
+
+.section-title {
+  font-size: var(--font-size-subtitle-2);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.35;
+}
+
+/* 卡片标题：统一 subtitle-2（18px / 36rpx） */
+.section__title,
+.plan-section__label,
+.discount-card__title,
+.device-card__title,
+.plan-card__name,
+.compat-card__title,
+.home-monthly__title,
+.home-monthly__name,
+.region-card__name {
+  font-size: var(--font-size-subtitle-2);
+}
+
+.section-subtitle {
+  margin-top: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.45;
+}

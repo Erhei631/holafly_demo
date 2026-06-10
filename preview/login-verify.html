@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>输入验证码 · Holafly</title>
+  <style>
+    :root {
+      --rose-50:#ffefef; --rose-500:#e6485c;
+      --neutral-50:#fff; --neutral-200:#e4e6ea;
+      --neutral-400:#7b7c7e; --neutral-600:#56575a; --neutral-900:#272729;
+      --blue-600:#0d8cc2;
+      --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
+    .preview-label{font-size:14px;color:var(--neutral-400);margin-bottom:16px}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:linear-gradient(180deg,var(--rose-50) 6.5%,var(--neutral-50) 100%)}
+    .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
+    .login-nav{position:absolute;top:47px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 7px;height:44px}
+    .login-nav__back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0}
+    .login-nav__back img{width:9px;height:16.5px;display:block}
+    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px}
+    .nav-capsule--menu{width:83px;padding:0 10px}
+    .nav-capsule img{display:block}
+    .nav-capsule__icon{width:16px;height:16px}
+    .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
+    .login-body{position:absolute;top:91px;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;padding:30px 26px calc(24px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
+    .login-brand{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%}
+    .login-brand__logo{width:92px;height:92px}
+    .login-brand__text{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+    .login-brand__title{font-size:24px;font-weight:500;line-height:32px}
+    .login-brand__subtitle{font-size:14px;color:var(--neutral-600);line-height:20px}
+    .verify-code{position:relative;width:100%;margin-top:39px;display:flex;gap:8px}
+    .verify-code__box{flex:1;min-width:0;height:52px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid transparent;border-radius:10px;font-size:20px;font-weight:500;color:var(--neutral-600);line-height:28px}
+    .verify-code__box--filled,.verify-code__box--active{border-color:var(--rose-500)}
+    .verify-code__input{position:absolute;inset:0;width:100%;height:100%;opacity:0;color:transparent;caret-color:transparent;border:none;background:transparent}
+    .login-actions{width:100%;max-width:293px;margin-top:34px;display:flex;flex-direction:column;align-items:center;gap:24px}
+    .verify-resend{font-size:14px;color:var(--neutral-400);line-height:20px;text-align:center}
+    .verify-resend--link{color:var(--blue-600);cursor:pointer}
+    .login-btn{width:100%;height:48px;border:none;border-radius:10px;font-size:16px;font-weight:500;cursor:pointer}
+    .login-btn--primary{background:var(--rose-500);color:#fff;box-shadow:0 10px 20px rgba(230,72,92,.35)}
+    .login-btn--primary:disabled{background:rgba(230,72,92,.4);cursor:not-allowed}
+    .login-btn--ghost{margin-top:auto;background:#fff;color:var(--neutral-400);border:1px solid var(--neutral-200)}
+    .login-toast{position:absolute;left:50%;top:54%;z-index:100;transform:translate(-50%,-50%) scale(.96);padding:12px 20px;background:rgba(41,43,46,.88);color:#fff;font-size:14px;line-height:1.43;border-radius:10px;text-align:center;max-width:280px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+    .login-toast.is-show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  </style>
+</head>
+<body>
+  <p class="preview-label">输入验证码 · Figma 344:2797</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <div class="login-nav">
+      <button class="login-nav__back" type="button" id="login-back"><img src="images/detail/nav-back.svg" alt="" /></button>
+      <div class="nav-capsule nav-capsule--menu">
+        <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
+        <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
+        <img class="nav-capsule__icon" src="images/detail/nav-close.svg" alt="" />
+      </div>
+    </div>
+    <div class="login-body">
+      <div class="login-brand">
+        <img class="login-brand__logo" src="images/auth/logo.svg" alt="Holafly" />
+        <div class="login-brand__text">
+          <h1 class="login-brand__title">欢迎使用Holafly</h1>
+          <p class="login-brand__subtitle" id="verify-subtitle">验证码已发送至 +86</p>
+        </div>
+      </div>
+      <div class="verify-code" id="verify-code">
+        <div class="verify-code__box" data-index="0"></div>
+        <div class="verify-code__box" data-index="1"></div>
+        <div class="verify-code__box" data-index="2"></div>
+        <div class="verify-code__box" data-index="3"></div>
+        <div class="verify-code__box" data-index="4"></div>
+        <div class="verify-code__box" data-index="5"></div>
+        <input class="verify-code__input" id="verify-input" type="tel" inputmode="numeric" maxlength="6" autocomplete="one-time-code" />
+      </div>
+      <div class="login-actions">
+        <p class="verify-resend" id="verify-resend">没收到？ 60 秒后重新发送</p>
+        <button class="login-btn login-btn--primary" type="button" id="verify-submit" disabled>立即登录</button>
+      </div>
+      <button class="login-btn login-btn--ghost" type="button" id="login-return">返回</button>
+    </div>
+    <div class="login-toast" id="login-toast" role="status" aria-live="polite"></div>
+  </div>
+  <script>
+    const params=new URLSearchParams(location.search);
+    const phone=params.get('phone')||'';
+    const masked=phone.replace(/(\d{3})\d{4}(\d{4})/,'$1****$2');
+    document.getElementById('verify-subtitle').textContent=`验证码已发送至 +86 ${masked}`;
+    const boxes=[...document.querySelectorAll('.verify-code__box')];
+    const input=document.getElementById('verify-input');
+    const submitBtn=document.getElementById('verify-submit');
+    const resendEl=document.getElementById('verify-resend');
+    let countdown=60;
+    let countdownTimer=null;
+    let toastTimer=null;
+    function showToast(message){
+      const toast=document.getElementById('login-toast');
+      toast.textContent=message;
+      toast.classList.add('is-show');
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>toast.classList.remove('is-show'),2000);
+    }
+    function renderCode(code){
+      boxes.forEach((box,index)=>{
+        box.textContent=code[index]||'';
+        box.classList.toggle('verify-code__box--filled',!!code[index]);
+        box.classList.toggle('verify-code__box--active',index===code.length);
+      });
+      submitBtn.disabled=code.length!==6;
+    }
+    function startCountdown(){
+      clearInterval(countdownTimer);
+      countdown=60;
+      resendEl.className='verify-resend';
+      resendEl.textContent=`没收到？ ${countdown} 秒后重新发送`;
+      countdownTimer=setInterval(()=>{
+        countdown-=1;
+        if(countdown<=0){
+          clearInterval(countdownTimer);
+          resendEl.className='verify-resend verify-resend--link';
+          resendEl.textContent='没收到？ 重新发送';
+          return;
+        }
+        resendEl.textContent=`没收到？ ${countdown} 秒后重新发送`;
+      },1000);
+    }
+    function goCheckout(){
+      const q=new URLSearchParams();
+      ['destination','days','quantity','unitPrice','totalPrice'].forEach(k=>{if(params.get(k))q.set(k,params.get(k));});
+      if(q.toString()) location.href=`checkout.html?${q}`;
+      else location.href='login.html';
+    }
+    document.getElementById('verify-code').addEventListener('click',()=>input.focus());
+    input.addEventListener('input',()=>{
+      input.value=input.value.replace(/\D/g,'').slice(0,6);
+      renderCode(input.value);
+    });
+    resendEl.addEventListener('click',()=>{
+      if(!resendEl.classList.contains('verify-resend--link')) return;
+      showToast('验证码已重新发送');
+      startCountdown();
+    });
+    submitBtn.addEventListener('click',()=>{
+      if(input.value.length!==6) return;
+      showToast('登录成功');
+      setTimeout(goCheckout,800);
+    });
+    document.getElementById('login-back').addEventListener('click',()=>history.back());
+    document.getElementById('login-return').addEventListener('click',()=>history.back());
+    renderCode('');
+    startCountdown();
+    input.focus();
+  </script>
+</body>
+</html>

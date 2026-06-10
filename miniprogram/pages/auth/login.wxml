@@ -1,0 +1,46 @@
+<view class="login-page" style="padding-top: {{statusBarHeight}}px; padding-bottom: {{safeBottom}}px;">
+  <view class="login-nav">
+    <view class="login-nav__back" bindtap="onBack" aria-label="返回">
+      <image class="login-nav__back-icon" src="/images/detail/nav-back.svg" mode="aspectFit" />
+    </view>
+    <view class="login-nav__right">
+      <view class="nav-capsule nav-capsule--menu">
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-share.svg" mode="aspectFit" />
+        <image class="nav-capsule__sep" src="/images/detail/nav-divider.svg" mode="aspectFit" />
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-close.svg" mode="aspectFit" />
+      </view>
+    </view>
+  </view>
+
+  <view class="login-body">
+    <view class="login-brand">
+      <image class="login-brand__logo" src="/images/auth/logo.svg" mode="aspectFit" />
+      <text class="login-brand__title">欢迎使用Holafly</text>
+    </view>
+
+    <view class="login-actions">
+      <button
+        wx:if="{{agreed}}"
+        class="login-btn login-btn--primary"
+        open-type="getPhoneNumber"
+        bindgetphonenumber="onGetPhoneNumber"
+      >手机号快速验证</button>
+      <button
+        wx:else
+        class="login-btn login-btn--primary"
+        bindtap="onRequireAgree"
+      >手机号快速验证</button>
+      <text class="login-link" bindtap="onSmsLogin">短信验证码登录</text>
+      <view class="login-agree" bindtap="onToggleAgree">
+        <view class="login-agree__check {{agreed ? 'login-agree__check--on' : ''}}">
+          <text wx:if="{{agreed}}" class="login-agree__tick">✓</text>
+        </view>
+        <text class="login-agree__text">
+          我已阅读并同意<text class="login-agree__link">服务协议</text>及<text class="login-agree__link">隐私协议</text>
+        </text>
+      </view>
+    </view>
+
+    <button class="login-btn login-btn--ghost" bindtap="onSkipLogin">暂不登录</button>
+  </view>
+</view>

@@ -1,0 +1,49 @@
+@import '../../styles/subpage.wxss';
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-base);
+}
+
+.support-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-bg-subtle);
+  border-radius: var(--radius-xl);
+  border: 2rpx solid var(--color-border-base);
+}
+
+.support-card__icon {
+  font-size: 44rpx;
+  line-height: 1;
+}
+
+.support-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.support-card__title {
+  display: block;
+  font-size: var(--font-size-subtitle-2);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.support-card__desc {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--font-size-body);
+  color: var(--color-text-secondary);
+  line-height: 1.45;
+}
+
+.support-card__arrow {
+  font-size: var(--font-size-subtitle-1);
+  color: var(--color-text-tertiary);
+}

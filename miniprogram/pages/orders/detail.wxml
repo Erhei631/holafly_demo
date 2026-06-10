@@ -1,0 +1,130 @@
+<view class="detail-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="detail-nav">
+    <view class="detail-nav__back" bindtap="onBack" aria-label="返回">
+      <image class="detail-nav__back-icon" src="/images/detail/nav-back.svg" mode="aspectFit" />
+    </view>
+    <text class="detail-nav__title">订单详情</text>
+    <view class="detail-nav__right">
+      <view class="nav-capsule nav-capsule--support" bindtap="onSupportTap" aria-label="客服">
+        <image class="nav-capsule__icon" src="/images/detail/nav-support.svg" mode="aspectFit" />
+      </view>
+      <view class="nav-capsule nav-capsule--menu">
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-share.svg" mode="aspectFit" />
+        <image class="nav-capsule__sep" src="/images/detail/nav-divider.svg" mode="aspectFit" />
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-close.svg" mode="aspectFit" />
+      </view>
+    </view>
+  </view>
+
+  <scroll-view
+    class="detail-scroll"
+    scroll-y
+    enhanced
+    show-scrollbar="{{false}}"
+    style="padding-bottom: calc(40rpx + {{safeBottom}}px);"
+  >
+    <view class="detail-tip">
+      <image class="detail-tip__icon" src="/images/orders/icon-wifi-tip.svg" mode="aspectFit" />
+      <text class="detail-tip__text">降落后，请连接机场 Wi-Fi 进行安装激活。</text>
+    </view>
+
+    <view class="detail-stack">
+      <view class="detail-order-card">
+        <view class="detail-order-card__head">
+          <text class="detail-order-card__no">{{order.orderNo}}</text>
+          <text wx:if="{{!showQr}}" class="detail-order-card__badge detail-order-card__badge--{{badgeTone}}">{{badgeLabel}}</text>
+        </view>
+        <view class="detail-order-card__body">
+          <view class="detail-order-card__left">
+            <image class="detail-order-card__flag" src="{{order.flag}}" mode="aspectFill" />
+            <text class="detail-order-card__name">{{planLabel}}</text>
+          </view>
+          <view class="detail-order-card__price-wrap">
+            <text class="detail-order-card__price">{{order.totalPriceLabel}}</text>
+            <text class="detail-order-card__qty">共 {{order.quantity}} 张</text>
+          </view>
+        </view>
+
+        <view class="detail-qr-panel" wx:if="{{showQr}}">
+          <view class="detail-qr-panel__content">
+            <view class="detail-qr-panel__frame">
+              <image
+                class="detail-qr-panel__image {{esimQrUsed ? 'detail-qr-panel__image--used' : ''}}"
+                src="/images/orders/esim-qr.png"
+                mode="aspectFill"
+                show-menu-by-longpress
+              />
+            </view>
+            <text class="detail-qr-panel__hint">一张 eSIM 仅限一台设备安装</text>
+            <text class="detail-qr-panel__badge detail-order-card__badge--{{esimBadgeTone}}">{{esimBadgeLabel}}</text>
+          </view>
+          <view class="detail-qr-panel__pager" wx:if="{{esimTotal > 1}}">
+            <button
+              class="detail-qr-panel__pager-btn detail-qr-panel__pager-btn--muted"
+              disabled="{{esimIndex <= 1}}"
+              bindtap="onPrevEsim"
+              aria-label="上一张"
+            >
+              <image class="detail-qr-panel__pager-icon" src="/images/orders/icon-qr-prev.svg" mode="aspectFit" />
+            </button>
+            <view class="detail-qr-panel__pager-count">
+              <text class="detail-qr-panel__pager-current">{{esimIndex}}</text>
+              <text class="detail-qr-panel__pager-total">/{{esimTotal}}</text>
+            </view>
+            <button
+              class="detail-qr-panel__pager-btn"
+              disabled="{{esimIndex >= esimTotal}}"
+              bindtap="onNextEsim"
+              aria-label="下一张"
+            >
+              <image class="detail-qr-panel__pager-icon" src="/images/orders/icon-qr-next.svg" mode="aspectFit" />
+            </button>
+          </view>
+          <view class="detail-qr-panel__divider" />
+          <view class="detail-qr-panel__actions">
+            <button class="detail-qr-panel__btn detail-qr-panel__btn--ghost" bindtap="onSaveQr">保存到相册</button>
+            <button class="detail-qr-panel__btn detail-qr-panel__btn--primary" bindtap="onInstallGuide">查看安装教程</button>
+          </view>
+        </view>
+      </view>
+
+      <view class="detail-info-panel">
+        <text class="detail-info-panel__title">订单信息</text>
+        <view class="detail-info-row">
+          <text class="detail-info-row__label">实付款</text>
+          <text class="detail-info-row__value detail-info-row__value--strong">{{order.totalPriceLabel}}</text>
+        </view>
+        <view class="detail-info-row">
+          <text class="detail-info-row__label">订单号</text>
+          <view class="detail-info-row__right">
+            <text class="detail-info-row__value">{{order.orderNo}}</text>
+            <view class="detail-info-row__copy" bindtap="onCopyOrderNo" aria-label="复制订单号">
+              <image class="detail-info-row__copy-icon" src="/images/orders/icon-copy.svg" mode="aspectFit" />
+            </view>
+          </view>
+        </view>
+        <view class="detail-info-row">
+          <text class="detail-info-row__label">下单时间</text>
+          <text class="detail-info-row__value">{{order.createdAt}}</text>
+        </view>
+        <view class="detail-info-row">
+          <text class="detail-info-row__label">支付时间</text>
+          <text class="detail-info-row__value">{{order.createdAt}}</text>
+        </view>
+        <view class="detail-info-row">
+          <text class="detail-info-row__label">支付方式</text>
+          <text class="detail-info-row__value">微信支付</text>
+        </view>
+        <view class="detail-info-row detail-info-row--link" bindtap="onInvoice">
+          <text class="detail-info-row__label">申请开票</text>
+          <image class="detail-info-row__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
+        </view>
+      </view>
+
+      <view class="detail-refund" bindtap="onRefund">
+        <text class="detail-refund__prefix">未激活？</text>
+        <text class="detail-refund__link">申请退款</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

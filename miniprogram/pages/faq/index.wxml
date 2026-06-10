@@ -1,0 +1,23 @@
+<view class="page" style="padding-top: {{statusBarHeight}}px; padding-bottom: {{safeBottom}}px;">
+  <view class="subpage-nav">
+    <view class="subpage-nav__back" bindtap="onBack">
+      <text class="subpage-nav__back-icon">‹</text>
+    </view>
+    <text class="subpage-nav__title">常见问题</text>
+    <view class="subpage-nav__spacer" />
+  </view>
+
+  <scroll-view class="subpage-body" scroll-y enhanced show-scrollbar="{{false}}">
+    <view
+      wx:for="{{items}}"
+      wx:key="id"
+      class="faq-item {{expandedId === item.id ? 'faq-item--open' : ''}}"
+    >
+      <view class="faq-item__head" data-id="{{item.id}}" bindtap="onToggle">
+        <text class="faq-item__q">{{item.q}}</text>
+        <text class="faq-item__icon">{{expandedId === item.id ? '⌃' : '⌄'}}</text>
+      </view>
+      <text wx:if="{{expandedId === item.id}}" class="faq-item__a">{{item.a}}</text>
+    </view>
+  </scroll-view>
+</view>

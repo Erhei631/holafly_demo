@@ -1,0 +1,102 @@
+<view class="success-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="success-nav">
+    <view class="success-nav__back" bindtap="onBack" aria-label="返回">
+      <image class="success-nav__back-icon" src="/images/detail/nav-back.svg" mode="aspectFit" />
+    </view>
+    <text class="success-nav__title">支付成功</text>
+    <view class="success-nav__right">
+      <view class="nav-capsule nav-capsule--support" bindtap="onSupportTap" aria-label="客服">
+        <image class="nav-capsule__icon" src="/images/detail/nav-support.svg" mode="aspectFit" />
+      </view>
+      <view class="nav-capsule nav-capsule--menu">
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-share.svg" mode="aspectFit" />
+        <image class="nav-capsule__sep" src="/images/detail/nav-divider.svg" mode="aspectFit" />
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-close.svg" mode="aspectFit" />
+      </view>
+    </view>
+  </view>
+
+  <scroll-view
+    class="success-scroll"
+    scroll-y
+    enhanced
+    show-scrollbar="{{false}}"
+    style="padding-bottom: calc(40rpx + {{safeBottom}}px);"
+  >
+    <view class="success-hero">
+      <image class="success-hero__icon" src="/images/success/icon-success.svg" mode="aspectFit" />
+      <text class="success-hero__title">{{successTitle}}</text>
+    </view>
+
+    <view class="success-stack">
+      <view class="success-esim-card">
+        <view class="success-esim-card__inner">
+          <block wx:if="{{!esimReady}}">
+            <view class="success-esim-top">
+              <view class="success-esim-head">
+                <text class="success-esim-head__status">正在为您准备 eSIM</text>
+                <text class="success-esim-head__plan">{{planLabel}}</text>
+              </view>
+              <view class="success-esim-qr" bindtap="onQrTap">
+                <image class="success-esim-qr__spinner" src="/images/success/esim-spinner.svg" mode="aspectFit" />
+              </view>
+            </view>
+            <view class="success-notice">
+              <text class="success-notice__text">eSIM 正在向运营商申请开通，通常需要 1–3 分钟。准备就绪后会通过微信通知您，无需停留在本页。</text>
+            </view>
+            <view class="success-divider"></view>
+            <button class="success-notify-btn" bindtap="onEnableNotify">
+              <image class="success-notify-btn__icon" src="/images/success/icon-wechat-notify.svg" mode="aspectFit" />
+              <text>开启微信通知</text>
+            </button>
+          </block>
+
+          <block wx:else>
+            <view class="success-esim-top">
+              <view class="success-esim-head">
+                <text class="success-esim-head__status success-esim-head__status--ready">您的eSIM已就绪</text>
+                <text class="success-esim-head__plan">{{planLabel}}</text>
+              </view>
+              <view class="success-esim-qr success-esim-qr--ready">
+                <image class="success-esim-qr__image" src="/images/success/esim-qr.png" mode="aspectFill" show-menu-by-longpress />
+              </view>
+            </view>
+            <view class="success-divider"></view>
+            <view class="success-esim-actions">
+              <button class="success-esim-actions__btn success-esim-actions__btn--ghost" bindtap="onSaveQr">保存到相册</button>
+              <button class="success-esim-actions__btn success-esim-actions__btn--primary" bindtap="onInstallGuide">查看安装教程</button>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <view class="success-reward-card">
+        <view class="success-reward-head">
+          <view class="success-reward-head__icon-wrap">
+            <image class="success-reward-head__icon" src="/images/success/icon-holacoin.png" mode="aspectFill" />
+          </view>
+          <text class="success-reward-head__title">恭喜您获得50HolaCoin</text>
+        </view>
+        <view class="success-reward-body">
+          <text class="success-reward-body__text">每一笔Holafly消费都可以获得HolaCoin，下载</text>
+          <text class="success-reward-body__brand">Holafly APP</text>
+          <text class="success-reward-body__text">兑换以下权益：</text>
+          <view class="success-reward-grid">
+            <view class="success-reward-item">
+              <image class="success-reward-item__icon" src="/images/success/benefit-esim.svg" mode="aspectFit" />
+              <text class="success-reward-item__label">免费eSIM</text>
+            </view>
+            <view class="success-reward-item">
+              <image class="success-reward-item__icon" src="/images/success/benefit-discount.svg" mode="aspectFit" />
+              <text class="success-reward-item__label">折扣优惠</text>
+            </view>
+            <view class="success-reward-item">
+              <image class="success-reward-item__icon" src="/images/success/benefit-gift.svg" mode="aspectFit" />
+              <text class="success-reward-item__label">更多好礼</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

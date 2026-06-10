@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>确认订单 · Holafly</title>
+  <style>
+    :root {
+      --rose-500:#e6485c;
+      --green-500:#48ec86;
+      --neutral-50:#fff; --neutral-100:#f8f8fb; --neutral-200:#e4e6ea;
+      --neutral-400:#7b7c7e; --neutral-600:#56575a; --neutral-900:#272729;
+      --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
+    .preview-label{font-size:14px;color:var(--neutral-400);margin-bottom:16px}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:#fff}
+    .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
+    .checkout-nav{position:absolute;top:47px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 7px;height:44px;background:var(--neutral-50)}
+    .checkout-nav__back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0;flex-shrink:0}
+    .checkout-nav__back img{width:9px;height:16.5px;display:block}
+    .checkout-nav__title{flex:1;text-align:center;font-size:16px;font-weight:500;line-height:24px}
+    .checkout-nav__right{width:83px;display:flex;justify-content:flex-end;flex-shrink:0}
+    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px}
+    .nav-capsule--menu{width:83px;padding:0 10px}
+    .nav-capsule img{display:block}
+    .nav-capsule__icon{width:14px;height:14px}
+    .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
+    .checkout-scroll{position:absolute;top:91px;left:0;right:0;bottom:96px;overflow-y:auto;padding:10px 20px 20px}
+    .checkout-stack{display:flex;flex-direction:column;gap:16px}
+    .checkout-panel{padding:16px;background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
+    .checkout-panel__title{display:block;font-size:16px;font-weight:500;line-height:24px}
+    .checkout-summary{margin-top:10px;padding:12px 16px;background:var(--neutral-100);border-radius:10px;display:flex;flex-direction:column;gap:12px}
+    .checkout-product{display:flex;align-items:center;gap:6px;padding:2px 0}
+    .checkout-product__flag{width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .checkout-product__name{font-size:16px;font-weight:500;line-height:24px}
+    .checkout-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .checkout-row__left{display:flex;align-items:center;gap:8px}
+    .checkout-row__icon{width:20px;height:20px;flex-shrink:0}
+    .checkout-row__label{font-size:15px;line-height:22px}
+    .checkout-row__right{display:flex;align-items:center;gap:8px}
+    .checkout-row__value{font-size:15px;font-weight:500;line-height:22px}
+    .checkout-row__arrow{width:16px;height:16px;flex-shrink:0}
+    .checkout-row__qty{font-size:15px;font-weight:500;line-height:22px}
+    .checkout-price-list{margin-top:16px;display:flex;flex-direction:column;gap:12px}
+    .checkout-price-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .checkout-price-row__label{font-size:15px;color:var(--neutral-600);line-height:22px}
+    .checkout-price-row__label--strong{color:var(--neutral-900)}
+    .checkout-price-row__value{font-size:16px;font-weight:500;line-height:24px}
+    .checkout-price-row__value--discount{color:var(--rose-500)}
+    .checkout-price-row__right{display:flex;align-items:center;gap:8px}
+    .checkout-price-row__placeholder{font-size:14px;color:var(--neutral-400)}
+    .checkout-price-row__total{font-size:20px;font-weight:500;line-height:28px}
+    .checkout-divider{height:1px;background:var(--neutral-200);margin:16px 0 12px}
+    .checkout-footer{position:absolute;left:0;right:0;bottom:0;z-index:30;padding:16px 20px calc(16px + env(safe-area-inset-bottom,var(--safe-area-bottom)));background:rgba(248,248,248,.8);backdrop-filter:blur(30px);box-shadow:0 -2px 12px rgba(0,0,0,.04)}
+    .checkout-footer__pay{width:100%;height:48px;border:none;border-radius:10px;background:var(--green-500);color:#272729;font-size:16px;font-weight:500;cursor:pointer;box-shadow:0 10px 20px rgba(57,224,57,.35)}
+    .checkout-toast{position:absolute;left:50%;top:54%;z-index:100;transform:translate(-50%,-50%) scale(.96);padding:12px 20px;background:rgba(41,43,46,.88);color:#fff;font-size:14px;line-height:1.43;border-radius:10px;text-align:center;max-width:280px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+    .checkout-toast.is-show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+    .wxpay-mask{position:absolute;inset:0;z-index:200;display:none;align-items:flex-end;background:rgba(0,0,0,.55)}
+    .wxpay-mask.is-open{display:flex}
+    .wxpay-sheet{width:100%;padding:20px 20px calc(20px + env(safe-area-inset-bottom,var(--safe-area-bottom)));background:#fff;border-radius:16px 16px 0 0;transform:translateY(100%);transition:transform .28s ease}
+    .wxpay-mask.is-open .wxpay-sheet{transform:translateY(0)}
+    .wxpay-sheet__header{display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:20px}
+    .wxpay-sheet__close{position:absolute;left:0;top:50%;transform:translateY(-50%);width:32px;height:32px;border:none;background:transparent;font-size:24px;color:var(--neutral-400);cursor:pointer;line-height:1}
+    .wxpay-sheet__title{font-size:16px;font-weight:500}
+    .wxpay-sheet__merchant{text-align:center;font-size:14px;color:var(--neutral-600);margin-bottom:8px}
+    .wxpay-sheet__amount{text-align:center;font-size:40px;font-weight:600;line-height:1.2;margin-bottom:8px}
+    .wxpay-sheet__desc{text-align:center;font-size:14px;color:var(--neutral-400);margin-bottom:24px}
+    .wxpay-sheet__method{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--neutral-100);border-radius:10px;margin-bottom:24px}
+    .wxpay-sheet__method-icon{width:28px;height:28px;border-radius:6px;background:#07c160;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0}
+    .wxpay-sheet__method-check{margin-left:auto;color:#07c160;font-size:18px;font-weight:700}
+    .wxpay-sheet__confirm{width:100%;height:48px;border:none;border-radius:10px;background:#07c160;color:#fff;font-size:16px;font-weight:500;cursor:pointer}
+    .wxpay-sheet__confirm:disabled{opacity:.6;cursor:wait}
+    .wxpay-sheet__cancel{display:block;width:100%;margin-top:12px;border:none;background:transparent;color:var(--neutral-400);font-size:14px;cursor:pointer;padding:8px}
+    .promo-mask{position:absolute;inset:0;z-index:150;display:none;align-items:flex-end;background:rgba(0,0,0,.4)}
+    .promo-mask.is-open{display:flex}
+    .promo-drawer{width:100%;display:flex;flex-direction:column;background:#fff;border-radius:24px 24px 0 0;padding:12px 0 24px;transform:translateY(100%);transition:transform .28s cubic-bezier(.32,.72,0,1);max-height:72%}
+    .promo-mask.is-open .promo-drawer{transform:translateY(0)}
+    .promo-drawer__handle-wrap{display:flex;justify-content:center;padding:4px 0 8px}
+    .promo-drawer__handle{width:36px;height:4px;border-radius:999px;background:var(--neutral-200)}
+    .promo-drawer__header{display:flex;align-items:center;justify-content:space-between;min-height:52px;padding:8px 20px}
+    .promo-drawer__title{flex:1;font-size:18px;font-weight:500;line-height:24px}
+    .promo-drawer__close{width:28px;height:28px;border:none;background:transparent;padding:0;cursor:pointer;flex-shrink:0}
+    .promo-drawer__close img{width:28px;height:28px;display:block}
+    .promo-drawer__body{flex:1;overflow:hidden;padding:0 20px}
+    .promo-drawer__input{width:100%;height:44px;border:none;border-radius:10px;background:var(--neutral-100);padding:0 16px;font-size:15px;line-height:22px;color:var(--neutral-900);outline:none}
+    .promo-drawer__input::placeholder{color:var(--neutral-400)}
+    .promo-drawer__illus{display:block;width:min(280px,72vw);height:auto;margin:16px auto 0;object-fit:contain}
+    .promo-drawer__footer{padding:16px 20px 0;flex-shrink:0}
+    .promo-drawer__apply{width:100%;height:48px;border:none;border-radius:10px;background:var(--green-500);color:var(--neutral-900);font-size:16px;font-weight:500;cursor:pointer;box-shadow:0 10px 20px rgba(57,224,57,.35)}
+  </style>
+</head>
+<body>
+  <p class="preview-label">确认订单 · Figma 164:1875</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <div class="checkout-nav">
+      <button class="checkout-nav__back" type="button" id="checkout-back"><img src="images/detail/nav-back.svg" alt="" /></button>
+      <h1 class="checkout-nav__title">确认订单</h1>
+      <div class="checkout-nav__right">
+        <div class="nav-capsule nav-capsule--menu">
+          <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
+          <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
+          <img class="nav-capsule__icon" src="images/detail/nav-close.svg" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="checkout-scroll">
+      <div class="checkout-stack">
+        <section class="checkout-panel">
+          <h2 class="checkout-panel__title">订单摘要</h2>
+          <div class="checkout-summary">
+            <div class="checkout-product">
+              <img class="checkout-product__flag" src="images/detail/flag-jp.png" alt="" />
+              <span class="checkout-product__name">日本eSIM</span>
+            </div>
+            <div class="checkout-row">
+              <div class="checkout-row__left">
+                <img class="checkout-row__icon" src="images/detail/icon-calendar.svg" alt="" />
+                <span class="checkout-row__label">使用天数</span>
+              </div>
+              <div class="checkout-row__right">
+                <span class="checkout-row__value" id="days-value">7天</span>
+              </div>
+            </div>
+            <div class="checkout-row">
+              <div class="checkout-row__left">
+                <img class="checkout-row__icon" src="images/detail/icon-esim.svg" alt="" />
+                <span class="checkout-row__label">eSIM数量</span>
+              </div>
+              <span class="checkout-row__qty" id="qty-value">× 1</span>
+            </div>
+          </div>
+        </section>
+        <section class="checkout-panel">
+          <h2 class="checkout-panel__title">价格明细</h2>
+          <div class="checkout-price-list">
+            <div class="checkout-price-row">
+              <span class="checkout-price-row__label">商品总价</span>
+              <span class="checkout-price-row__value" id="original-total">¥105</span>
+            </div>
+            <div class="checkout-price-row" id="promo-row" style="cursor:pointer">
+              <span class="checkout-price-row__label">折扣码</span>
+              <div class="checkout-price-row__right">
+                <img class="checkout-row__arrow" src="images/detail/icon-arrow-right.svg" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="checkout-divider"></div>
+          <div class="checkout-price-row">
+            <span class="checkout-price-row__label checkout-price-row__label--strong">合计</span>
+            <span class="checkout-price-row__total" id="final-total">¥63</span>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="checkout-footer">
+      <button class="checkout-footer__pay" type="button" id="checkout-pay">立即支付 ¥63</button>
+    </div>
+    <div class="checkout-toast" id="checkout-toast" role="status" aria-live="polite"></div>
+    <div class="promo-mask" id="promo-mask" aria-hidden="true">
+      <div class="promo-drawer" role="dialog" aria-labelledby="promo-drawer-title">
+        <div class="promo-drawer__handle-wrap"><div class="promo-drawer__handle"></div></div>
+        <div class="promo-drawer__header">
+          <h2 class="promo-drawer__title" id="promo-drawer-title">折扣码</h2>
+          <button class="promo-drawer__close" type="button" id="promo-close" aria-label="关闭">
+            <img src="images/checkout/promo-close.svg" alt="" />
+          </button>
+        </div>
+        <div class="promo-drawer__body">
+          <input class="promo-drawer__input" id="promo-input" type="text" placeholder="请输入折扣码" autocomplete="off" />
+          <img class="promo-drawer__illus" src="images/checkout/promo-illustration.png" alt="" />
+        </div>
+        <div class="promo-drawer__footer">
+          <button class="promo-drawer__apply" type="button" id="promo-apply">立即使用</button>
+        </div>
+      </div>
+    </div>
+    <div class="wxpay-mask" id="wxpay-mask" aria-hidden="true">
+      <div class="wxpay-sheet" role="dialog" aria-labelledby="wxpay-title">
+        <div class="wxpay-sheet__header">
+          <button class="wxpay-sheet__close" type="button" id="wxpay-close" aria-label="关闭">×</button>
+          <span class="wxpay-sheet__title" id="wxpay-title">微信支付</span>
+        </div>
+        <p class="wxpay-sheet__merchant">Holafly</p>
+        <p class="wxpay-sheet__amount" id="wxpay-amount">¥63.00</p>
+        <p class="wxpay-sheet__desc" id="wxpay-desc">日本eSIM · 7天 × 1</p>
+        <div class="wxpay-sheet__method">
+          <span class="wxpay-sheet__method-icon">微</span>
+          <span>微信支付</span>
+          <span class="wxpay-sheet__method-check">✓</span>
+        </div>
+        <button class="wxpay-sheet__confirm" type="button" id="wxpay-confirm">确认支付</button>
+        <button class="wxpay-sheet__cancel" type="button" id="wxpay-cancel">取消</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const PRICES={1:15,3:35,5:48,7:63,10:85,15:120};
+    const ORIGINAL_DAILY=15;
+    const MAX_QTY=9;
+    const params=new URLSearchParams(location.search);
+    let days=Math.max(1,Number(params.get('days'))||7);
+    let quantity=Math.max(1,Math.min(MAX_QTY,Number(params.get('quantity'))||1));
+    let toastTimer=null;
+    function formatYuan(n){return`¥${n}`;}
+    function unitTotal(d){return PRICES[d]||Math.round((PRICES[7]/7)*d);}
+    function syncPricing(){
+      const total=unitTotal(days)*quantity;
+      const original=ORIGINAL_DAILY*days*quantity;
+      document.getElementById('days-value').textContent=`${days}天`;
+      document.getElementById('qty-value').textContent=`× ${quantity}`;
+      document.getElementById('original-total').textContent=formatYuan(original);
+      document.getElementById('final-total').textContent=formatYuan(total);
+      document.getElementById('checkout-pay').textContent=`立即支付 ${formatYuan(total)}`;
+    }
+    function showToast(message){
+      const toast=document.getElementById('checkout-toast');
+      toast.textContent=message;
+      toast.classList.add('is-show');
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>toast.classList.remove('is-show'),2000);
+    }
+    function goDetail(){
+      const q=new URLSearchParams();
+      q.set('destination',params.get('destination')||'日本');
+      q.set('days',String(days));
+      q.set('quantity',String(quantity));
+      location.href=`detail.html?${q}`;
+    }
+    document.getElementById('checkout-back').addEventListener('click',goDetail);
+    const promoMask=document.getElementById('promo-mask');
+    const promoInput=document.getElementById('promo-input');
+    function openPromoDrawer(){
+      promoMask.classList.add('is-open');
+      promoMask.setAttribute('aria-hidden','false');
+      setTimeout(()=>promoInput.focus(),280);
+    }
+    function closePromoDrawer(){
+      promoMask.classList.remove('is-open');
+      promoMask.setAttribute('aria-hidden','true');
+    }
+    document.getElementById('promo-row').addEventListener('click',openPromoDrawer);
+    document.getElementById('promo-close').addEventListener('click',closePromoDrawer);
+    promoMask.addEventListener('click',(e)=>{if(e.target===promoMask) closePromoDrawer();});
+    document.getElementById('promo-apply').addEventListener('click',()=>{
+      const code=promoInput.value.trim();
+      if(!code){showToast('请输入折扣码');return;}
+      closePromoDrawer();
+      showToast('折扣码已提交');
+    });
+    const wxpayMask=document.getElementById('wxpay-mask');
+    const wxpayConfirm=document.getElementById('wxpay-confirm');
+    function getTotal(){return unitTotal(days)*quantity;}
+    function formatPayAmount(n){return`¥${n.toFixed(2)}`;}
+    function openWxPay(){
+      const total=getTotal();
+      document.getElementById('wxpay-amount').textContent=formatPayAmount(total);
+      document.getElementById('wxpay-desc').textContent=`日本eSIM · ${days}天 × ${quantity}`;
+      wxpayMask.classList.add('is-open');
+      wxpayMask.setAttribute('aria-hidden','false');
+    }
+    function closeWxPay(){
+      wxpayMask.classList.remove('is-open');
+      wxpayMask.setAttribute('aria-hidden','true');
+      wxpayConfirm.disabled=false;
+      wxpayConfirm.textContent='确认支付';
+    }
+    function onPaySuccess(){
+      closeWxPay();
+      const total=getTotal();
+      const q=new URLSearchParams();
+      q.set('days',String(days));
+      q.set('quantity',String(quantity));
+      q.set('totalPrice',String(total));
+      q.set('totalPriceLabel',formatYuan(total));
+      location.href=`success.html?${q}`;
+    }
+    document.getElementById('checkout-pay').addEventListener('click',openWxPay);
+    document.getElementById('wxpay-close').addEventListener('click',closeWxPay);
+    document.getElementById('wxpay-cancel').addEventListener('click',closeWxPay);
+    wxpayMask.addEventListener('click',(e)=>{if(e.target===wxpayMask) closeWxPay();});
+    wxpayConfirm.addEventListener('click',()=>{
+      wxpayConfirm.disabled=true;
+      wxpayConfirm.textContent='支付处理中...';
+      setTimeout(onPaySuccess,1200);
+    });
+    syncPricing();
+  </script>
+</body>
+</html>

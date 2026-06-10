@@ -1,0 +1,75 @@
+<view class="page page--tab" style="padding-top: {{statusBarHeight}}px;">
+  <view class="orders-page">
+    <text class="orders-page__title">我的订单</text>
+
+    <view class="orders-tabs">
+      <view
+        wx:for="{{tabs}}"
+        wx:key="id"
+        class="orders-tabs__item {{activeTab === item.id ? 'orders-tabs__item--active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="onTabChange"
+      >
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+
+    <scroll-view class="orders-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+      <block wx:if="{{isEmpty}}">
+        <view class="orders-empty">
+          <text class="orders-empty__icon">📦</text>
+          <text class="orders-empty__title">暂无订单</text>
+          <text class="orders-empty__hint">购买 eSIM 后，订单与安装信息将显示在这里</text>
+          <button class="orders-empty__cta btn-primary" bindtap="onGoHome">去选购套餐</button>
+        </view>
+      </block>
+
+      <block wx:else>
+        <view
+          wx:for="{{orders}}"
+          wx:key="id"
+          class="order-card"
+          data-id="{{item.id}}"
+          bindtap="onOrderDetail"
+        >
+          <view class="order-card__head">
+            <view class="order-card__head-left">
+              <text class="order-card__dest">{{item.destination}}</text>
+              <text class="order-card__meta">{{item.dateRange}} · {{item.days}} 天</text>
+            </view>
+            <text class="order-card__badge order-card__badge--{{item.statusTone}}">{{item.statusLabel}}</text>
+          </view>
+
+          <view class="order-card__esim">
+            <text class="order-card__esim-label">eSIM 信息</text>
+            <text class="order-card__esim-plan">{{item.esim.planLabel}}</text>
+            <text class="order-card__esim-iccid">ICCID {{item.esim.iccid}}</text>
+          </view>
+
+          <view class="order-card__foot">
+            <text class="order-card__price">{{item.totalPriceLabel}}</text>
+            <text class="order-card__no">订单号 {{item.orderNo}}</text>
+          </view>
+
+          <view class="order-card__actions" catchtap="stopBubble">
+            <button
+              wx:if="{{item.status === 'pending_install'}}"
+              class="order-card__btn btn-primary"
+              data-id="{{item.id}}"
+              bindtap="onInstallGuide"
+            >
+              查看安装教程
+            </button>
+            <button
+              class="order-card__btn btn-outline-brand"
+              data-id="{{item.id}}"
+              bindtap="onSupport"
+            >
+              联系客服
+            </button>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+</view>

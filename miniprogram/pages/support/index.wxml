@@ -1,0 +1,28 @@
+<view class="page" style="padding-top: {{statusBarHeight}}px; padding-bottom: {{safeBottom}}px;">
+  <view class="subpage-nav">
+    <view class="subpage-nav__back" bindtap="onBack">
+      <text class="subpage-nav__back-icon">‹</text>
+    </view>
+    <text class="subpage-nav__title">客服中心</text>
+    <view class="subpage-nav__spacer" />
+  </view>
+
+  <scroll-view class="subpage-body" scroll-y enhanced show-scrollbar="{{false}}">
+    <text class="article__lead">购买前、安装中、出行后均可联系中文客服。请准备好订单号与手机型号。</text>
+
+    <view
+      wx:for="{{channels}}"
+      wx:key="id"
+      class="support-card"
+      data-id="{{item.id}}"
+      bindtap="onChannelTap"
+    >
+      <text class="support-card__icon">{{item.icon}}</text>
+      <view class="support-card__body">
+        <text class="support-card__title">{{item.title}}</text>
+        <text class="support-card__desc">{{item.desc}}</text>
+      </view>
+      <text class="support-card__arrow">›</text>
+    </view>
+  </scroll-view>
+</view>

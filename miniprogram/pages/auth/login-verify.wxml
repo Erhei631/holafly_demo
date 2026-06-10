@@ -1,0 +1,54 @@
+<view class="login-page" style="padding-top: {{statusBarHeight}}px; padding-bottom: {{safeBottom}}px;">
+  <view class="login-nav">
+    <view class="login-nav__back" bindtap="onBack" aria-label="返回">
+      <image class="login-nav__back-icon" src="/images/detail/nav-back.svg" mode="aspectFit" />
+    </view>
+    <view class="login-nav__right">
+      <view class="nav-capsule nav-capsule--menu">
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-share.svg" mode="aspectFit" />
+        <image class="nav-capsule__sep" src="/images/detail/nav-divider.svg" mode="aspectFit" />
+        <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-close.svg" mode="aspectFit" />
+      </view>
+    </view>
+  </view>
+
+  <view class="login-body login-body--sms">
+    <view class="login-brand login-brand--sms">
+      <image class="login-brand__logo" src="/images/auth/logo.svg" mode="aspectFit" />
+      <view class="login-brand__text">
+        <text class="login-brand__title">欢迎使用Holafly</text>
+        <text class="login-brand__subtitle">验证码已发送至 +86 {{phoneMasked}}</text>
+      </view>
+    </view>
+
+    <view class="verify-code" bindtap="onFocusCode">
+      <view
+        wx:for="{{codeDigits}}"
+        wx:key="index"
+        class="verify-code__box {{item ? 'verify-code__box--filled' : ''}} {{activeIndex === index ? 'verify-code__box--active' : ''}}"
+      >
+        <text>{{item}}</text>
+      </view>
+      <input
+        class="verify-code__input"
+        type="number"
+        maxlength="6"
+        value="{{code}}"
+        focus="{{true}}"
+        bindinput="onCodeInput"
+        bindfocus="onFocusCode"
+      />
+    </view>
+
+    <view class="login-actions login-actions--verify">
+      <text wx:if="{{!canResend}}" class="verify-resend">没收到？ {{countdown}} 秒后重新发送</text>
+      <text wx:else class="verify-resend verify-resend--link" bindtap="onResend">没收到？ 重新发送</text>
+      <button
+        class="login-btn login-btn--primary {{canSubmit ? '' : 'login-btn--disabled'}}"
+        bindtap="onSubmit"
+      >立即登录</button>
+    </view>
+
+    <button class="login-btn login-btn--ghost" bindtap="onBack">返回</button>
+  </view>
+</view>

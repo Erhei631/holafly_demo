@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>登录 · Holafly</title>
+  <style>
+    :root {
+      --rose-50:#ffefef; --rose-500:#e6485c;
+      --neutral-50:#fff; --neutral-200:#e4e6ea;
+      --neutral-400:#7b7c7e; --neutral-900:#272729;
+      --blue-600:#0d8cc2;
+      --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
+    .preview-label{font-size:14px;color:var(--neutral-400);margin-bottom:16px}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:linear-gradient(180deg,var(--rose-50) 6.5%,var(--neutral-50) 100%)}
+    .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
+    .login-nav{position:absolute;top:47px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 7px;height:44px}
+    .login-nav__back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0}
+    .login-nav__back img{width:9px;height:16.5px;display:block}
+    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px}
+    .nav-capsule--menu{width:83px;padding:0 10px}
+    .nav-capsule img{display:block}
+    .nav-capsule__icon{width:16px;height:16px}
+    .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
+    .login-body{position:absolute;top:91px;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;padding:30px 53px calc(24px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
+    .login-brand{display:flex;flex-direction:column;align-items:center;gap:16px}
+    .login-brand__logo{width:92px;height:92px}
+    .login-brand__title{font-size:24px;font-weight:500;line-height:32px;text-align:center}
+    .login-actions{width:100%;margin-top:147px;display:flex;flex-direction:column;align-items:center;gap:24px}
+    .login-btn{width:100%;height:48px;border:none;border-radius:10px;font-size:16px;font-weight:500;cursor:pointer}
+    .login-btn--primary{background:var(--rose-500);color:#fff;box-shadow:0 10px 20px rgba(230,72,92,.35)}
+    .login-btn--ghost{margin-top:auto;background:#fff;color:var(--neutral-400);border:1px solid var(--neutral-200)}
+    .login-link{font-size:15px;font-weight:500;color:var(--neutral-400);cursor:pointer;background:none;border:none}
+    .login-agree{display:flex;align-items:center;justify-content:center;gap:6px;width:100%}
+    .login-agree__check{width:18px;height:18px;border:1px solid var(--neutral-200);border-radius:50%;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
+    .login-agree__check--on{background:var(--rose-500);border-color:var(--rose-500)}
+    .login-agree__text{font-size:14px;color:var(--neutral-400);line-height:20px;white-space:nowrap}
+    .login-agree__link{color:var(--blue-600)}
+    .login-toast{position:absolute;left:50%;top:54%;z-index:100;transform:translate(-50%,-50%) scale(.96);padding:12px 20px;background:rgba(41,43,46,.88);color:#fff;font-size:14px;line-height:1.43;border-radius:10px;text-align:center;max-width:280px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+    .login-toast.is-show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  </style>
+</head>
+<body>
+  <p class="preview-label">登录 · Figma 164:1189</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <div class="login-nav">
+      <button class="login-nav__back" type="button" id="login-back"><img src="images/detail/nav-back.svg" alt="" /></button>
+      <div class="nav-capsule nav-capsule--menu">
+        <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
+        <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
+        <img class="nav-capsule__icon" src="images/detail/nav-close.svg" alt="" />
+      </div>
+    </div>
+    <div class="login-body">
+      <div class="login-brand">
+        <img class="login-brand__logo" src="images/auth/logo.svg" alt="Holafly" />
+        <h1 class="login-brand__title">欢迎使用Holafly</h1>
+      </div>
+      <div class="login-actions">
+        <button class="login-btn login-btn--primary" type="button" id="login-phone">手机号快速验证</button>
+        <button class="login-link" type="button" id="login-sms">短信验证码登录</button>
+        <label class="login-agree" id="login-agree">
+          <span class="login-agree__check" id="login-check"></span>
+          <span class="login-agree__text">我已阅读并同意<span class="login-agree__link">服务协议</span>及<span class="login-agree__link">隐私协议</span></span>
+        </label>
+      </div>
+      <button class="login-btn login-btn--ghost" type="button" id="login-skip">暂不登录</button>
+    </div>
+    <div class="login-toast" id="login-toast" role="status" aria-live="polite"></div>
+  </div>
+  <script>
+    const params=new URLSearchParams(location.search);
+    let agreed=false;
+    let toastTimer=null;
+    function showToast(message){
+      const toast=document.getElementById('login-toast');
+      toast.textContent=message;
+      toast.classList.add('is-show');
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>toast.classList.remove('is-show'),2000);
+    }
+    function goCheckout(){
+      const q=new URLSearchParams();
+      ['destination','days','quantity','unitPrice','totalPrice'].forEach(k=>{if(params.get(k))q.set(k,params.get(k));});
+      if(q.toString()) location.href=`checkout.html?${q}`;
+      else history.back();
+    }
+    document.getElementById('login-back').addEventListener('click',()=>history.back());
+    document.getElementById('login-skip').addEventListener('click',()=>history.back());
+    document.getElementById('login-agree').addEventListener('click',()=>{
+      agreed=!agreed;
+      document.getElementById('login-check').classList.toggle('login-agree__check--on',agreed);
+      document.getElementById('login-check').textContent=agreed?'✓':'';
+    });
+    function requireAgree(){
+      if(!agreed){
+        showToast('请先阅读并同意服务协议及隐私协议');
+        return false;
+      }
+      return true;
+    }
+    document.getElementById('login-phone').addEventListener('click',()=>{
+      if(!requireAgree()) return;
+      const ok=confirm('模拟微信小程序「获取手机号」授权\n\n点击「确定」视为授权成功');
+      if(ok) goCheckout();
+    });
+    document.getElementById('login-sms').addEventListener('click',()=>{
+      location.href=`login-sms.html?${params.toString()}`;
+    });
+  </script>
+</body>
+</html>

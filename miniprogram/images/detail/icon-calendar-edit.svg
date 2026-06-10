@@ -1,0 +1,17 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="calendar-edit">
+<path id="Vector" d="M6.66667 1.66667V4.16667" stroke="var(--stroke-0, #292B2E)" stroke-width="1.25" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M13.3333 1.66667V4.16667" stroke="var(--stroke-0, #292B2E)" stroke-width="1.25" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M2.91667 7.575H17.0833" stroke="var(--stroke-0, #292B2E)" stroke-width="1.25" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Group">
+<path id="Vector_4" d="M16.0083 13.1417L13.0583 16.0917C12.9417 16.2083 12.8333 16.425 12.8083 16.5833L12.65 17.7083C12.5917 18.1167 12.875 18.4 13.2833 18.3417L14.4083 18.1833C14.5667 18.1583 14.7917 18.05 14.9 17.9333L17.85 14.9834C18.3583 14.475 18.6 13.8834 17.85 13.1334C17.1083 12.3917 16.5167 12.6333 16.0083 13.1417Z" stroke="var(--stroke-0, #292B2E)" stroke-width="1.25" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M15.5833 13.5667C15.8333 14.4667 16.5333 15.1667 17.4333 15.4167" stroke="var(--stroke-0, #292B2E)" stroke-width="1.25" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path id="Vector_6" d="M10 18.3333H6.66667C3.75 18.3333 2.5 16.6667 2.5 14.1667V7.08333C2.5 4.58333 3.75 2.91667 6.66667 2.91667H13.3333C16.25 2.91667 17.5 4.58333 17.5 7.08333V10" stroke="var(--stroke-0, #292B2E)" stroke-width="1.25" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Vector_7" opacity="0">
+</g>
+<path id="Vector_8" d="M9.99624 11.4167H10.0037" stroke="var(--stroke-0, #292B2E)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_9" d="M6.91193 11.4167H6.91941" stroke="var(--stroke-0, #292B2E)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_10" d="M6.91193 13.9167H6.91941" stroke="var(--stroke-0, #292B2E)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
