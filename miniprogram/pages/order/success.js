@@ -34,7 +34,7 @@ Page({
   },
 
   onBack() {
-    wx.switchTab({ url: '/pages/orders/index' });
+    wx.switchTab({ url: '/pages/index/index' });
   },
 
   onSupportTap() {
@@ -45,15 +45,50 @@ Page({
     wx.showToast({ title: '已开启微信通知', icon: 'success' });
   },
 
-  onQrTap() {
-    if (this.data.esimReady) return;
+  onEsimReady() {
     this.setData({ esimReady: true });
   },
 
+  onContinueBuy() {
+    wx.switchTab({ url: '/pages/index/index' });
+  },
+
+  onGoOrders() {
+    wx.switchTab({ url: '/pages/orders/index' });
+  },
+
   onSaveQr() {
-    wx.saveImageToPhotosAlbum({
-      filePath: '/images/success/esim-qr.png',
-      success: () => wx.showToast({ title: '已保存到相册', icon: 'success' }),
+    const qrSrc = '/images/success/esim-qr.png';
+
+    const saveToAlbum = (filePath) => {
+      wx.saveImageToPhotosAlbum({
+        filePath,
+        success: () => wx.showToast({ title: '已保存到相册', icon: 'success' }),
+        fail: (err) => {
+          const denied = err.errMsg && (
+            err.errMsg.includes('auth deny')
+            || err.errMsg.includes('authorize')
+            || err.errMsg.includes('permission')
+          );
+          if (denied) {
+            wx.showModal({
+              title: '提示',
+              content: '需要您授权保存图片到相册',
+              confirmText: '去设置',
+              success: (res) => {
+                if (res.confirm) wx.openSetting();
+              },
+            });
+            return;
+          }
+          wx.showToast({ title: '保存失败', icon: 'none' });
+        },
+      });
+    };
+
+    wx.getImageInfo({
+      src: qrSrc,
+      success: (res) => saveToAlbum(res.path),
       fail: () => wx.showToast({ title: '保存失败', icon: 'none' }),
     });
   },

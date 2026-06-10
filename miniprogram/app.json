@@ -12,6 +12,7 @@
     "pages/order/checkout",
     "pages/order/success",
     "pages/guide/install",
+    "pages/guide/esim",
     "pages/support/index",
     "pages/support/refund",
     "pages/faq/index"

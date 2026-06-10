@@ -52,21 +52,39 @@
           </view>
 
           <view class="order-card__actions" catchtap="stopBubble">
-            <button
-              wx:if="{{item.status === 'pending_install'}}"
-              class="order-card__btn btn-primary"
-              data-id="{{item.id}}"
-              bindtap="onInstallGuide"
-            >
-              查看安装教程
-            </button>
-            <button
-              class="order-card__btn btn-outline-brand"
-              data-id="{{item.id}}"
-              bindtap="onSupport"
-            >
-              联系客服
-            </button>
+            <block wx:if="{{item.status === 'pending_install'}}">
+              <button
+                class="order-card__btn btn-primary"
+                data-id="{{item.id}}"
+                bindtap="onInstallGuide"
+              >
+                查看安装教程
+              </button>
+              <button
+                class="order-card__btn btn-outline-brand"
+                data-id="{{item.id}}"
+                bindtap="onSupport"
+              >
+                联系客服
+              </button>
+            </block>
+            <block wx:else>
+              <button
+                class="order-card__btn btn-outline-brand"
+                data-id="{{item.id}}"
+                bindtap="onInvoice"
+              >
+                申请开票
+              </button>
+              <button
+                class="order-card__btn btn-outline-brand"
+                data-id="{{item.id}}"
+                data-destination="{{item.destination}}"
+                bindtap="onRepurchase"
+              >
+                再次购买
+              </button>
+            </block>
           </view>
         </view>
       </block>

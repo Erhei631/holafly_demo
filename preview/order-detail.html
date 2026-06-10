@@ -43,6 +43,8 @@
     .detail-order-card__badge{padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500}
     .detail-order-card__badge--pending{background:var(--yellow-100);color:var(--yellow-800)}
     .detail-order-card__badge--active{background:var(--green-100);color:var(--green-700)}
+    .detail-order-card__badge--installed,
+    .detail-qr-panel__badge.detail-order-card__badge--installed{padding:4px 6px;font-weight:400;line-height:18px;background:var(--neutral-100);color:var(--neutral-400)}
     .detail-order-card__badge--done{background:var(--neutral-200);color:var(--neutral-400)}
     .detail-order-card__body{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px}
     .detail-order-card__left{display:flex;align-items:center;gap:6px}
@@ -60,9 +62,9 @@
     .detail-qr-panel__badge{margin-top:2px;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500}
     .detail-qr-panel__badge.detail-order-card__badge--pending{background:var(--yellow-100);color:var(--yellow-800)}
     .detail-qr-panel__badge.detail-order-card__badge--active{background:var(--green-100);color:var(--green-700)}
-    .detail-qr-panel__badge.detail-order-card__badge--installed{background:var(--green-100);color:var(--green-700)}
     .detail-qr-panel__badge.detail-order-card__badge--done{background:var(--neutral-200);color:var(--neutral-400)}
     .detail-qr-panel__pager{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:10px}
+    .detail-qr-panel__pager[hidden]{display:none!important}
     .detail-qr-panel__pager-btn{width:35px;height:35px;border-radius:9999px;border:1px solid var(--neutral-200);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0}
     .detail-qr-panel__pager-btn--muted{background:var(--neutral-100)}
     .detail-qr-panel__pager-btn:disabled{opacity:.45;cursor:not-allowed}
@@ -71,7 +73,7 @@
     .detail-qr-panel__pager-current{font-size:18px;font-weight:500;color:var(--neutral-900)}
     .detail-qr-panel__divider{height:1px;background:var(--neutral-200);margin:16px 0 0}
     .detail-qr-panel__actions{display:flex;gap:12px;width:100%;margin-top:16px}
-    .detail-qr-panel__btn{flex:1;min-width:0;height:44px;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;padding:12px 24px}
+    .detail-qr-panel__btn{flex:1;min-width:0;height:44px;border-radius:10px;font-size:14px;font-weight:500;line-height:44px;white-space:nowrap;cursor:pointer;padding:0 10px}
     .detail-qr-panel__btn--ghost{border:1px solid var(--neutral-200);background:#fff;color:var(--neutral-400)}
     .detail-qr-panel__btn--primary{border:none;background:var(--rose-500);color:#fff}
     .detail-info-panel{padding:16px;background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
@@ -150,7 +152,7 @@
             </div>
             <div class="detail-qr-panel__divider"></div>
             <div class="detail-qr-panel__actions">
-              <button class="detail-qr-panel__btn detail-qr-panel__btn--ghost" type="button" id="save-qr-btn">保存到相册</button>
+              <button class="detail-qr-panel__btn detail-qr-panel__btn--ghost" type="button" id="save-qr-btn">保存当前二维码</button>
               <button class="detail-qr-panel__btn detail-qr-panel__btn--primary" type="button" id="install-guide-btn">查看安装教程</button>
             </div>
           </div>
@@ -210,7 +212,7 @@
       HF20260520183830: {
         orderNo: 'HF20260520183830',
         badge: '已激活',
-        badgeTone: 'active',
+        badgeTone: 'installed',
         name: '泰国eSIM·5天',
         price: '¥45.00',
         qty: 3,
@@ -225,8 +227,8 @@
       },
       HF20260520183831: {
         orderNo: 'HF20260520183831',
-        badge: '已完成',
-        badgeTone: 'done',
+        badge: '已激活',
+        badgeTone: 'installed',
         name: '日本eSIM·7天',
         price: '¥63.00',
         qty: 1,
@@ -336,9 +338,30 @@
       }
     });
 
-    document.getElementById('save-qr-btn').addEventListener('click', () => {
-      showToast('已保存到相册');
-    });
+    async function saveQrImage() {
+      const img = document.getElementById('qr-image');
+      if (!img || !img.src) {
+        showToast('二维码未就绪');
+        return;
+      }
+      try {
+        const response = await fetch(img.src);
+        if (!response.ok) throw new Error('fetch failed');
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'esim-qr.png';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showToast('已保存到相册');
+      } catch {
+        showToast('保存失败');
+      }
+    }
+    document.getElementById('save-qr-btn').addEventListener('click', saveQrImage);
 
     document.getElementById('install-guide-btn').addEventListener('click', () => {
       showToast('安装教程（待开发）');

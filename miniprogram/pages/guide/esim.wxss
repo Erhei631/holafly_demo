@@ -1,0 +1,130 @@
+@import '../../styles/subpage.wxss';
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, var(--blue-50) 6.5%, var(--color-bg-base) 100%);
+}
+
+.subpage-nav--gradient {
+  background: transparent;
+  border-bottom: none;
+}
+
+.esim-scroll {
+  flex: 1;
+  height: 0;
+}
+
+.esim-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5) var(--space-6);
+}
+
+.esim-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-bg-base);
+  border-radius: 48rpx;
+  box-shadow: 0 20rpx 80rpx rgba(0, 0, 0, 0.05);
+}
+
+.esim-card__title {
+  font-size: var(--font-size-subtitle-2);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 48rpx;
+}
+
+.esim-card__divider {
+  height: 1rpx;
+  background: var(--color-divider);
+}
+
+.esim-intro {
+  font-size: 30rpx;
+  color: var(--color-text-primary);
+  line-height: 44rpx;
+}
+
+.esim-intro__highlight {
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.esim-stats {
+  display: flex;
+  gap: 12rpx;
+}
+
+.esim-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  padding: var(--space-3);
+  background: var(--color-bg-muted);
+  border-radius: 20rpx;
+  min-width: 0;
+}
+
+.esim-stat__value {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 48rpx;
+}
+
+.esim-stat__label {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  line-height: 32rpx;
+}
+
+.esim-compare,
+.esim-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.esim-feature {
+  flex: 1 1 calc(50% - 6rpx);
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  padding: var(--space-3);
+  background: var(--color-bg-muted);
+  border-radius: 20rpx;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.esim-feature__icon-wrap {
+  display: flex;
+  align-items: center;
+  padding: 16rpx;
+}
+
+.esim-feature__icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.esim-feature__title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 40rpx;
+}
+
+.esim-feature__desc {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  line-height: 32rpx;
+}

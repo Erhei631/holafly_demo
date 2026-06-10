@@ -102,7 +102,31 @@ Page({
   },
 
   onSaveQr() {
-    wx.showToast({ title: '长按二维码保存', icon: 'none' });
+    const qrPath = '/images/orders/esim-qr.png';
+    wx.getImageInfo({
+      src: qrPath,
+      success: (info) => {
+        wx.saveImageToPhotosAlbum({
+          filePath: info.path,
+          success: () => wx.showToast({ title: '已保存到相册' }),
+          fail: (err) => {
+            if (err.errMsg && err.errMsg.includes('auth deny')) {
+              wx.showModal({
+                title: '提示',
+                content: '需要相册权限才能保存二维码',
+                confirmText: '去设置',
+                success: (res) => {
+                  if (res.confirm) wx.openSetting();
+                },
+              });
+              return;
+            }
+            wx.showToast({ title: '保存失败', icon: 'none' });
+          },
+        });
+      },
+      fail: () => wx.showToast({ title: '二维码未就绪', icon: 'none' }),
+    });
   },
 
   onCopyOrderNo() {

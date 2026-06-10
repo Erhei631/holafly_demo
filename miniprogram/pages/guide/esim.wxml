@@ -1,0 +1,57 @@
+<view class="page" style="padding-top: {{statusBarHeight}}px; padding-bottom: {{safeBottom}}px;">
+  <view class="subpage-nav subpage-nav--gradient">
+    <view class="subpage-nav__back" bindtap="onBack">
+      <text class="subpage-nav__back-icon">‹</text>
+    </view>
+    <text class="subpage-nav__title">什么是eSIM</text>
+    <view class="subpage-nav__spacer" />
+  </view>
+
+  <scroll-view class="esim-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="esim-stack">
+      <view class="esim-card">
+        <text class="esim-card__title">什么是 eSIM?</text>
+        <view class="esim-card__divider" />
+        <text class="esim-intro">
+          <text>{{intro.before}}</text>
+          <text class="esim-intro__highlight">{{intro.highlight}}</text>
+          <text>{{intro.after}}</text>
+        </text>
+        <view class="esim-stats">
+          <view wx:for="{{stats}}" wx:key="label" class="esim-stat">
+            <text class="esim-stat__value">{{item.value}}</text>
+            <text class="esim-stat__label">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="esim-card">
+        <text class="esim-card__title">eSIM vs 实体 SIM 卡</text>
+        <view class="esim-card__divider" />
+        <view class="esim-compare">
+          <view wx:for="{{compare}}" wx:key="id" class="esim-feature">
+            <view class="esim-feature__icon-wrap">
+              <image class="esim-feature__icon" src="{{item.icon}}" mode="aspectFit" />
+            </view>
+            <text class="esim-feature__title">{{item.title}}</text>
+            <text class="esim-feature__desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="esim-card">
+        <text class="esim-card__title">为什么用 eSIM</text>
+        <view class="esim-card__divider" />
+        <view class="esim-benefits">
+          <view wx:for="{{benefits}}" wx:key="id" class="esim-feature">
+            <view class="esim-feature__icon-wrap">
+              <image class="esim-feature__icon" src="{{item.icon}}" mode="aspectFit" />
+            </view>
+            <text class="esim-feature__title">{{item.title}}</text>
+            <text class="esim-feature__desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

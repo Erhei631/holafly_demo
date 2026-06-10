@@ -145,8 +145,11 @@
 }
 
 .checkout-row__icon {
+  display: block;
   width: 40rpx;
   height: 40rpx;
+  max-width: 40rpx;
+  max-height: 40rpx;
   flex-shrink: 0;
 }
 
@@ -347,7 +350,9 @@
 }
 
 .promo-drawer__body {
+  position: relative;
   padding: 0 40rpx;
+  overflow: visible;
 }
 
 .promo-drawer__input {
@@ -367,12 +372,18 @@
 
 .promo-drawer__illus {
   display: block;
-  width: 560rpx;
-  margin: 32rpx auto 0;
+  width: 712rpx;
+  max-width: calc(100% - 48rpx);
+  margin: 24rpx auto -144rpx;
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .promo-drawer__footer {
-  padding: 32rpx 40rpx 0;
+  position: relative;
+  z-index: 2;
+  padding: 0 40rpx 0;
 }
 
 .promo-drawer__apply {

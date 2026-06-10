@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame">
+<path id="Vector" d="M15.8 2.5H8.2C6.43269 2.5 5 3.93269 5 5.7V18.3C5 20.0673 6.43269 21.5 8.2 21.5H15.8C17.5673 21.5 19 20.0673 19 18.3V5.7C19 3.93269 17.5673 2.5 15.8 2.5Z" stroke="var(--stroke-0, #F0464E)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M10.4 5.2H13.6" stroke="var(--stroke-0, #F0464E)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M13.5 9H10.5C9.56112 9 8.8 9.76112 8.8 10.7V13.9C8.8 14.8389 9.56112 15.6 10.5 15.6H13.5C14.4389 15.6 15.2 14.8389 15.2 13.9V10.7C15.2 9.76112 14.4389 9 13.5 9Z" stroke="var(--stroke-0, #F0464E)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M12 9V15.6M8.8 12.3H15.2" stroke="var(--stroke-0, #F0464E)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M12 19.1C12.2761 19.1 12.5 18.8761 12.5 18.6C12.5 18.3239 12.2761 18.1 12 18.1C11.7239 18.1 11.5 18.3239 11.5 18.6C11.5 18.8761 11.7239 19.1 12 19.1Z" fill="var(--fill-0, #F0464E)"/>
+</g>
+</svg>

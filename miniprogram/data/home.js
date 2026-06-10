@@ -32,6 +32,27 @@ const HOME_REVIEWS = [
   },
 ];
 
+const WHY_CHOOSE = [
+  {
+    id: 'data',
+    icon: '/images/home/why-infinity.png',
+    title: '不限流量 · 不限速',
+    desc: '4K视频、直播、导航全程不卡顿，绝不偷偷降速',
+  },
+  {
+    id: 'support',
+    icon: '/images/home/why-headset.png',
+    title: '中文客服 7×24h',
+    desc: '全天候真人在线，遇到问题随时秒回',
+  },
+  {
+    id: 'coverage',
+    icon: '/images/home/why-globe.png',
+    title: '覆盖全球200+国家',
+    desc: '全球200+国家，一次支付，畅行旅程',
+  },
+];
+
 const HOME_COMPARE = {
   columns: [
     { id: 'holafly', name: 'Holafly', sub: 'eSIM', primary: true },
@@ -67,7 +88,7 @@ const HOME_COMPARE = {
       id: 'activation',
       label: '激活',
       cells: [
-        { text: '30 秒', tone: 'primary' },
+        { text: '30s', tone: 'primary' },
         { text: '物流', tone: 'muted' },
         { text: '电话', tone: 'muted' },
         { text: '取还', tone: 'muted' },
@@ -103,5 +124,6 @@ module.exports = {
   HOME_POPULAR,
   ACTIVITY_FEED,
   HOME_REVIEWS,
+  WHY_CHOOSE,
   HOME_COMPARE,
 };

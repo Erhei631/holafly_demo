@@ -37,7 +37,7 @@
     .checkout-product__name{font-size:16px;font-weight:500;line-height:24px}
     .checkout-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .checkout-row__left{display:flex;align-items:center;gap:8px}
-    .checkout-row__icon{width:20px;height:20px;flex-shrink:0}
+    .checkout-row__icon{display:block;width:20px;height:20px;max-width:20px;max-height:20px;object-fit:contain;flex-shrink:0}
     .checkout-row__label{font-size:15px;line-height:22px}
     .checkout-row__right{display:flex;align-items:center;gap:8px}
     .checkout-row__value{font-size:15px;font-weight:500;line-height:22px}
@@ -83,11 +83,11 @@
     .promo-drawer__title{flex:1;font-size:18px;font-weight:500;line-height:24px}
     .promo-drawer__close{width:28px;height:28px;border:none;background:transparent;padding:0;cursor:pointer;flex-shrink:0}
     .promo-drawer__close img{width:28px;height:28px;display:block}
-    .promo-drawer__body{flex:1;overflow:hidden;padding:0 20px}
+    .promo-drawer__body{flex:1;overflow:visible;padding:0 20px;position:relative}
     .promo-drawer__input{width:100%;height:44px;border:none;border-radius:10px;background:var(--neutral-100);padding:0 16px;font-size:15px;line-height:22px;color:var(--neutral-900);outline:none}
     .promo-drawer__input::placeholder{color:var(--neutral-400)}
-    .promo-drawer__illus{display:block;width:min(280px,72vw);height:auto;margin:16px auto 0;object-fit:contain}
-    .promo-drawer__footer{padding:16px 20px 0;flex-shrink:0}
+    .promo-drawer__illus{display:block;width:min(356px,calc(100% - 24px));height:auto;margin:12px auto -72px;object-fit:contain;position:relative;z-index:1;pointer-events:none}
+    .promo-drawer__footer{position:relative;z-index:2;padding:0 20px 0;flex-shrink:0}
     .promo-drawer__apply{width:100%;height:48px;border:none;border-radius:10px;background:var(--green-500);color:var(--neutral-900);font-size:16px;font-weight:500;cursor:pointer;box-shadow:0 10px 20px rgba(57,224,57,.35)}
   </style>
 </head>
@@ -138,7 +138,7 @@
           <div class="checkout-price-list">
             <div class="checkout-price-row">
               <span class="checkout-price-row__label">商品总价</span>
-              <span class="checkout-price-row__value" id="original-total">¥105</span>
+              <span class="checkout-price-row__value" id="original-total">¥63</span>
             </div>
             <div class="checkout-price-row" id="promo-row" style="cursor:pointer">
               <span class="checkout-price-row__label">折扣码</span>
@@ -198,7 +198,6 @@
   </div>
   <script>
     const PRICES={1:15,3:35,5:48,7:63,10:85,15:120};
-    const ORIGINAL_DAILY=15;
     const MAX_QTY=9;
     const params=new URLSearchParams(location.search);
     let days=Math.max(1,Number(params.get('days'))||7);
@@ -208,7 +207,7 @@
     function unitTotal(d){return PRICES[d]||Math.round((PRICES[7]/7)*d);}
     function syncPricing(){
       const total=unitTotal(days)*quantity;
-      const original=ORIGINAL_DAILY*days*quantity;
+      const original=total;
       document.getElementById('days-value').textContent=`${days}天`;
       document.getElementById('qty-value').textContent=`× ${quantity}`;
       document.getElementById('original-total').textContent=formatYuan(original);

@@ -57,6 +57,17 @@ Page({
     wx.navigateTo({ url: '/pages/support/index' });
   },
 
+  onInvoice() {
+    wx.showToast({ title: '申请开票（待开发）', icon: 'none' });
+  },
+
+  onRepurchase(e) {
+    const destination = e.currentTarget.dataset.destination || '日本';
+    wx.navigateTo({
+      url: `/pages/search/result?destination=${encodeURIComponent(destination)}`,
+    });
+  },
+
   onOrderDetail(e) {
     const { id } = e.currentTarget.dataset;
     if (!id) return;

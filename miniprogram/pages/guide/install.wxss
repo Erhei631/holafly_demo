@@ -7,25 +7,121 @@
   background: var(--color-bg-base);
 }
 
-.install-tabs {
-  display: flex;
-  gap: var(--space-2);
-  margin-top: var(--space-4);
-}
-
-.install-tabs__item {
+.install-scroll {
   flex: 1;
-  text-align: center;
-  padding: var(--space-2);
-  border-radius: var(--radius-lg);
-  border: 2rpx solid var(--color-border-base);
-  font-size: var(--font-size-body);
-  color: var(--color-text-secondary);
+  height: 0;
 }
 
-.install-tabs__item--active {
-  background: var(--blue-50);
-  border-color: var(--blue-200);
+.install-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5) var(--space-6);
+}
+
+.install-segment {
+  display: flex;
+  gap: 8rpx;
+  padding: 8rpx;
+  background: var(--neutral-200);
+  border-radius: 24rpx;
+}
+
+.install-segment__item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 32rpx;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  font-weight: 500;
   color: var(--color-text-primary);
-  font-weight: 600;
+}
+
+.install-segment__item--active {
+  background: var(--color-bg-base);
+  box-shadow: 0 4rpx 16rpx -8rpx rgba(0, 0, 0, 0.2);
+}
+
+.install-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-bg-base);
+  border-radius: 48rpx;
+  box-shadow: 0 20rpx 80rpx rgba(0, 0, 0, 0.05);
+}
+
+.install-card__title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 48rpx;
+}
+
+.install-preface {
+  display: flex;
+  flex-direction: column;
+  gap: 40rpx;
+  padding: 16rpx 24rpx;
+  background: var(--color-bg-muted);
+  border-radius: 20rpx;
+}
+
+.install-preface__item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.install-preface__icon-wrap {
+  flex-shrink: 0;
+  padding: 20rpx;
+  background: var(--color-bg-base);
+  border-radius: var(--radius-full);
+}
+
+.install-preface__icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: block;
+}
+
+.install-preface__text {
+  flex: 1;
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  line-height: 32rpx;
+}
+
+.install-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 40rpx;
+}
+
+.install-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.install-step__text {
+  width: 100%;
+  font-size: 30rpx;
+  color: var(--color-text-primary);
+  line-height: 44rpx;
+}
+
+.install-step__image {
+  width: 100%;
+  max-width: 522rpx;
+  display: block;
+}
+
+.install-step__image--order {
+  max-width: 432rpx;
 }

@@ -82,7 +82,7 @@
           </view>
           <view class="detail-qr-panel__divider" />
           <view class="detail-qr-panel__actions">
-            <button class="detail-qr-panel__btn detail-qr-panel__btn--ghost" bindtap="onSaveQr">保存到相册</button>
+            <button class="detail-qr-panel__btn detail-qr-panel__btn--ghost" bindtap="onSaveQr">保存当前二维码</button>
             <button class="detail-qr-panel__btn detail-qr-panel__btn--primary" bindtap="onInstallGuide">查看安装教程</button>
           </view>
         </view>

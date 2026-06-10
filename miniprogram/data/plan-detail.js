@@ -1,4 +1,4 @@
-/** 日本 eSIM 详情 — Figma 144:147 */
+/** 日本 eSIM 详情 — Figma 490:5737 */
 const JAPAN_PLAN = {
   id: 'jp',
   name: '日本',
@@ -13,6 +13,15 @@ const JAPAN_PLAN = {
     { id: 'speed', label: '高速稳网', icon: '/images/detail/tag-speed.svg' },
     { id: 'roam', label: '无漫游费', icon: '/images/detail/tag-roam.svg' },
   ],
+  compatCard: {
+    icon: '/images/detail/compat-card.svg',
+    title: '我的手机手机是否支持 eSIM？',
+    subtitle: '支持大陆版与国际版机型查询',
+  },
+  reviewSummary: {
+    rating: '4.7',
+    total: '95,304',
+  },
   reviews: [
     {
       id: 'r1',
@@ -31,15 +40,8 @@ const JAPAN_PLAN = {
   ],
   faqItems: [
     {
-      id: 'compat',
-      type: 'highlight',
-      title: '我的手机手机是否支持 eSIM？',
-      subtitle: '支持大陆版与国际版机型查询',
-      action: 'compat',
-    },
-    {
       id: 'install',
-      title: 'eSIM 如何安装, 到了会自动连接吗？',
+      title: 'eSIM 如何安装, 到了目的地会自动连接吗？',
       answer: '建议出发前在有 Wi-Fi 的环境扫码安装 eSIM。抵达日本后开启蜂窝数据与数据漫游，系统会自动连接当地网络，无需手动选运营商。',
     },
     {
@@ -53,35 +55,39 @@ const JAPAN_PLAN = {
       answer: '未安装或未激活的订单可申请全额退款；已激活订单将按平台退款政策处理，详情可联系 7×24 小时在线客服。',
     },
   ],
-  networkItems: [
+  appIntro: '足够4K视频、直播、视频通话与实时导航，全程不降速、不限量。',
+  appSections: [
     {
-      id: 'speed',
-      label: '网速',
-      icon: '/images/detail/icon-network.svg',
-      text: '我们的日本国际 eSIM 提供高速 4G LTE 与 5G 网路服务（视当地覆盖情况而定）',
+      id: 'overseas',
+      title: '海外应用 · 直连无忧',
+      apps: [
+        { id: 'maps', name: '谷歌地图', subtitle: '实时导航不卡顿', icon: '/images/detail/app-maps.png' },
+        { id: 'youtube', name: 'YouTube', subtitle: '畅看 4K 视频', icon: '/images/detail/app-youtube.png' },
+        { id: 'instagram', name: 'Instagram', subtitle: '刷图发限时动态', icon: '/images/detail/app-instagram.png' },
+        { id: 'whatsapp', name: 'WhatsApp', subtitle: '高清视频通话', icon: '/images/detail/app-whatsapp.png' },
+      ],
     },
     {
-      id: 'coverage',
-      label: '覆盖范围',
-      icon: '/images/detail/icon-coverage.svg',
-      text: '您可在市区享有良好的讯号涵盖率，然而在山区、沙漠或森林地区，可能会有讯号不稳定的情况。',
-    },
-    {
-      id: 'carrier',
-      label: '网络运营商',
-      icon: '/images/detail/icon-carrier.svg',
-      text: 'KDDI / Softbank',
+      id: 'domestic',
+      title: '国内应用 · 照常使用',
+      apps: [
+        { id: 'wechat', name: '微信', subtitle: '视频通话报平安', icon: '/images/detail/app-wechat.png' },
+        { id: 'xhs', name: '小红书', subtitle: '边玩边直播', icon: '/images/detail/app-xhs.png' },
+        { id: 'douyin', name: '抖音', subtitle: '直播 / 发高清视频', icon: '/images/detail/app-douyin.png' },
+        { id: 'alipay', name: '支付宝', subtitle: '扫码付款', icon: '/images/detail/app-alipay.png' },
+      ],
     },
   ],
-  appIcons: [
-    '/images/detail/app-1.png',
-    '/images/detail/app-2.png',
-    '/images/detail/app-3.png',
-    '/images/detail/app-4.png',
-    '/images/detail/app-5.png',
-    '/images/detail/app-6.png',
-    '/images/detail/app-7.png',
+  usageSteps: [
+    { id: 'pay', icon: '/images/detail/usage-pay.svg', label: '微信购买一键支付' },
+    { id: 'wifi', icon: '/images/detail/usage-wifi.svg', label: '落地连机场连Wi-Fi' },
+    { id: 'qr', icon: '/images/detail/usage-qr.svg', label: '订单页面扫码安装设置' },
   ],
+  networkCarriers: [
+    { id: 'kddi', icon: '/images/detail/carrier-kddi.png', width: 102 },
+    { id: 'softbank', icon: '/images/detail/carrier-softbank.png', width: 218 },
+  ],
+  networkSpeedText: '我们的日本国际 eSIM 提供高速 4G LTE 与 5G 网路服务（视当地覆盖情况而定）',
   servicePromises: [
     { id: 'refund', icon: '/images/detail/promise-1.svg', lines: ['未激活', '全额退款'] },
     { id: 'support', icon: '/images/detail/promise-2.svg', lines: ['7×24', '小时客服'] },
@@ -94,31 +100,11 @@ function getJapanPlan() {
   return JAPAN_PLAN;
 }
 
-function formatChipDaily(daily) {
-  const rounded = Math.round(daily * 10) / 10;
-  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
-}
-
 function buildDayChipOptions(prices) {
   return Object.keys(prices)
     .map(Number)
     .sort((a, b) => a - b)
-    .map((days) => {
-      const total = prices[days];
-      const daily = total / days;
-      if (days === 1) {
-        return {
-          days,
-          priceLabel: `¥${total.toFixed(2)}/天`,
-          badge: false,
-        };
-      }
-      return {
-        days,
-        priceLabel: `低至¥${formatChipDaily(daily)}/天`,
-        badge: true,
-      };
-    });
+    .map((days) => ({ days }));
 }
 
 function calcPricing(prices, days, quantity, originalDaily) {
@@ -129,15 +115,18 @@ function calcPricing(prices, days, quantity, originalDaily) {
   const total = unitTotal * quantity;
   const dailyAvg = Math.round((total / days / quantity) * 10) / 10;
   const savePercent = Math.max(0, Math.round((1 - dailyAvg / originalDaily) * 100));
+  const saveAmount = Math.max(0, Math.round((originalDaily - dailyAvg) * 10) / 10);
 
   return {
     total,
     dailyAvg,
     originalDaily,
     savePercent,
+    saveAmount,
     totalLabel: String(total),
-    dailyAvgLabel: String(dailyAvg),
-    footerMeta: `/ ${days}天`,
+    dailyAvgLabel: Number.isInteger(dailyAvg) ? String(dailyAvg) : dailyAvg.toFixed(1),
+    saveLabel: `官方立减${savePercent}%省${saveAmount}元`,
+    footerMeta: '/天',
   };
 }
 

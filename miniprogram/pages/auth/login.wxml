@@ -28,7 +28,7 @@
       <button
         wx:else
         class="login-btn login-btn--primary"
-        bindtap="onRequireAgree"
+        bindtap="onShowAgreeModal"
       >手机号快速验证</button>
       <text class="login-link" bindtap="onSmsLogin">短信验证码登录</text>
       <view class="login-agree" bindtap="onToggleAgree">
@@ -42,5 +42,24 @@
     </view>
 
     <button class="login-btn login-btn--ghost" bindtap="onSkipLogin">暂不登录</button>
+  </view>
+
+  <view wx:if="{{showAgreeModal}}" class="agree-modal">
+    <view class="agree-modal__mask" bindtap="onAgreeModalCancel" />
+    <view class="agree-modal__panel">
+      <view class="agree-modal__body">
+        <text class="agree-modal__title">温馨提示</text>
+        <text class="agree-modal__text">请先阅读并同意<text class="login-agree__link">服务协议</text>及<text class="login-agree__link">隐私协议</text></text>
+      </view>
+      <view class="agree-modal__actions">
+        <button class="agree-modal__btn agree-modal__btn--cancel" bindtap="onAgreeModalCancel">取消</button>
+        <button
+          class="agree-modal__btn agree-modal__btn--confirm"
+          open-type="getPhoneNumber"
+          bindtap="onAgreeModalConfirm"
+          bindgetphonenumber="onGetPhoneNumber"
+        >我已阅读</button>
+      </view>
+    </view>
   </view>
 </view>

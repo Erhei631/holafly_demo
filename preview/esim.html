@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>什么是eSIM · Holafly</title>
+  <style>
+    :root {
+      --rose-500:#e6485c;
+      --blue-50:#edf9fe;
+      --neutral-50:#fff; --neutral-100:#f8f8fb; --neutral-200:#e4e6ea;
+      --neutral-600:#56575a; --neutral-900:#272729;
+      --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
+      --padding-12:12px; --padding-16:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
+    .preview-label{font-size:14px;color:var(--neutral-600);margin-bottom:16px}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:linear-gradient(180deg,var(--blue-50) 6.5%,var(--neutral-50) 100%)}
+    .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
+    .esim-nav{position:absolute;top:47px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:44px}
+    .esim-nav__back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0}
+    .esim-nav__back img{width:9px;height:16.5px;display:block}
+    .esim-nav__title{font-size:16px;font-weight:500}
+    .esim-nav__spacer{width:32px}
+    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px}
+    .nav-capsule--menu{width:83px;padding:0 10px}
+    .nav-capsule img{display:block}
+    .nav-capsule__icon{width:16px;height:16px}
+    .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
+    .esim-scroll{position:absolute;top:91px;left:0;right:0;bottom:0;overflow-y:auto;padding:12px 20px calc(24px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
+    .esim-stack{display:flex;flex-direction:column;gap:12px}
+    .esim-card{display:flex;flex-direction:column;gap:12px;padding:16px;background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
+    .esim-card__title{font-size:16px;font-weight:500;line-height:24px}
+    .esim-card__divider{height:1px;background:var(--neutral-200)}
+    .esim-intro{font-size:15px;line-height:22px}
+    .esim-intro__highlight{font-weight:500;color:var(--rose-500)}
+    .esim-stats{display:flex;gap:6px}
+    .esim-stat{flex:1;display:flex;flex-direction:column;gap:2px;padding:12px;background:var(--neutral-100);border-radius:10px;min-width:0}
+    .esim-stat__value{font-size:18px;font-weight:500;line-height:24px}
+    .esim-stat__label{font-size:12px;color:var(--neutral-600);line-height:16px}
+    .esim-compare,.esim-benefits{display:flex;flex-wrap:wrap;gap:6px}
+    .esim-feature{flex:1 1 calc(50% - 3px);display:flex;flex-direction:column;gap:2px;padding:12px;background:var(--neutral-100);border-radius:10px;min-width:0;box-sizing:border-box}
+    .esim-feature__icon-wrap{display:flex;align-items:center;padding:8px}
+    .esim-feature__icon{width:24px;height:24px}
+    .esim-feature__title{font-size:14px;font-weight:500;line-height:20px}
+    .esim-feature__desc{font-size:12px;color:var(--neutral-600);line-height:16px}
+  </style>
+</head>
+<body>
+  <p class="preview-label">什么是eSIM · Figma 502:8384</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <div class="esim-nav">
+      <button class="esim-nav__back" type="button" id="esim-back"><img src="images/detail/nav-back.svg" alt="" /></button>
+      <span class="esim-nav__title">什么是eSIM</span>
+      <div class="nav-capsule nav-capsule--menu">
+        <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
+        <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
+        <img class="nav-capsule__icon" src="images/detail/nav-close.svg" alt="" />
+      </div>
+    </div>
+    <div class="esim-scroll">
+      <div class="esim-stack">
+        <div class="esim-card">
+          <span class="esim-card__title">什么是 eSIM?</span>
+          <div class="esim-card__divider"></div>
+          <p class="esim-intro">eSIM（Embedded SIM，嵌入式 SIM 卡）是一种<span class="esim-intro__highlight">内嵌在手机硬件里的数字 SIM 卡</span>，无需实体卡槽，也不用插拔，只要扫一个二维码或下载配置文件，几分钟内就能开通网络。</p>
+          <div class="esim-stats">
+            <div class="esim-stat"><span class="esim-stat__value">200+</span><span class="esim-stat__label">国家与地区可用</span></div>
+            <div class="esim-stat"><span class="esim-stat__value">30s</span><span class="esim-stat__label">扫码激活</span></div>
+            <div class="esim-stat"><span class="esim-stat__value">20个</span><span class="esim-stat__label">iPhone可存配置</span></div>
+          </div>
+        </div>
+        <div class="esim-card">
+          <span class="esim-card__title">eSIM vs 实体 SIM 卡</span>
+          <div class="esim-card__divider"></div>
+          <div class="esim-compare">
+            <div class="esim-feature">
+              <div class="esim-feature__icon-wrap"><img class="esim-feature__icon" src="images/esim-about/icon-esim.svg" alt="" /></div>
+              <span class="esim-feature__title">eSIM</span>
+              <span class="esim-feature__desc">数字芯片 · 内置在手机里 · 扫码即装</span>
+            </div>
+            <div class="esim-feature">
+              <div class="esim-feature__icon-wrap"><img class="esim-feature__icon" src="images/esim-about/icon-sim.svg" alt="" /></div>
+              <span class="esim-feature__title">实体 SIM 卡</span>
+              <span class="esim-feature__desc">塑料卡片 · 需邮寄 · 拔插原卡</span>
+            </div>
+          </div>
+        </div>
+        <div class="esim-card">
+          <span class="esim-card__title">为什么用 eSIM</span>
+          <div class="esim-card__divider"></div>
+          <div class="esim-benefits">
+            <div class="esim-feature"><div class="esim-feature__icon-wrap"><img class="esim-feature__icon" src="images/esim-about/icon-instant.svg" alt="" /></div><span class="esim-feature__title">即买即用</span><span class="esim-feature__desc">无需邮寄等待，购买后秒发，扫码 30 秒激活</span></div>
+            <div class="esim-feature"><div class="esim-feature__icon-wrap"><img class="esim-feature__icon" src="images/esim-about/icon-secure.svg" alt="" /></div><span class="esim-feature__title">更安全</span><span class="esim-feature__desc">eSIM 绑定设备，丢手机也不会被复制盗用</span></div>
+            <div class="esim-feature"><div class="esim-feature__icon-wrap"><img class="esim-feature__icon" src="images/esim-about/icon-dual.svg" alt="" /></div><span class="esim-feature__title">不占卡槽</span><span class="esim-feature__desc">保留原卡原号、双卡并用，国内号继续收验证码</span></div>
+            <div class="esim-feature"><div class="esim-feature__icon-wrap"><img class="esim-feature__icon" src="images/esim-about/icon-global.svg" alt="" /></div><span class="esim-feature__title">一卡多国</span><span class="esim-feature__desc">一份套餐覆盖多国，无需为每个目的地换卡</span></div>
+            <div class="esim-feature"><div class="esim-feature__icon-wrap"><img class="esim-feature__icon" src="images/esim-about/icon-eco.svg" alt="" /></div><span class="esim-feature__title">更环保</span><span class="esim-feature__desc">纯虚拟卡，减少塑料卡片浪费</span></div>
+            <div class="esim-feature"><div class="esim-feature__icon-wrap"><img class="esim-feature__icon" src="images/esim-about/icon-save.svg" alt="" /></div><span class="esim-feature__title">更便宜</span><span class="esim-feature__desc">比国际漫游便宜数倍，省下的钱花在旅程上</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('esim-back').addEventListener('click', () => {
+      if (history.length > 1) history.back();
+      else location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>

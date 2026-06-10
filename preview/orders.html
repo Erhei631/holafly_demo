@@ -29,6 +29,7 @@
     .order-card__badge{padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500;white-space:nowrap}
     .order-card__badge--pending{background:var(--yellow-100);color:var(--yellow-800)}
     .order-card__badge--active{background:var(--green-100);color:var(--green-700)}
+    .order-card__badge--installed{padding:4px 6px;font-weight:400;line-height:18px;background:var(--neutral-100);color:var(--neutral-400)}
     .order-card__badge--done{background:var(--neutral-200);color:var(--neutral-400)}
     .order-card__body{padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}
     .order-card__left{display:flex;align-items:center;gap:6px}
@@ -72,14 +73,14 @@
             </div>
           </div>
           <div class="order-card__actions">
-            <button class="order-card__btn" type="button">申请开票</button>
+            <button class="order-card__btn" type="button" data-action="support">联系客服</button>
             <button class="order-card__btn" type="button">安装教程</button>
           </div>
         </article>
         <article class="order-card">
           <div class="order-card__head">
             <span class="order-card__no">HF20260520183830</span>
-            <span class="order-card__badge order-card__badge--active">已激活</span>
+            <span class="order-card__badge order-card__badge--installed">已激活</span>
           </div>
           <div class="order-card__body" data-order-no="HF20260520183830" role="button" tabindex="0" aria-label="查看订单详情">
             <div class="order-card__left">
@@ -92,13 +93,14 @@
             </div>
           </div>
           <div class="order-card__actions">
-            <button class="order-card__btn" type="button">续订</button>
+            <button class="order-card__btn" type="button" data-action="invoice">申请开票</button>
+            <button class="order-card__btn" type="button" data-action="repurchase">再次购买</button>
           </div>
         </article>
         <article class="order-card">
           <div class="order-card__head">
             <span class="order-card__no">HF20260520183831</span>
-            <span class="order-card__badge order-card__badge--done">已完成</span>
+            <span class="order-card__badge order-card__badge--installed">已激活</span>
           </div>
           <div class="order-card__body" data-order-no="HF20260520183831" role="button" tabindex="0" aria-label="查看订单详情">
             <div class="order-card__left">
@@ -111,8 +113,8 @@
             </div>
           </div>
           <div class="order-card__actions">
-            <button class="order-card__btn" type="button">申请开票</button>
-            <button class="order-card__btn" type="button">再次购买</button>
+            <button class="order-card__btn" type="button" data-action="invoice">申请开票</button>
+            <button class="order-card__btn" type="button" data-action="repurchase">再次购买</button>
           </div>
         </article>
       </div>
@@ -154,6 +156,18 @@
           goOrderDetail(body.dataset.orderNo);
         }
       });
+    });
+
+    document.querySelectorAll('[data-action="support"]').forEach((btn) => {
+      btn.addEventListener('click', () => alert('联系客服（待开发）'));
+    });
+
+    document.querySelectorAll('[data-action="invoice"]').forEach((btn) => {
+      btn.addEventListener('click', () => alert('申请开票（待开发）'));
+    });
+
+    document.querySelectorAll('[data-action="repurchase"]').forEach((btn) => {
+      btn.addEventListener('click', () => { location.href = 'index.html'; });
     });
   </script>
 </body>

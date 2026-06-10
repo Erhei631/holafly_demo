@@ -39,8 +39,17 @@
     .login-agree__check--on{background:var(--rose-500);border-color:var(--rose-500)}
     .login-agree__text{font-size:14px;color:var(--neutral-400);line-height:20px;white-space:nowrap}
     .login-agree__link{color:var(--blue-600)}
-    .login-toast{position:absolute;left:50%;top:54%;z-index:100;transform:translate(-50%,-50%) scale(.96);padding:12px 20px;background:rgba(41,43,46,.88);color:#fff;font-size:14px;line-height:1.43;border-radius:10px;text-align:center;max-width:280px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
-    .login-toast.is-show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+    .agree-modal{position:absolute;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:0 40px}
+    .agree-modal.is-open{display:flex}
+    .agree-modal__mask{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+    .agree-modal__panel{position:relative;z-index:1;width:100%;max-width:280px;background:#fff;border-radius:16px;overflow:hidden;text-align:center}
+    .agree-modal__body{padding:24px 20px 20px}
+    .agree-modal__title{display:block;font-size:16px;font-weight:500;line-height:24px;color:var(--neutral-900)}
+    .agree-modal__text{display:block;margin-top:8px;font-size:14px;line-height:1.43;color:var(--neutral-400)}
+    .agree-modal__actions{display:flex;border-top:1px solid var(--neutral-200)}
+    .agree-modal__btn{flex:1;height:48px;border:none;background:transparent;font-size:16px;cursor:pointer;padding:0}
+    .agree-modal__btn--cancel{color:var(--neutral-400);border-right:1px solid var(--neutral-200)}
+    .agree-modal__btn--confirm{color:var(--rose-500);font-weight:500}
   </style>
 </head>
 <body>
@@ -70,18 +79,33 @@
       </div>
       <button class="login-btn login-btn--ghost" type="button" id="login-skip">暂不登录</button>
     </div>
-    <div class="login-toast" id="login-toast" role="status" aria-live="polite"></div>
+    <div class="agree-modal" id="agree-modal" role="dialog" aria-modal="true">
+      <div class="agree-modal__mask" id="agree-modal-mask"></div>
+      <div class="agree-modal__panel">
+        <div class="agree-modal__body">
+          <span class="agree-modal__title">温馨提示</span>
+          <span class="agree-modal__text">请先阅读并同意<span class="login-agree__link">服务协议</span>及<span class="login-agree__link">隐私协议</span></span>
+        </div>
+        <div class="agree-modal__actions">
+          <button class="agree-modal__btn agree-modal__btn--cancel" type="button" id="agree-modal-cancel">取消</button>
+          <button class="agree-modal__btn agree-modal__btn--confirm" type="button" id="agree-modal-confirm">我已阅读</button>
+        </div>
+      </div>
+    </div>
   </div>
   <script>
     const params=new URLSearchParams(location.search);
     let agreed=false;
-    let toastTimer=null;
-    function showToast(message){
-      const toast=document.getElementById('login-toast');
-      toast.textContent=message;
-      toast.classList.add('is-show');
-      clearTimeout(toastTimer);
-      toastTimer=setTimeout(()=>toast.classList.remove('is-show'),2000);
+    function setAgreed(value){
+      agreed=value;
+      document.getElementById('login-check').classList.toggle('login-agree__check--on',agreed);
+      document.getElementById('login-check').textContent=agreed?'✓':'';
+    }
+    function openAgreeModal(){
+      document.getElementById('agree-modal').classList.add('is-open');
+    }
+    function closeAgreeModal(){
+      document.getElementById('agree-modal').classList.remove('is-open');
     }
     function goCheckout(){
       const q=new URLSearchParams();
@@ -91,22 +115,21 @@
     }
     document.getElementById('login-back').addEventListener('click',()=>history.back());
     document.getElementById('login-skip').addEventListener('click',()=>history.back());
-    document.getElementById('login-agree').addEventListener('click',()=>{
-      agreed=!agreed;
-      document.getElementById('login-check').classList.toggle('login-agree__check--on',agreed);
-      document.getElementById('login-check').textContent=agreed?'✓':'';
-    });
-    function requireAgree(){
-      if(!agreed){
-        showToast('请先阅读并同意服务协议及隐私协议');
-        return false;
-      }
-      return true;
-    }
-    document.getElementById('login-phone').addEventListener('click',()=>{
-      if(!requireAgree()) return;
+    document.getElementById('login-agree').addEventListener('click',()=>setAgreed(!agreed));
+    function startPhoneLogin(){
       const ok=confirm('模拟微信小程序「获取手机号」授权\n\n点击「确定」视为授权成功');
       if(ok) goCheckout();
+    }
+    document.getElementById('login-phone').addEventListener('click',()=>{
+      if(!agreed){openAgreeModal();return;}
+      startPhoneLogin();
+    });
+    document.getElementById('agree-modal-cancel').addEventListener('click',closeAgreeModal);
+    document.getElementById('agree-modal-mask').addEventListener('click',closeAgreeModal);
+    document.getElementById('agree-modal-confirm').addEventListener('click',()=>{
+      setAgreed(true);
+      closeAgreeModal();
+      startPhoneLogin();
     });
     document.getElementById('login-sms').addEventListener('click',()=>{
       location.href=`login-sms.html?${params.toString()}`;

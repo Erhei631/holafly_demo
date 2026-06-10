@@ -83,9 +83,52 @@
       pointer-events: none;
     }
 
+    .home-header {
+      position: absolute;
+      top: var(--status-bar);
+      left: 0;
+      right: 0;
+      z-index: 15;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7px 0 20px;
+      pointer-events: none;
+    }
+
+    .nav-capsule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #dedede;
+      border-radius: 15px;
+      flex-shrink: 0;
+    }
+
+    .nav-capsule--menu {
+      width: 83px;
+      padding: 0 10px;
+    }
+
+    .nav-capsule img { display: block; }
+
+    .nav-capsule__icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .nav-capsule__sep {
+      width: 1px;
+      height: 13px;
+      margin: 0 8px;
+    }
+
     .page-scroll {
       position: absolute;
-      top: 0;
+      top: calc(var(--status-bar) + 44px);
       left: 0;
       right: 0;
       bottom: var(--tab-bar);
@@ -93,6 +136,12 @@
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       background: transparent;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .page-scroll::-webkit-scrollbar {
+      display: none;
     }
 
     .hero__map--fixed {
@@ -113,33 +162,12 @@
       padding: 0 20px 24px;
     }
 
-    .hero-top {
-      position: relative;
-      width: calc(100% + 40px);
-      margin-left: -20px;
-      margin-right: -20px;
-      padding-top: 89px;
-      box-sizing: border-box;
-    }
-
     .brand {
-      position: relative;
-      z-index: 1;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      text-align: center;
     }
 
     .brand__logo { width: 110px; height: 34px; display: block; }
-
-    .brand__title {
-      margin-top: 8px;
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--neutral-900);
-      line-height: 32px;
-    }
 
     .home-main {
       position: relative;
@@ -147,18 +175,27 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
-      margin-top: 24px;
+      margin-top: 14px;
     }
 
-    .promo-banner {
-      display: block;
+    .promo-card {
       width: 100%;
-      height: auto;
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.9);
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
       box-sizing: border-box;
       cursor: pointer;
+    }
+
+    .promo-card__content {
+      width: 100%;
+    }
+
+    .promo-card__image {
+      width: 100%;
+      display: block;
+      vertical-align: top;
     }
 
     .activity-bar {
@@ -237,18 +274,6 @@
       background: var(--blue-100);
       border-radius: 24px;
     }
-
-    .search-block__perks {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 12px;
-      color: var(--neutral-600);
-      line-height: 18px;
-    }
-
-    .search-block__perk-sep { opacity: 0.5; }
 
     .search-card {
       width: 100%;
@@ -389,6 +414,7 @@
 
     .edu-card--esim {
       background: linear-gradient(172deg, #f2fdeb 0%, #e0f4fd 100%);
+      cursor: pointer;
     }
 
     .edu-card--compat {
@@ -535,52 +561,124 @@
       color: var(--neutral-400);
     }
 
-    .compare-card {
-      padding: 16px 16px 20px;
+    .why-card {
+      padding: 16px 0 20px;
       background: #fff;
       border-radius: 24px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
     }
 
-    .compare-card__title {
+    .why-card__section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 0 16px 16px;
+    }
+
+    .why-card__header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .why-card__heading {
       font-size: 16px;
-      font-weight: 600;
-      color: #202c40;
-      line-height: 22px;
-      margin-bottom: 12px;
+      font-weight: 500;
+      color: var(--neutral-900);
+      line-height: 24px;
+    }
+
+    .why-card__logo {
+      width: 71px;
+      height: 20px;
+      display: block;
+    }
+
+    .why-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .why-feature {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      background: var(--neutral-100);
+      border-radius: 10px;
+    }
+
+    .why-feature__icon-wrap {
+      flex-shrink: 0;
+      padding: 6px;
+      background: #fff;
+      border-radius: 10px;
+    }
+
+    .why-feature__icon {
+      width: 28px;
+      height: 28px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .why-feature__body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .why-feature__title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--neutral-600);
+      line-height: 20px;
+    }
+
+    .why-feature__desc {
+      font-size: 12px;
+      color: var(--neutral-600);
+      line-height: 16px;
     }
 
     .compare-scroll {
+      padding: 0 16px;
+      box-sizing: border-box;
+      position: relative;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      position: relative;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
 
     .compare-scroll::-webkit-scrollbar {
       display: none;
     }
 
+    .compare-table {
+      position: relative;
+      min-width: 572px;
+    }
+
     .compare-highlight {
       position: absolute;
       left: 72px;
-      top: -4px;
+      top: 0;
+      bottom: 0;
       width: 100px;
-      height: calc(100% + 4px);
-      border-radius: 16px;
+      border-radius: 10px;
       background: linear-gradient(
-        124deg,
-        #bfebff 21.9%,
+        124.135deg,
+        #bfebff 21.92%,
         #f9eef8 53.4%,
-        #ffccb0 131.9%
+        #ffccb0 131.92%
       );
       pointer-events: none;
-      z-index: 0;
-    }
-
-    .compare-table {
-      position: relative;
       z-index: 1;
-      min-width: 572px;
     }
 
     .compare-row {
@@ -593,10 +691,12 @@
     }
 
     .compare-row:not(.compare-row--head) {
-      height: 45px;
+      height: 44px;
     }
 
     .compare-cell {
+      position: relative;
+      z-index: 0;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -609,7 +709,7 @@
     .compare-cell--label {
       position: sticky;
       left: 0;
-      z-index: 2;
+      z-index: 4;
       width: 72px;
       font-size: 12px;
       font-weight: 500;
@@ -638,7 +738,14 @@
     }
 
     .compare-col--holafly {
-      background: transparent;
+      position: relative;
+      z-index: 2;
+      background: transparent !important;
+      border-top-color: transparent !important;
+    }
+
+    .compare-row:last-child .compare-col--holafly {
+      border-bottom-color: transparent !important;
     }
 
     .compare-row--alt .compare-col:not(.compare-col--holafly) {
@@ -812,9 +919,10 @@
       height: 82%;
       display: flex;
       flex-direction: column;
+      gap: 8px;
       background: #fff;
       border-radius: 24px 24px 0 0;
-      padding-bottom: calc(24px + env(safe-area-inset-bottom, var(--safe-area-bottom)));
+      padding: 12px 0 calc(24px + env(safe-area-inset-bottom, var(--safe-area-bottom)));
       box-sizing: border-box;
       transform: translateY(100%);
       transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
@@ -824,23 +932,30 @@
 
     .compat-sheet.is-open { transform: translateY(0); pointer-events: auto; }
 
-    .compat-sheet__handle-wrap { display: flex; justify-content: center; padding: 4px 0 8px; }
+    .compat-sheet__handle-wrap { display: flex; justify-content: center; padding: 4px 0 8px; flex-shrink: 0; }
     .compat-sheet__handle { width: 36px; height: 4px; border-radius: 999px; background: var(--neutral-200); }
-    .compat-sheet__header { display: flex; align-items: center; justify-content: space-between; padding: 8px 20px; min-height: 52px; }
+    .compat-sheet__header { display: flex; align-items: center; justify-content: space-between; padding: 8px 20px; min-height: 52px; flex-shrink: 0; box-sizing: border-box; }
     .compat-sheet__title { flex: 1; font-size: 18px; font-weight: 500; line-height: 24px; }
     .compat-sheet__close { border: none; background: transparent; padding: 0; cursor: pointer; width: 28px; height: 28px; }
     .compat-sheet__close img { width: 28px; height: 28px; display: block; }
-    .compat-sheet__scroll { flex: 1; min-height: 0; overflow-y: auto; padding-bottom: 8px; }
-    .compat-sheet__section { padding: 0 20px 8px; }
-    .compat-sheet__body { display: flex; flex-direction: column; gap: 16px; padding: 16px 20px 0; }
+    .compat-device { display: flex; flex-direction: column; gap: 4px; padding: 12px 20px; background: var(--neutral-100); flex-shrink: 0; box-sizing: border-box; }
+    .compat-device__row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .compat-device__name { font-size: 15px; font-weight: 500; line-height: 22px; color: var(--neutral-900); }
+    .compat-device__badge { display: flex; align-items: center; gap: 4px; padding: 4px 6px; background: var(--green-100); border-radius: 4px; font-size: 12px; line-height: 16px; color: #179b50; flex-shrink: 0; }
+    .compat-device__badge img { width: 14px; height: 14px; }
+    .compat-device__hint { font-size: 12px; color: var(--neutral-400); line-height: 16px; }
+    .compat-sheet__section { display: flex; flex-direction: column; gap: 8px; padding: 8px 20px 0; flex-shrink: 0; box-sizing: border-box; }
+    .compat-sheet__body { display: flex; flex-direction: column; gap: 16px; padding: 16px 20px 0; flex: 1; min-height: 0; overflow-y: auto; box-sizing: border-box; }
     .compat-sheet__label { display: block; font-size: 12px; color: var(--neutral-400); line-height: 16px; }
-    .compat-version-row { display: flex; gap: 8px; margin-top: 8px; }
-    .compat-version { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid var(--neutral-200); border-radius: 16px; background: #fff; cursor: pointer; }
+    .compat-step-label { display: block; font-size: 12px; color: var(--neutral-400); line-height: 16px; margin: 0; padding-left: 18px; text-indent: -18px; }
+    .compat-version-row { display: flex; gap: 8px; }
+    .compat-version { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid var(--neutral-200); border-radius: 16px; background: #fff; cursor: pointer; box-sizing: border-box; }
     .compat-version--active { background: var(--rose-50); border-color: var(--rose-500); }
     .compat-version img { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
+    .compat-version__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
     .compat-version__title { display: block; font-size: 16px; font-weight: 500; line-height: 24px; }
     .compat-version__subtitle { display: block; font-size: 12px; color: var(--neutral-400); line-height: 16px; }
-    .compat-segment { display: flex; gap: 4px; padding: 4px; background: var(--neutral-100); border-radius: 12px; }
+    .compat-segment { display: flex; gap: 4px; padding: 4px; background: var(--neutral-200); border-radius: 12px; }
     .compat-segment__item { flex: 1; display: flex; align-items: center; justify-content: center; padding: 8px 16px; border: none; border-radius: 8px; background: transparent; font-size: 14px; cursor: pointer; }
     .compat-segment__item--active { background: #fff; box-shadow: 0 2px 8px -4px rgba(0, 0, 0, 0.2); }
     .compat-search { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--neutral-100); border-radius: 24px; }
@@ -848,8 +963,8 @@
     .compat-search input { flex: 1; min-width: 0; border: none; background: transparent; font-size: 14px; color: var(--neutral-900); outline: none; }
     .compat-search input::placeholder { color: var(--neutral-600); }
     .compat-models { display: flex; flex-direction: column; gap: 12px; }
-    .compat-model { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--neutral-100); }
-    .compat-model:last-child { padding-bottom: 0; border-bottom: none; }
+    .compat-model { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .compat-model__divider { height: 1px; background: var(--neutral-100); width: 100%; }
     .compat-model__name { font-size: 15px; font-weight: 500; line-height: 22px; }
     .compat-model__badge { display: flex; align-items: center; gap: 4px; padding: 4px 6px; background: var(--green-100); border-radius: 4px; font-size: 12px; color: var(--green-700); flex-shrink: 0; }
     .compat-model__badge img { width: 14px; height: 14px; }
@@ -1026,17 +1141,24 @@
   <p class="preview-label">Holafly 首页预览 · Figma 269:2799 · 更新于 <span id="build-time"></span></p>
   <div class="device" id="device">
     <img class="hero__map--fixed" src="images/home/map-watermark.png" alt="" />
+    <div class="home-header">
+      <div class="brand">
+        <img class="brand__logo" src="images/home/logo.svg?v=3" alt="Holafly" width="110" height="34" />
+      </div>
+      <div class="nav-capsule nav-capsule--menu">
+        <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
+        <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
+        <img class="nav-capsule__icon" src="images/detail/nav-close.svg" alt="" />
+      </div>
+    </div>
     <div class="page-scroll">
     <div class="page">
-      <div class="hero-top">
-        <div class="brand">
-          <img class="brand__logo" src="images/home/logo.svg?v=3" alt="Holafly" width="110" height="34" />
-          <h1 class="brand__title">出境上网助手</h1>
-        </div>
-      </div>
-
       <div class="home-main">
-        <img class="promo-banner" id="promo-banner" src="images/home/promo-banner.png" alt="新用户专属8折优惠" />
+        <div class="promo-card" id="promo-banner" role="button" tabindex="0">
+          <div class="promo-card__content">
+            <img class="promo-card__image" src="images/home/promo-card.png" alt="新用户专属折扣码" />
+          </div>
+        </div>
 
         <div class="activity-bar">
           <div class="activity-bar__chip"><span class="activity-bar__chip-text">实时</span></div>
@@ -1048,20 +1170,13 @@
 
         <div class="search-block">
           <div class="search-block__shell">
-            <div class="search-block__perks">
-              <span>7 × 24小时客服</span>
-              <span class="search-block__perk-sep">|</span>
-              <span>无限流量</span>
-              <span class="search-block__perk-sep">|</span>
-              <span>200+国家覆盖</span>
-            </div>
             <div class="search-card">
               <div class="search-card__dest" id="open-drawer">
                 <img class="search-card__icon" src="images/home/icon-airplane.svg?v=3" alt="" />
                 <div class="search-card__dest-row">
                   <span class="search-card__label">目的地</span>
                   <div class="search-card__vsep"></div>
-                  <span class="search-card__value" id="dest-display">日本</span>
+                  <span class="search-card__value" id="dest-display">香港</span>
                   <img class="search-card__chevron" src="images/home/icon-chevron-down.svg" alt="" />
                 </div>
               </div>
@@ -1076,7 +1191,7 @@
         </div>
 
         <div class="edu-cards">
-          <div class="edu-card edu-card--esim">
+          <div class="edu-card edu-card--esim" id="open-esim-card" role="button" tabindex="0">
             <img class="edu-card__icon" src="images/home/card-esim.svg?v=3" alt="" />
             <div class="edu-card__body">
               <span class="edu-card__tag">eSIM</span>
@@ -1097,6 +1212,102 @@
             </div>
           </div>
         </div>
+
+        <section class="why-card">
+          <div class="why-card__section">
+            <div class="why-card__header">
+              <span class="why-card__heading">为什么选择</span>
+              <img class="why-card__logo" src="images/home/why-logo.svg" alt="Holafly" width="71" height="20" />
+            </div>
+            <div class="why-features">
+              <div class="why-feature">
+                <div class="why-feature__icon-wrap">
+                  <img class="why-feature__icon" src="images/home/why-infinity.png" alt="" />
+                </div>
+                <div class="why-feature__body">
+                  <span class="why-feature__title">不限流量 · 不限速</span>
+                  <span class="why-feature__desc">4K视频、直播、导航全程不卡顿，绝不偷偷降速</span>
+                </div>
+              </div>
+              <div class="why-feature">
+                <div class="why-feature__icon-wrap">
+                  <img class="why-feature__icon" src="images/home/why-headset.png" alt="" />
+                </div>
+                <div class="why-feature__body">
+                  <span class="why-feature__title">中文客服 7×24h</span>
+                  <span class="why-feature__desc">全天候真人在线，遇到问题随时秒回</span>
+                </div>
+              </div>
+              <div class="why-feature">
+                <div class="why-feature__icon-wrap">
+                  <img class="why-feature__icon" src="images/home/why-globe.png" alt="" />
+                </div>
+                <div class="why-feature__body">
+                  <span class="why-feature__title">覆盖全球200+国家</span>
+                  <span class="why-feature__desc">全球200+国家，一次支付，畅行旅程</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="compare-scroll">
+            <div class="compare-table">
+              <div class="compare-highlight" aria-hidden="true"></div>
+              <div class="compare-row compare-row--head">
+                <div class="compare-cell compare-cell--label compare-cell--head">权益</div>
+                <div class="compare-cell compare-col compare-col--holafly">
+                  <div class="compare-head">
+                    <img class="compare-head__logo" src="images/home/logo.svg?v=3" alt="Holafly" width="54" height="17" />
+                    <span class="compare-head__sub">eSIM</span>
+                  </div>
+                </div>
+                <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">实体卡</span><span class="compare-head__sub">SIM</span></div></div>
+                <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">漫游</span><span class="compare-head__sub">运营商</span></div></div>
+                <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">随身</span><span class="compare-head__sub">WiFi</span></div></div>
+                <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">其他</span><span class="compare-head__sub">eSIM</span></div></div>
+              </div>
+              <div class="compare-row">
+                <div class="compare-cell compare-cell--label">流量</div>
+                <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">无限不限速</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">GB 限额</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">降速</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">共享</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">GB 限额</span></div>
+              </div>
+              <div class="compare-row compare-row--alt">
+                <div class="compare-cell compare-cell--label">价格</div>
+                <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">¥6/天起</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">¥15+</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">¥25-60</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">¥15-35</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">美元</span></div>
+              </div>
+              <div class="compare-row">
+                <div class="compare-cell compare-cell--label">激活</div>
+                <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">30s</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">物流</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">电话</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">取还</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">扫码</span></div>
+              </div>
+              <div class="compare-row compare-row--alt">
+                <div class="compare-cell compare-cell--label">国内号</div>
+                <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">保留</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">换卡</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">保留</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">保留</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">保留</span></div>
+              </div>
+              <div class="compare-row">
+                <div class="compare-cell compare-cell--label">客服</div>
+                <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">中文 7×24</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">商家</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">运营商</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">租赁商</span></div>
+                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">英文</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <div class="reviews-card">
           <div class="reviews-card__header">
@@ -1130,68 +1341,6 @@
             </div>
           </div>
         </div>
-
-        <section class="compare-card">
-          <h2 class="compare-card__title">Holafly 核心优势</h2>
-          <div class="compare-scroll">
-            <div class="compare-highlight" aria-hidden="true"></div>
-            <div class="compare-table">
-              <div class="compare-row compare-row--head">
-                <div class="compare-cell compare-cell--label compare-cell--head">权益</div>
-                <div class="compare-cell compare-col compare-col--holafly">
-                  <div class="compare-head">
-                    <img class="compare-head__logo" src="images/home/logo.svg?v=3" alt="Holafly" width="54" height="17" />
-                    <span class="compare-head__sub">eSIM</span>
-                  </div>
-                </div>
-                <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">实体卡</span><span class="compare-head__sub">SIM</span></div></div>
-                <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">漫游</span><span class="compare-head__sub">运营商</span></div></div>
-                <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">随身</span><span class="compare-head__sub">WiFi</span></div></div>
-                <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">其他</span><span class="compare-head__sub">eSIM</span></div></div>
-              </div>
-              <div class="compare-row">
-                <div class="compare-cell compare-cell--label">流量</div>
-                <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">无限不限速</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">GB 限额</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">降速</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">共享</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">GB 限额</span></div>
-              </div>
-              <div class="compare-row compare-row--alt">
-                <div class="compare-cell compare-cell--label">价格</div>
-                <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">¥6/天起</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">¥15+</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">¥25-60</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">¥15-35</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">美元</span></div>
-              </div>
-              <div class="compare-row">
-                <div class="compare-cell compare-cell--label">激活</div>
-                <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">30 秒</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">物流</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">电话</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">取还</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">扫码</span></div>
-              </div>
-              <div class="compare-row compare-row--alt">
-                <div class="compare-cell compare-cell--label">国内号</div>
-                <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">保留</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">换卡</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">保留</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">保留</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">保留</span></div>
-              </div>
-              <div class="compare-row">
-                <div class="compare-cell compare-cell--label">客服</div>
-                <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">中文 7×24</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">商家</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">运营商</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">租赁商</span></div>
-                <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">英文</span></div>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
     </div>
@@ -1250,13 +1399,20 @@
           <img src="images/compat/close.svg" alt="" />
         </button>
       </div>
-      <div class="compat-sheet__scroll">
-        <div class="compat-sheet__section">
-          <span class="compat-sheet__label">您的手机是哪个版本</span>
-          <div class="compat-version-row" id="compat-version-row"></div>
+      <div class="compat-device">
+        <span class="compat-sheet__label">您的机型</span>
+        <div class="compat-device__row">
+          <span class="compat-device__name">iPhone 17e</span>
+          <span class="compat-device__badge"><img src="images/compat/check.svg" alt="" />支持</span>
         </div>
-        <div class="compat-sheet__body">
-          <span class="compat-sheet__label">选择查询方式</span>
+        <span class="compat-device__hint">系统检查结果仅供参考，建议按照以下方式手动确认</span>
+      </div>
+      <div class="compat-sheet__section">
+        <span class="compat-step-label">1. 您的手机是哪个版本</span>
+        <div class="compat-version-row" id="compat-version-row"></div>
+      </div>
+      <div class="compat-sheet__body">
+          <span class="compat-step-label">2. 选择查询方式</span>
           <div class="compat-segment" id="compat-segment"></div>
           <div class="compat-model-panel" id="compat-model-panel">
             <div class="compat-search">
@@ -1272,7 +1428,6 @@
             <span class="compat-dial__code">*#06#</span>
             <span class="compat-dial__hint">在拨号界面输入 *#06#，若出现 EID 号码则通常支持 eSIM。不同版本机型结果可能不同，建议结合机型列表核对。</span>
           </div>
-        </div>
       </div>
     </div>
   </div>
@@ -1306,7 +1461,7 @@
       window.location.href = 'detail.html?destination=日本';
     }
 
-    let selectedId = 'jp';
+    let selectedId = 'hk';
     const mask = document.getElementById('drawer-mask');
     const drawer = document.getElementById('drawer');
     const destDisplay = document.getElementById('dest-display');
@@ -1333,7 +1488,7 @@
     });
 
     document.getElementById('promo-banner').addEventListener('click', () => {
-      alert('优惠券已领取');
+      alert('折扣码已复制');
     });
 
     const ACTIVITY_FEED = [
@@ -1479,11 +1634,12 @@
       const models = keyword
         ? COMPAT.models.filter((m) => m.name.toLowerCase().includes(keyword))
         : COMPAT.models;
-      document.getElementById('compat-models-list').innerHTML = models.map((m) => `
+      document.getElementById('compat-models-list').innerHTML = models.map((m, i) => `
         <div class="compat-model">
           <span class="compat-model__name">${m.name}</span>
           ${m.supported ? '<span class="compat-model__badge"><img src="images/compat/check.svg" alt="" />支持</span>' : ''}
         </div>
+        ${i < models.length - 1 ? '<div class="compat-model__divider"></div>' : ''}
       `).join('');
     }
 
@@ -1503,7 +1659,7 @@
       document.getElementById('compat-version-row').innerHTML = COMPAT.versions.map((v) => `
         <button type="button" class="compat-version" data-version="${v.id}">
           <img src="${v.icon}" alt="" />
-          <span>
+          <span class="compat-version__text">
             <span class="compat-version__title">${v.title}</span>
             <span class="compat-version__subtitle">${v.subtitle}</span>
           </span>
@@ -1527,6 +1683,7 @@
     }
 
     mountCompatSheet();
+    document.getElementById('open-esim-card').addEventListener('click', () => { location.href = 'esim.html'; });
     document.getElementById('open-compat-card').addEventListener('click', openCompatSheet);
     document.getElementById('compat-sheet-mask').addEventListener('click', closeCompatSheet);
     document.getElementById('compat-sheet-close').addEventListener('click', closeCompatSheet);

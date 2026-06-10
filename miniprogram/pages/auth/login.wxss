@@ -177,3 +177,82 @@
 .login-agree__link {
   color: var(--blue-600);
 }
+
+.agree-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 80rpx;
+}
+
+.agree-modal__mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.agree-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560rpx;
+  background: var(--color-bg-base);
+  border-radius: 32rpx;
+  overflow: hidden;
+  text-align: center;
+}
+
+.agree-modal__body {
+  padding: 48rpx 40rpx 40rpx;
+}
+
+.agree-modal__title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 48rpx;
+}
+
+.agree-modal__text {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 28rpx;
+  color: var(--color-text-tertiary);
+  line-height: 1.43;
+}
+
+.agree-modal__actions {
+  display: flex;
+  border-top: 2rpx solid var(--color-divider);
+}
+
+.agree-modal__btn {
+  flex: 1;
+  height: 96rpx;
+  line-height: 96rpx;
+  border: none;
+  background: transparent;
+  font-size: 32rpx;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.agree-modal__btn::after {
+  border: none;
+}
+
+.agree-modal__btn--cancel {
+  color: var(--color-text-tertiary);
+  border-right: 2rpx solid var(--color-divider);
+}
+
+.agree-modal__btn--confirm {
+  color: var(--color-primary);
+  font-weight: 500;
+}

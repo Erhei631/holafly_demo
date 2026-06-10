@@ -3,12 +3,19 @@ const {
   MULTI_REGIONS,
   filterChips,
 } = require('../../data/destinations');
-const { HOME_POPULAR, ACTIVITY_FEED, HOME_REVIEWS, HOME_COMPARE } = require('../../data/home');
+const {
+  HOME_POPULAR,
+  ACTIVITY_FEED,
+  HOME_REVIEWS,
+  WHY_CHOOSE,
+  HOME_COMPARE,
+} = require('../../data/home');
 const {
   VERSION_OPTIONS,
   METHOD_OPTIONS,
   POPULAR_MODELS,
   DIAL_HINT,
+  DEVICE_INFO,
 } = require('../../data/compat-check');
 const { getSafeAreaBottom, getStatusBarHeight } = require('../../utils/safe-area');
 
@@ -30,9 +37,9 @@ Page({
   data: {
     statusBarHeight: 20,
     safeBottom: 0,
-    destinationQuery: '日本',
-    destinationDisplay: '日本',
-    selectedDestinationId: 'jp',
+    destinationQuery: '香港',
+    destinationDisplay: '香港',
+    selectedDestinationId: 'hk',
     showDestinationDrawer: false,
     drawerKeyword: '',
     popularCountries: POPULAR_COUNTRIES,
@@ -42,12 +49,14 @@ Page({
     popularRecommendations: HOME_POPULAR,
     activityFeed: ACTIVITY_FEED,
     reviews: HOME_REVIEWS,
+    whyChoose: WHY_CHOOSE,
     compare: HOME_COMPARE,
     showCompatSheet: false,
     compatVersions: VERSION_OPTIONS,
     compatMethods: METHOD_OPTIONS,
     compatModels: POPULAR_MODELS,
     compatDialHint: DIAL_HINT,
+    compatDevice: DEVICE_INFO,
     compatVersion: 'global',
     compatMethod: 'model',
     compatSearch: '',
@@ -127,11 +136,11 @@ Page({
   },
 
   onClaimPromoTap() {
-    wx.showToast({ title: '优惠券已领取', icon: 'success' });
+    wx.showToast({ title: '折扣码已复制', icon: 'success' });
   },
 
   onEsimCardTap() {
-    wx.navigateTo({ url: '/pages/faq/index?topic=esim' });
+    wx.navigateTo({ url: '/pages/guide/esim' });
   },
 
   onCompatCardTap() {

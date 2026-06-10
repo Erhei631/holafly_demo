@@ -1,21 +1,23 @@
 <view class="page page--tab">
   <image class="hero__map" src="/images/home/map-watermark.png" mode="aspectFill" />
-  <scroll-view class="page-scroll home-scroll" scroll-y enhanced show-scrollbar="{{false}}">
-  <view class="hero-top">
+  <view class="home-header" style="padding-top: {{statusBarHeight}}px;">
     <view class="brand">
       <image class="brand__logo" src="/images/home/logo.svg" mode="aspectFit" />
-      <text class="brand__title">出境上网助手</text>
+    </view>
+    <view class="nav-capsule nav-capsule--menu">
+      <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-share.svg" mode="aspectFit" />
+      <image class="nav-capsule__sep" src="/images/detail/nav-divider.svg" mode="aspectFit" />
+      <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-close.svg" mode="aspectFit" />
     </view>
   </view>
-
+  <scroll-view class="page-scroll home-scroll" scroll-y enhanced show-scrollbar="{{false}}">
   <view class="hero">
     <view class="home-main">
-      <image
-        class="promo-banner"
-        src="/images/home/promo-banner.png"
-        mode="widthFix"
-        bindtap="onClaimPromoTap"
-      />
+      <view class="promo-card" bindtap="onClaimPromoTap">
+        <view class="promo-card__content">
+          <image class="promo-card__image" src="/images/home/promo-card.png" mode="widthFix" />
+        </view>
+      </view>
 
       <view class="activity-bar">
         <view class="activity-bar__chip">
@@ -41,14 +43,6 @@
 
       <view class="search-block">
         <view class="search-block__shell">
-          <view class="search-block__perks">
-            <text class="search-block__perk">7 × 24小时客服</text>
-            <text class="search-block__perk-sep">|</text>
-            <text class="search-block__perk">无限流量</text>
-            <text class="search-block__perk-sep">|</text>
-            <text class="search-block__perk">200+国家覆盖</text>
-          </view>
-
           <view class="search-card">
             <view class="search-card__dest" bindtap="openDestinationDrawer">
               <image class="search-card__icon" src="/images/home/icon-airplane.svg" mode="aspectFit" />
@@ -110,38 +104,27 @@
         </view>
       </view>
 
-      <view class="reviews-card">
-        <view class="reviews-card__header">
-          <view class="reviews-card__brand">
-            <image class="reviews-card__logo" src="/images/home/trustpilot-logo.svg" mode="aspectFit" />
-            <text class="reviews-card__count">来自 95,304 位用户评价</text>
+      <view class="why-card">
+        <view class="why-card__section">
+          <view class="why-card__header">
+            <text class="why-card__heading">为什么选择</text>
+            <image class="why-card__logo" src="/images/home/why-logo.svg" mode="aspectFit" />
           </view>
-          <view class="reviews-card__rating">
-            <text class="reviews-card__score">4.7</text>
-            <text class="reviews-card__max">/5</text>
-            <image class="reviews-card__arrow" src="/images/home/icon-arrow-right.svg" mode="aspectFit" />
-          </view>
-        </view>
-        <view class="reviews-card__divider" />
-        <view class="reviews-list">
-          <view wx:for="{{reviews}}" wx:key="id" class="review-item">
-            <view class="review-item__top">
-              <text class="review-item__name">{{item.name}}</text>
-              <view class="review-item__badge">
-                <text class="review-item__badge-text">{{item.rating}}</text>
+          <view class="why-features">
+            <view wx:for="{{whyChoose}}" wx:key="id" class="why-feature">
+              <view class="why-feature__icon-wrap">
+                <image class="why-feature__icon" src="{{item.icon}}" mode="aspectFill" />
+              </view>
+              <view class="why-feature__body">
+                <text class="why-feature__title">{{item.title}}</text>
+                <text class="why-feature__desc">{{item.desc}}</text>
               </view>
             </view>
-            <text class="review-item__text">{{item.text}}</text>
-            <text class="review-item__meta">{{item.meta}}</text>
           </view>
         </view>
-      </view>
-
-      <view class="compare-card">
-        <text class="compare-card__title">Holafly 核心优势</text>
         <scroll-view class="compare-scroll" scroll-x enhanced show-scrollbar="{{false}}">
-          <view class="compare-highlight" />
           <view class="compare-table">
+            <view class="compare-highlight" />
             <view class="compare-row compare-row--head">
               <view class="compare-cell compare-cell--label compare-cell--head">权益</view>
               <view
@@ -177,6 +160,33 @@
             </view>
           </view>
         </scroll-view>
+      </view>
+
+      <view class="reviews-card">
+        <view class="reviews-card__header">
+          <view class="reviews-card__brand">
+            <image class="reviews-card__logo" src="/images/home/trustpilot-logo.svg" mode="aspectFit" />
+            <text class="reviews-card__count">来自 95,304 位用户评价</text>
+          </view>
+          <view class="reviews-card__rating">
+            <text class="reviews-card__score">4.7</text>
+            <text class="reviews-card__max">/5</text>
+            <image class="reviews-card__arrow" src="/images/home/icon-arrow-right.svg" mode="aspectFit" />
+          </view>
+        </view>
+        <view class="reviews-card__divider" />
+        <view class="reviews-list">
+          <view wx:for="{{reviews}}" wx:key="id" class="review-item">
+            <view class="review-item__top">
+              <text class="review-item__name">{{item.name}}</text>
+              <view class="review-item__badge">
+                <text class="review-item__badge-text">{{item.rating}}</text>
+              </view>
+            </view>
+            <text class="review-item__text">{{item.text}}</text>
+            <text class="review-item__meta">{{item.meta}}</text>
+          </view>
+        </view>
       </view>
     </view>
   </view>
@@ -269,7 +279,7 @@
   />
   <view
     class="compat-sheet {{showCompatSheet ? 'compat-sheet--show' : ''}}"
-    style="padding-bottom: {{safeBottom}}px;"
+    style="padding-bottom: {{safeBottom + 24}}px;"
     catchtap="noop"
     catchtouchmove="noop"
   >
@@ -282,10 +292,20 @@
         <image class="compat-sheet__close-icon" src="/images/compat/close.svg" mode="aspectFit" />
       </view>
     </view>
-    <scroll-view class="compat-sheet__scroll" scroll-y enhanced show-scrollbar="{{false}}">
-      <view class="compat-sheet__section">
-        <text class="compat-sheet__label">您的手机是哪个版本</text>
-        <view class="compat-version-row">
+    <view class="compat-device">
+      <text class="compat-sheet__label">您的机型</text>
+      <view class="compat-device__row">
+        <text class="compat-device__name">{{compatDevice.name}}</text>
+        <view wx:if="{{compatDevice.supported}}" class="compat-device__badge">
+          <image class="compat-device__check" src="/images/compat/check.svg" mode="aspectFit" />
+          <text>支持</text>
+        </view>
+      </view>
+      <text class="compat-device__hint">{{compatDevice.disclaimer}}</text>
+    </view>
+    <view class="compat-sheet__section">
+      <text class="compat-step-label">1. 您的手机是哪个版本</text>
+      <view class="compat-version-row">
           <view
             wx:for="{{compatVersions}}"
             wx:key="id"
@@ -299,10 +319,10 @@
               <text class="compat-version__subtitle">{{item.subtitle}}</text>
             </view>
           </view>
-        </view>
       </view>
-      <view class="compat-sheet__body">
-        <text class="compat-sheet__label">选择查询方式</text>
+    </view>
+    <scroll-view class="compat-sheet__body" scroll-y enhanced show-scrollbar="{{false}}">
+        <text class="compat-step-label">2. 选择查询方式</text>
         <view class="compat-segment">
           <view
             wx:for="{{compatMethods}}"
@@ -327,24 +347,22 @@
           </view>
           <view class="compat-models">
             <text class="compat-sheet__label">热门机型</text>
-            <view
-              wx:for="{{filteredCompatModels}}"
-              wx:key="id"
-              class="compat-model"
-            >
-              <text class="compat-model__name">{{item.name}}</text>
-              <view wx:if="{{item.supported}}" class="compat-model__badge">
-                <image class="compat-model__check" src="/images/compat/check.svg" mode="aspectFit" />
-                <text>支持</text>
+            <block wx:for="{{filteredCompatModels}}" wx:key="id">
+              <view class="compat-model">
+                <text class="compat-model__name">{{item.name}}</text>
+                <view wx:if="{{item.supported}}" class="compat-model__badge">
+                  <image class="compat-model__check" src="/images/compat/check.svg" mode="aspectFit" />
+                  <text>支持</text>
+                </view>
               </view>
-            </view>
+              <view wx:if="{{index < filteredCompatModels.length - 1}}" class="compat-model__divider" />
+            </block>
           </view>
         </block>
         <view wx:else class="compat-dial">
           <text class="compat-dial__code">*#06#</text>
           <text class="compat-dial__hint">{{compatDialHint}}</text>
         </view>
-      </view>
     </scroll-view>
   </view>
 </view>

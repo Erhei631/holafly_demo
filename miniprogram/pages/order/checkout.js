@@ -44,7 +44,7 @@ Page({
     const unitTotal = plan.prices[days]
       || Math.round((plan.prices[7] / 7) * days);
     const totalPrice = unitTotal * quantity;
-    const originalTotal = plan.originalDaily * days * quantity;
+    const originalTotal = totalPrice;
     const totalPriceLabel = formatYuan(totalPrice);
 
     this.setData({

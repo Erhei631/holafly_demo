@@ -6,6 +6,7 @@ Page({
     statusBarHeight: 20,
     safeBottom: 0,
     agreed: false,
+    showAgreeModal: false,
     redirect: 'checkout',
     checkoutQuery: '',
   },
@@ -32,11 +33,20 @@ Page({
     this.setData({ agreed: !this.data.agreed });
   },
 
-  onRequireAgree() {
-    wx.showToast({ title: '请先阅读并同意服务协议及隐私协议', icon: 'none' });
+  onShowAgreeModal() {
+    this.setData({ showAgreeModal: true });
+  },
+
+  onAgreeModalCancel() {
+    this.setData({ showAgreeModal: false });
+  },
+
+  onAgreeModalConfirm() {
+    this.setData({ agreed: true, showAgreeModal: false });
   },
 
   onGetPhoneNumber(e) {
+    this.setData({ agreed: true, showAgreeModal: false });
     const { errMsg, code } = e.detail;
 
     if (errMsg === 'getPhoneNumber:fail user deny' || errMsg.includes('user deny')) {

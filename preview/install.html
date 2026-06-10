@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>安装教程 · Holafly</title>
+  <style>
+    :root {
+      --rose-500:#e6485c;
+      --neutral-50:#fff; --neutral-100:#f8f8fb; --neutral-200:#e4e6ea;
+      --neutral-600:#56575a; --neutral-900:#272729;
+      --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
+    .preview-label{font-size:14px;color:var(--neutral-600);margin-bottom:16px}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:#fff}
+    .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
+    .install-nav{position:absolute;top:47px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:44px}
+    .install-nav__back{position:relative;z-index:1;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0;flex-shrink:0}
+    .install-nav__back img{width:9px;height:16.5px;display:block}
+    .install-nav__title{position:absolute;left:50%;transform:translateX(-50%);font-size:16px;font-weight:500;line-height:24px;text-align:center;pointer-events:none;white-space:nowrap}
+    .install-nav .nav-capsule{position:relative;z-index:1;flex-shrink:0}
+    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px}
+    .nav-capsule--menu{width:83px;padding:0 10px}
+    .nav-capsule img{display:block}
+    .nav-capsule__icon{width:16px;height:16px}
+    .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
+    .install-scroll{position:absolute;top:91px;left:0;right:0;bottom:0;overflow-y:auto;padding:16px 20px calc(24px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
+    .install-stack{display:flex;flex-direction:column;gap:12px}
+    .install-segment{display:flex;gap:4px;padding:4px;background:var(--neutral-200);border-radius:12px}
+    .install-segment__item{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500;color:var(--neutral-900);border:none;background:transparent;cursor:pointer;font-family:inherit}
+    .install-segment__item--active{background:#fff;box-shadow:0 2px 8px -4px rgba(0,0,0,.2)}
+    .install-card{display:flex;flex-direction:column;gap:12px;padding:16px;background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
+    .install-card__title{font-size:16px;font-weight:500;line-height:24px}
+    .install-preface{display:flex;flex-direction:column;gap:20px;padding:8px 12px;background:var(--neutral-100);border-radius:10px}
+    .install-preface__item{display:flex;align-items:center;gap:8px}
+    .install-preface__icon-wrap{flex-shrink:0;padding:10px;background:#fff;border-radius:50%}
+    .install-preface__icon{width:24px;height:24px;display:block}
+    .install-preface__text{flex:1;font-size:12px;color:var(--neutral-600);line-height:16px}
+    .install-steps{display:flex;flex-direction:column;gap:20px}
+    .install-step{display:flex;flex-direction:column;align-items:center;gap:10px}
+    .install-step__text{width:100%;font-size:15px;line-height:22px}
+    .install-step__image{width:100%;max-width:261px;display:block}
+    .install-step__image--order{max-width:216px}
+  </style>
+</head>
+<body>
+  <p class="preview-label">安装教程 · Figma 502:7302</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <div class="install-nav">
+      <button class="install-nav__back" type="button" id="install-back"><img src="images/detail/nav-back.svg" alt="" /></button>
+      <span class="install-nav__title">安装教程</span>
+      <div class="nav-capsule nav-capsule--menu">
+        <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
+        <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
+        <img class="nav-capsule__icon" src="images/detail/nav-close.svg" alt="" />
+      </div>
+    </div>
+    <div class="install-scroll">
+      <div class="install-stack">
+        <div class="install-segment" id="install-segment">
+          <button type="button" class="install-segment__item install-segment__item--active" data-platform="ios">iPhone</button>
+          <button type="button" class="install-segment__item" data-platform="android">Android</button>
+        </div>
+        <div class="install-card">
+          <span class="install-card__title">前置说明</span>
+          <div class="install-preface">
+            <div class="install-preface__item">
+              <div class="install-preface__icon-wrap"><img class="install-preface__icon" src="images/install-guide/icon-save-qr.svg" alt="" /></div>
+              <span class="install-preface__text">请提前在出发前进入订单详情，将二维码保存至本地相册</span>
+            </div>
+            <div class="install-preface__item">
+              <div class="install-preface__icon-wrap"><img class="install-preface__icon" src="images/install-guide/icon-wifi.svg" alt="" /></div>
+              <span class="install-preface__text">降落后，请连接机场 Wi-Fi 进行安装激活。</span>
+            </div>
+          </div>
+        </div>
+        <div class="install-card">
+          <span class="install-card__title">具体步骤</span>
+          <div class="install-steps" id="install-steps"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const IOS_STEPS = [
+      { text: '1.在订单页面找到你的二维码，保存至手机相册。（请在出发前完成此步骤）', image: 'images/install-guide/step-order-qr.png', compact: true },
+      { text: '2.落地后，连接机场Wi-Fi，打开手机相册，长按保存的二维码跳转手机设置页面，安装过程将自动开始。', image: 'images/install-guide/step-ios-2.png' },
+      { text: '3. 移动配置完成后点击完成。', image: 'images/install-guide/step-ios-3.png' },
+      { text: '4. 给您的新 Holafly 线路起个名字来识别它，比如 “Holafly Spain”。', image: 'images/install-guide/step-ios-4.png' },
+    ];
+    const ANDROID_STEPS = [
+      { text: '1. 出发前在订单详情保存二维码至相册，或记下激活码。' },
+      { text: '2. 落地后连接机场 Wi-Fi，打开「设置」→「网络与互联网」→「SIM 卡管理」。' },
+      { text: '3. 选择添加 eSIM / 下载 SIM，扫描相册中的二维码完成安装。' },
+      { text: '4. 启用 Holafly eSIM 并开启移动数据，抵达目的地后即可使用。' },
+    ];
+    let platform = 'ios';
+    function renderSteps() {
+      const steps = platform === 'ios' ? IOS_STEPS : ANDROID_STEPS;
+      document.getElementById('install-steps').innerHTML = steps.map((s) => `
+        <div class="install-step">
+          <p class="install-step__text">${s.text}</p>
+          ${s.image ? `<img class="install-step__image${s.compact ? ' install-step__image--order' : ''}" src="${s.image}" alt="" />` : ''}
+        </div>
+      `).join('');
+    }
+    document.getElementById('install-segment').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-platform]');
+      if (!btn) return;
+      platform = btn.dataset.platform;
+      document.querySelectorAll('.install-segment__item').forEach((el) => {
+        el.classList.toggle('install-segment__item--active', el.dataset.platform === platform);
+      });
+      renderSteps();
+    });
+    document.getElementById('install-back').addEventListener('click', () => {
+      if (history.length > 1) history.back();
+      else location.href = 'detail.html';
+    });
+    renderSteps();
+  </script>
+</body>
+</html>

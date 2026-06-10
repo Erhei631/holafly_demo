@@ -4,32 +4,43 @@ const {
   METHOD_OPTIONS,
   POPULAR_MODELS,
   DIAL_HINT,
+  DEVICE_INFO,
 } = require('../../data/compat-check');
 const { getSafeAreaBottom, getStatusBarHeight } = require('../../utils/safe-area');
 const {
   tripDays,
   formatShortLabel,
-  formatLongLabel,
   formatRangeLabel,
   compareDate,
   getDateBounds,
   getDefaultTripDates,
-  buildYears,
-  buildMonths,
-  buildDays,
-  indicesFromDate,
-  dateFromIndices,
-  clampPickerValue,
 } = require('../../utils/trip');
+const {
+  WEEKDAY_LABELS,
+  buildCalendarMonths,
+  decorateCalendarMonths,
+  applyRangeTap,
+  formatFooterDate,
+} = require('../../utils/calendar-range');
 
 const MAX_QUANTITY = 9;
 const MAX_CUSTOM_DAYS = 90;
+
+function buildAppSectionRows(sections) {
+  return sections.map((section) => ({
+    ...section,
+    rows: Array.from({ length: Math.ceil(section.apps.length / 2) }, (_, index) =>
+      section.apps.slice(index * 2, index * 2 + 2),
+    ),
+  }));
+}
 
 Page({
   data: {
     statusBarHeight: 20,
     safeBottom: 0,
     plan: getJapanPlan(),
+    appSections: buildAppSectionRows(getJapanPlan().appSections),
     dayChipOptionsRow1: buildDayChipOptions(getJapanPlan().prices).slice(0, 3),
     dayChipOptionsRow2: buildDayChipOptions(getJapanPlan().prices).slice(3),
     selectedDays: 7,
@@ -41,23 +52,22 @@ Page({
     dailyAvgLabel: '9',
     originalDaily: 15,
     savePercent: 40,
-    footerMeta: '/ 7天',
+    saveLabel: '官方立减40%省6元',
+    footerMeta: '/天',
+    countdownH: '02',
+    countdownM: '49',
+    countdownS: '16',
     showDateRangeSheet: false,
     startDate: '',
     endDate: '',
     startDateLabel: '请选择',
     endDateLabel: '请选择',
-    startDateLongLabel: '请选择',
-    endDateLongLabel: '请选择',
+    startFooterLabel: '请选择',
+    endFooterLabel: '请选择',
     minDate: '',
     maxDate: '',
-    endMinDate: '',
-    pickerYears: [],
-    pickerMonths: [],
-    startPickerDays: [],
-    endPickerDays: [],
-    startPickerValue: [0, 0, 0],
-    endPickerValue: [0, 0, 0],
+    weekdayLabels: WEEKDAY_LABELS,
+    calendarMonths: [],
     customDaysPreview: 0,
     expandedFaqId: '',
     showCompatSheet: false,
@@ -65,6 +75,7 @@ Page({
     compatMethods: METHOD_OPTIONS,
     compatModels: POPULAR_MODELS,
     compatDialHint: DIAL_HINT,
+    compatDevice: DEVICE_INFO,
     compatVersion: 'global',
     compatMethod: 'model',
     compatSearch: '',
@@ -86,64 +97,56 @@ Page({
       quantity: Math.max(1, Math.min(MAX_QUANTITY, Number(options.quantity) || 1)),
       minDate: bounds.minDate,
       maxDate: bounds.maxDate,
-      endMinDate: bounds.minDate,
       startDate: defaultDates.startDate,
       endDate: defaultDates.endDate,
       startDateLabel: formatShortLabel(defaultDates.startDate),
       endDateLabel: formatShortLabel(defaultDates.endDate),
-      ...this.buildPickerPatch(defaultDates.startDate, defaultDates.endDate, bounds),
-    }, () => this.syncPricing());
+      ...this.buildCalendarPatch(defaultDates.startDate, defaultDates.endDate, bounds),
+    }, () => {
+      this.syncPricing();
+      this.startCountdown();
+    });
   },
 
-  buildPickerPatch(startDate, endDate, boundsOverride) {
+  onUnload() {
+    if (this.countdownTimer) {
+      clearInterval(this.countdownTimer);
+      this.countdownTimer = null;
+    }
+  },
+
+  startCountdown() {
+    if (this.countdownTimer) clearInterval(this.countdownTimer);
+    let remaining = 2 * 3600 + 49 * 60 + 16;
+    const tick = () => {
+      if (remaining <= 0) remaining = 2 * 3600 + 49 * 60 + 16;
+      const h = Math.floor(remaining / 3600);
+      const m = Math.floor((remaining % 3600) / 60);
+      const s = remaining % 60;
+      this.setData({
+        countdownH: String(h).padStart(2, '0'),
+        countdownM: String(m).padStart(2, '0'),
+        countdownS: String(s).padStart(2, '0'),
+      });
+      remaining -= 1;
+    };
+    tick();
+    this.countdownTimer = setInterval(tick, 1000);
+  },
+
+  buildCalendarPatch(startDate, endDate, boundsOverride) {
     const { minDate, maxDate } = boundsOverride || this.data;
-    const pickerYears = buildYears(minDate, maxDate);
-    const pickerMonths = buildMonths();
-
-    const startPickerValue = clampPickerValue(
-      indicesFromDate(startDate, pickerYears),
-      pickerYears,
-      minDate,
-      maxDate,
-    );
-    const startYear = pickerYears[startPickerValue[0]];
-    const startMonth = pickerMonths[startPickerValue[1]];
-    const startPickerDays = buildDays(startYear, startMonth);
-    const safeStartValue = [...startPickerValue];
-    if (safeStartValue[2] >= startPickerDays.length) {
-      safeStartValue[2] = startPickerDays.length - 1;
-    }
-    const safeStartDate = dateFromIndices(pickerYears, safeStartValue);
-
-    const endPickerValue = clampPickerValue(
-      indicesFromDate(endDate, pickerYears),
-      pickerYears,
-      safeStartDate,
-      maxDate,
-    );
-    const endYear = pickerYears[endPickerValue[0]];
-    const endMonth = pickerMonths[endPickerValue[1]];
-    const endPickerDays = buildDays(endYear, endMonth);
-    const safeEndValue = [...endPickerValue];
-    if (safeEndValue[2] >= endPickerDays.length) {
-      safeEndValue[2] = endPickerDays.length - 1;
-    }
-    const safeEndDate = dateFromIndices(pickerYears, safeEndValue);
+    this.calendarMonthsBase = buildCalendarMonths(minDate, maxDate);
+    const calendarMonths = decorateCalendarMonths(this.calendarMonthsBase, startDate, endDate);
 
     return {
-      pickerYears,
-      pickerMonths,
-      startPickerDays,
-      endPickerDays,
-      startPickerValue: safeStartValue,
-      endPickerValue: safeEndValue,
-      startDate: safeStartDate,
-      endDate: safeEndDate,
-      startDateLabel: formatShortLabel(safeStartDate),
-      endDateLabel: formatShortLabel(safeEndDate),
-      startDateLongLabel: formatLongLabel(safeStartDate),
-      endDateLongLabel: formatLongLabel(safeEndDate),
-      endMinDate: safeStartDate,
+      calendarMonths,
+      startDate,
+      endDate,
+      startDateLabel: formatShortLabel(startDate),
+      endDateLabel: formatShortLabel(endDate),
+      startFooterLabel: formatFooterDate(startDate),
+      endFooterLabel: formatFooterDate(endDate),
     };
   },
 
@@ -161,6 +164,7 @@ Page({
       dailyAvgLabel: pricing.dailyAvgLabel,
       originalDaily: pricing.originalDaily,
       savePercent: pricing.savePercent,
+      saveLabel: pricing.saveLabel,
       footerMeta: pricing.footerMeta,
     };
   },
@@ -192,7 +196,6 @@ Page({
       endDate: defaultDates.endDate,
       startDateLabel: formatShortLabel(defaultDates.startDate),
       endDateLabel: formatShortLabel(defaultDates.endDate),
-      endMinDate: defaultDates.startDate,
       customDaysPreview: selectedDays,
       ...this.getPricingPatch({ selectedDays }),
     });
@@ -200,13 +203,15 @@ Page({
 
   onCustomDaysTap() {
     const { startDate, endDate } = this.data;
-    const pickerPatch = this.buildPickerPatch(startDate, endDate);
-    const customDaysPreview = tripDays(pickerPatch.startDate, pickerPatch.endDate);
+    const calendarPatch = this.buildCalendarPatch(startDate, endDate);
+    const customDaysPreview = calendarPatch.endDate
+      ? tripDays(calendarPatch.startDate, calendarPatch.endDate)
+      : 0;
 
     this.setData({
       showDateRangeSheet: true,
       customDaysPreview,
-      ...pickerPatch,
+      ...calendarPatch,
     });
   },
 
@@ -214,26 +219,23 @@ Page({
     this.setData({ showDateRangeSheet: false });
   },
 
-  onStartPickerChange(e) {
-    const { pickerYears, minDate, maxDate, endDate } = this.data;
-    const startPickerValue = clampPickerValue(e.detail.value, pickerYears, minDate, maxDate);
-    const startDate = dateFromIndices(pickerYears, startPickerValue);
-    let nextEndDate = endDate;
-    if (!nextEndDate || compareDate(nextEndDate, startDate) < 0) {
-      nextEndDate = startDate;
-    }
-    const patch = this.buildPickerPatch(startDate, nextEndDate);
-    patch.customDaysPreview = tripDays(patch.startDate, patch.endDate);
-    this.setData(patch);
-  },
+  onCalendarDayTap(e) {
+    const { date, disabled } = e.currentTarget.dataset;
+    if (!date || Number(disabled)) return;
 
-  onEndPickerChange(e) {
-    const { pickerYears, startDate, maxDate } = this.data;
-    const endPickerValue = clampPickerValue(e.detail.value, pickerYears, startDate, maxDate);
-    const endDate = dateFromIndices(pickerYears, endPickerValue);
-    const patch = this.buildPickerPatch(startDate, endDate);
-    patch.customDaysPreview = tripDays(patch.startDate, patch.endDate);
-    this.setData(patch);
+    const { startDate, endDate } = this.data;
+    const next = applyRangeTap(date, startDate, endDate);
+    const calendarMonths = decorateCalendarMonths(this.calendarMonthsBase, next.startDate, next.endDate);
+    const customDaysPreview = next.endDate ? tripDays(next.startDate, next.endDate) : 0;
+
+    this.setData({
+      startDate: next.startDate,
+      endDate: next.endDate,
+      calendarMonths,
+      startFooterLabel: formatFooterDate(next.startDate),
+      endFooterLabel: formatFooterDate(next.endDate),
+      customDaysPreview,
+    });
   },
 
   onConfirmDateRange() {
@@ -299,15 +301,19 @@ Page({
     wx.navigateTo({ url: `/pages/auth/login?redirect=checkout&${query}` });
   },
 
+  onCompatCardTap() {
+    this.setData({ showCompatSheet: true });
+  },
+
   onFaqTap(e) {
-    const { action, id } = e.currentTarget.dataset;
-    if (action === 'compat') {
-      this.setData({ showCompatSheet: true });
-      return;
-    }
+    const { id } = e.currentTarget.dataset;
     this.setData({
       expandedFaqId: this.data.expandedFaqId === id ? '' : id,
     });
+  },
+
+  onUsageGuideTap() {
+    wx.navigateTo({ url: '/pages/guide/install' });
   },
 
   onCloseCompatSheet() {

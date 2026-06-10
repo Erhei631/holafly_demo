@@ -27,9 +27,16 @@ const POPULAR_MODELS = [
 
 const DIAL_HINT = '在拨号界面输入 *#06#，若出现 EID 号码则通常支持 eSIM。不同版本机型结果可能不同，建议结合机型列表核对。';
 
+const DEVICE_INFO = {
+  name: 'iPhone 17e',
+  supported: true,
+  disclaimer: '系统检查结果仅供参考，建议按照以下方式手动确认',
+};
+
 module.exports = {
   VERSION_OPTIONS,
   METHOD_OPTIONS,
   POPULAR_MODELS,
   DIAL_HINT,
+  DEVICE_INFO,
 };

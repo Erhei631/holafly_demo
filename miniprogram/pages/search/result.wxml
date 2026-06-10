@@ -4,9 +4,6 @@
       <image class="detail-nav__back-icon" src="/images/detail/nav-back.svg" mode="aspectFit" />
     </view>
     <view class="detail-nav__right">
-      <view class="nav-capsule nav-capsule--support" bindtap="onSupportTap" aria-label="客服">
-        <image class="nav-capsule__icon" src="/images/detail/nav-support.svg" mode="aspectFit" />
-      </view>
       <view class="nav-capsule nav-capsule--menu">
         <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-share.svg" mode="aspectFit" />
         <image class="nav-capsule__sep" src="/images/detail/nav-divider.svg" mode="aspectFit" />
@@ -40,179 +37,110 @@
       </view>
 
       <view class="config-card">
-        <view class="config-card__inner">
-          <view class="config-section config-section--days">
-            <view class="config-section__head">
-              <view class="config-section__label-wrap">
-                <image class="config-section__icon" src="/images/detail/icon-calendar.svg" mode="aspectFit" />
-                <text class="config-section__label">使用天数</text>
-              </view>
-              <view class="config-section__badge">
-                <text>多天更划算</text>
-              </view>
-            </view>
-            <view class="day-grid">
-              <view
-                wx:for="{{dayChipOptionsRow1}}"
-                wx:key="days"
-                class="day-chip {{!isCustomDays && selectedDays === item.days ? 'day-chip--active' : ''}}"
-                data-days="{{item.days}}"
-                bindtap="onDaySelect"
-              >
-                <text class="day-chip__label">{{item.days}}天</text>
-                <view wx:if="{{item.badge}}" class="day-chip__badge">
-                  <text class="day-chip__price">{{item.priceLabel}}</text>
+        <view class="config-card__wrap">
+          <view class="config-card__inner">
+            <view class="config-section config-section--days">
+              <view class="config-section__head">
+                <view class="config-section__label-wrap">
+                  <image class="config-section__icon" src="/images/detail/icon-calendar.svg" mode="aspectFit" />
+                  <text class="config-section__label">使用天数</text>
                 </view>
-                <text wx:else class="day-chip__price">{{item.priceLabel}}</text>
-              </view>
-            </view>
-            <view class="day-grid">
-              <view
-                wx:for="{{dayChipOptionsRow2}}"
-                wx:key="days"
-                class="day-chip {{!isCustomDays && selectedDays === item.days ? 'day-chip--active' : ''}}"
-                data-days="{{item.days}}"
-                bindtap="onDaySelect"
-              >
-                <text class="day-chip__label">{{item.days}}天</text>
-                <view wx:if="{{item.badge}}" class="day-chip__badge">
-                  <text class="day-chip__price">{{item.priceLabel}}</text>
+                <view class="config-section__badge">
+                  <text>多天更划算</text>
                 </view>
-                <text wx:else class="day-chip__price">{{item.priceLabel}}</text>
+              </view>
+              <view class="day-grid">
+                <view
+                  wx:for="{{dayChipOptionsRow1}}"
+                  wx:key="days"
+                  class="day-chip {{!isCustomDays && selectedDays === item.days ? 'day-chip--active' : ''}}"
+                  data-days="{{item.days}}"
+                  bindtap="onDaySelect"
+                >
+                  <text class="day-chip__label">{{item.days}}天</text>
+                </view>
+              </view>
+              <view class="day-grid">
+                <view
+                  wx:for="{{dayChipOptionsRow2}}"
+                  wx:key="days"
+                  class="day-chip {{!isCustomDays && selectedDays === item.days ? 'day-chip--active' : ''}}"
+                  data-days="{{item.days}}"
+                  bindtap="onDaySelect"
+                >
+                  <text class="day-chip__label">{{item.days}}天</text>
+                </view>
+              </view>
+              <view class="day-custom {{isCustomDays ? 'day-custom--active' : ''}}" bindtap="onCustomDaysTap">
+                <image class="day-custom__icon" src="{{isCustomDays ? '/images/detail/icon-calendar-edit-active.svg' : '/images/detail/icon-calendar-edit.svg'}}" mode="aspectFit" />
+                <text class="day-custom__text">{{customDaysLabel || '自定义'}}</text>
               </view>
             </view>
-            <view class="day-custom {{isCustomDays ? 'day-custom--active' : ''}}" bindtap="onCustomDaysTap">
-              <image class="day-custom__icon" src="{{isCustomDays ? '/images/detail/icon-calendar-edit-active.svg' : '/images/detail/icon-calendar-edit.svg'}}" mode="aspectFit" />
-              <text class="day-custom__text">{{customDaysLabel || '自定义'}}</text>
-            </view>
-          </view>
 
-          <view class="config-section">
-            <view class="config-section__label-wrap config-section__label-wrap--solo">
-              <image class="config-section__icon" src="/images/detail/icon-esim.svg" mode="aspectFit" />
-              <text class="config-section__label">eSIM数量</text>
-            </view>
-            <view class="qty-stepper">
-              <view
-                class="qty-stepper__btn {{quantity <= 1 ? 'qty-stepper__btn--disabled' : ''}}"
-                bindtap="onQtyMinus"
-              >
-                <image class="qty-stepper__icon" src="/images/detail/icon-minus.svg" mode="aspectFit" />
+            <view class="config-section">
+              <view class="config-section__label-wrap config-section__label-wrap--solo">
+                <image class="config-section__icon" src="/images/detail/icon-esim.svg" mode="aspectFit" />
+                <text class="config-section__label">eSIM数量</text>
               </view>
-              <text class="qty-stepper__value">{{quantity}}</text>
-              <view
-                class="qty-stepper__btn qty-stepper__btn--plus {{quantity >= maxQuantity ? 'qty-stepper__btn--disabled' : ''}}"
-                bindtap="onQtyPlus"
-              >
-                <image class="qty-stepper__icon" src="/images/detail/icon-plus.svg" mode="aspectFit" />
-              </view>
-            </view>
-          </view>
-
-          <view class="price-summary">
-            <view class="price-summary__divider" />
-            <view class="price-summary__row">
-              <view class="price-summary__total">
-                <text class="price-summary__total-label">合计</text>
-                <view class="price-summary__value">
-                  <text class="price-summary__currency">¥</text>
-                  <text class="price-summary__amount">{{totalLabel}}</text>
+              <view class="qty-stepper">
+                <view
+                  class="qty-stepper__btn {{quantity <= 1 ? 'qty-stepper__btn--disabled' : ''}}"
+                  bindtap="onQtyMinus"
+                >
+                  <image class="qty-stepper__icon" src="/images/detail/icon-minus.svg" mode="aspectFit" />
+                </view>
+                <text class="qty-stepper__value">{{quantity}}</text>
+                <view
+                  class="qty-stepper__btn qty-stepper__btn--plus {{quantity >= maxQuantity ? 'qty-stepper__btn--disabled' : ''}}"
+                  bindtap="onQtyPlus"
+                >
+                  <image class="qty-stepper__icon" src="/images/detail/icon-plus.svg" mode="aspectFit" />
                 </view>
               </view>
             </view>
           </view>
-        </view>
-      </view>
 
-      <view class="panel">
-        <view class="panel__head">
-          <text class="panel__title panel__title--inline">用户评价</text>
-          <view class="panel__link" bindtap="onReviewsAllTap">
-            <text>查看全部</text>
-            <image class="panel__link-icon" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
-          </view>
-        </view>
-        <view class="panel__divider" />
-        <view wx:for="{{plan.reviews}}" wx:key="id" class="review-card">
-          <view class="review-card__head">
-            <text class="review-card__name">{{item.name}}</text>
-            <view class="review-card__badge">
-              <text class="review-card__badge-text">{{item.rating}}</text>
-            </view>
-          </view>
-          <text class="review-card__text">{{item.text}}</text>
-          <text class="review-card__meta">{{item.meta}}</text>
-        </view>
-      </view>
-
-      <view class="panel">
-        <text class="panel__title">常见问题</text>
-        <view class="faq-list">
-          <view
-            wx:for="{{plan.faqItems}}"
-            wx:key="id"
-            class="faq-item {{item.type === 'highlight' ? 'faq-item--highlight' : ''}} {{expandedFaqId === item.id ? 'faq-item--open' : ''}}"
-          >
-            <view
-              class="faq-item__row"
-              data-id="{{item.id}}"
-              data-action="{{item.action}}"
-              bindtap="onFaqTap"
-            >
-              <image
-                wx:if="{{item.type === 'highlight'}}"
-                class="faq-item__icon"
-                src="/images/detail/icon-compat.svg"
-                mode="aspectFit"
-              />
-              <view class="faq-item__content">
-                <text class="faq-item__title">{{item.title}}</text>
-                <text wx:if="{{item.subtitle}}" class="faq-item__subtitle">{{item.subtitle}}</text>
+          <view class="config-card__promo">
+            <view class="config-card__promo-left">
+              <view class="config-card__promo-daily">
+                <text class="config-card__promo-daily-label">限时补贴低至日均</text>
+                <text class="config-card__promo-daily-currency">¥</text>
+                <text class="config-card__promo-daily-amount">{{dailyAvgLabel}}</text>
+                <text class="config-card__promo-daily-unit">/天</text>
               </view>
-              <image
-                class="faq-item__arrow {{expandedFaqId === item.id ? 'faq-item__arrow--open' : ''}}"
-                src="/images/detail/icon-arrow-right.svg"
-                mode="aspectFit"
-              />
+              <view class="config-card__promo-tags">
+                <view class="config-card__promo-tag">
+                  <text>原价¥{{originalDaily}}起</text>
+                </view>
+                <view class="config-card__promo-tag">
+                  <text>{{saveLabel}}</text>
+                </view>
+              </view>
             </view>
-            <text
-              wx:if="{{item.answer && expandedFaqId === item.id}}"
-              class="faq-item__answer"
-            >{{item.answer}}</text>
+            <view class="config-card__promo-countdown">
+              <text class="config-card__promo-countdown-label">距离优惠结束</text>
+              <view class="config-card__promo-timer">
+                <text class="config-card__promo-timer-box">{{countdownH}}</text>
+                <text class="config-card__promo-timer-sep">:</text>
+                <text class="config-card__promo-timer-box">{{countdownM}}</text>
+                <text class="config-card__promo-timer-sep">:</text>
+                <text class="config-card__promo-timer-box">{{countdownS}}</text>
+              </view>
+            </view>
           </view>
         </view>
+      </view>
+
+      <view class="compat-card" bindtap="onCompatCardTap">
+        <image class="compat-card__icon" src="{{plan.compatCard.icon}}" mode="aspectFit" />
+        <view class="compat-card__content">
+          <text class="compat-card__title">{{plan.compatCard.title}}</text>
+          <text class="compat-card__subtitle">{{plan.compatCard.subtitle}}</text>
+        </view>
+        <image class="compat-card__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
       </view>
 
       <view class="panel">
-        <text class="panel__title">网络服务 & 运营商</text>
-        <view
-          wx:for="{{plan.networkItems}}"
-          wx:key="id"
-          class="info-block"
-        >
-          <view class="info-block__head">
-            <image class="info-block__icon" src="{{item.icon}}" mode="aspectFit" />
-            <text class="info-block__label">{{item.label}}</text>
-          </view>
-          <text class="info-block__text">{{item.text}}</text>
-        </view>
-      </view>
-
-      <view class="panel">
-        <text class="panel__title">畅连国内外APP</text>
-        <view class="app-row">
-          <view
-            wx:for="{{plan.appIcons}}"
-            wx:key="*this"
-            class="app-row__item"
-            style="z-index: {{7 - index}};"
-          >
-            <image class="app-row__icon" src="{{item}}" mode="aspectFit" />
-          </view>
-        </view>
-      </view>
-
-      <view class="panel panel--last">
         <text class="panel__title">Holafly服务承诺</text>
         <view class="promise-grid">
           <view wx:for="{{plan.servicePromises}}" wx:key="id" class="promise-item">
@@ -221,6 +149,126 @@
               <text class="promise-item__line">{{item.lines[0]}}</text>
               <text class="promise-item__line">{{item.lines[1]}}</text>
             </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="panel panel--apps">
+        <image class="panel__deco panel__deco--apps" src="/images/detail/app-deco.png" mode="aspectFit" />
+        <view class="panel__intro">
+          <text class="panel__title panel__title--inline">畅连国内外APP</text>
+          <text class="panel__subtitle">{{plan.appIntro}}</text>
+        </view>
+        <view class="panel__divider" />
+        <view class="panel__apps-body">
+          <block wx:for="{{appSections}}" wx:key="id">
+            <text class="app-section__title">{{item.title}}</text>
+            <view wx:for="{{item.rows}}" wx:for-item="row" wx:key="*this" class="app-row">
+              <view wx:for="{{row}}" wx:for-item="app" wx:key="id" class="app-tile">
+                <view class="app-tile__icon-wrap">
+                  <image class="app-tile__icon" src="{{app.icon}}" mode="aspectFit" />
+                </view>
+                <view class="app-tile__text">
+                  <text class="app-tile__name">{{app.name}}</text>
+                  <text class="app-tile__subtitle">{{app.subtitle}}</text>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <view class="reviews-card">
+        <view class="reviews-card__header" bindtap="onReviewsAllTap">
+          <view class="reviews-card__brand">
+            <image class="reviews-card__logo" src="/images/home/trustpilot-logo.svg" mode="aspectFit" />
+            <text class="reviews-card__count">来自 {{plan.reviewSummary.total}} 位用户评价</text>
+          </view>
+          <view class="reviews-card__rating">
+            <text class="reviews-card__score">{{plan.reviewSummary.rating}}</text>
+            <text class="reviews-card__max">/5</text>
+            <image class="reviews-card__arrow" src="/images/home/icon-arrow-right.svg" mode="aspectFit" />
+          </view>
+        </view>
+        <view class="reviews-card__divider" />
+        <view class="reviews-list">
+          <view wx:for="{{plan.reviews}}" wx:key="id" class="review-item">
+            <view class="review-item__top">
+              <text class="review-item__name">{{item.name}}</text>
+              <view class="review-item__badge">
+                <text class="review-item__badge-text">{{item.rating}}</text>
+              </view>
+            </view>
+            <text class="review-item__text">{{item.text}}</text>
+            <text class="review-item__meta">{{item.meta}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="panel">
+        <view class="panel__head">
+          <text class="panel__title panel__title--inline">使用方法</text>
+          <view class="panel__link" bindtap="onUsageGuideTap">
+            <text>查看完整教程</text>
+            <image class="panel__link-icon" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
+          </view>
+        </view>
+        <view class="usage-steps">
+          <view class="usage-steps__connector usage-steps__connector--1" />
+          <view class="usage-steps__connector usage-steps__connector--2" />
+          <view wx:for="{{plan.usageSteps}}" wx:key="id" class="usage-step">
+            <view class="usage-step__icon-wrap">
+              <image class="usage-step__icon" src="{{item.icon}}" mode="aspectFit" />
+            </view>
+            <text class="usage-step__label">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="panel">
+        <text class="panel__title">网络服务</text>
+        <view class="network-block">
+          <view class="network-block__head">
+            <image class="network-block__icon" src="/images/detail/icon-carrier.svg" mode="aspectFit" />
+            <text class="network-block__label">网络运营商</text>
+          </view>
+          <view class="network-block__carriers">
+            <image
+              wx:for="{{plan.networkCarriers}}"
+              wx:key="id"
+              class="network-block__carrier-logo network-block__carrier-logo--{{item.id}}"
+              style="width: {{item.width}}rpx;"
+              src="{{item.icon}}"
+              mode="aspectFit"
+            />
+          </view>
+        </view>
+        <view class="network-block">
+          <view class="network-block__head">
+            <image class="network-block__icon" src="/images/detail/icon-network.svg" mode="aspectFit" />
+            <text class="network-block__label">网速</text>
+          </view>
+          <text class="network-block__text">{{plan.networkSpeedText}}</text>
+        </view>
+      </view>
+
+      <view class="panel panel--last">
+        <text class="panel__title">常见问题</text>
+        <view class="faq-list faq-list--simple">
+          <view
+            wx:for="{{plan.faqItems}}"
+            wx:key="id"
+            class="faq-item faq-item--simple {{expandedFaqId === item.id ? 'faq-item--open' : ''}}"
+          >
+            <view class="faq-item__row" data-id="{{item.id}}" bindtap="onFaqTap">
+              <text class="faq-item__title">{{item.title}}</text>
+              <image
+                class="faq-item__arrow {{expandedFaqId === item.id ? 'faq-item__arrow--open' : ''}}"
+                src="/images/detail/icon-arrow-right.svg"
+                mode="aspectFit"
+              />
+            </view>
+            <text wx:if="{{item.answer && expandedFaqId === item.id}}" class="faq-item__answer">{{item.answer}}</text>
           </view>
         </view>
       </view>
@@ -234,7 +282,7 @@
   />
   <view
     class="compat-sheet {{showCompatSheet ? 'compat-sheet--show' : ''}}"
-    style="padding-bottom: {{safeBottom}}px;"
+    style="padding-bottom: {{safeBottom + 24}}px;"
     catchtap="noop"
     catchtouchmove="noop"
   >
@@ -247,27 +295,37 @@
           <image class="compat-sheet__close-icon" src="/images/compat/close.svg" mode="aspectFit" />
         </view>
       </view>
-      <scroll-view class="compat-sheet__scroll" scroll-y enhanced show-scrollbar="{{false}}">
-        <view class="compat-sheet__section">
-          <text class="compat-sheet__label">您的手机是哪个版本</text>
-          <view class="compat-version-row">
-            <view
-              wx:for="{{compatVersions}}"
-              wx:key="id"
-              class="compat-version {{compatVersion === item.id ? 'compat-version--active' : ''}}"
-              data-version="{{item.id}}"
-              bindtap="onCompatVersionTap"
-            >
-              <image class="compat-version__icon" src="{{item.icon}}" mode="aspectFill" />
-              <view class="compat-version__text">
-                <text class="compat-version__title">{{item.title}}</text>
-                <text class="compat-version__subtitle">{{item.subtitle}}</text>
-              </view>
+      <view class="compat-device">
+        <text class="compat-sheet__label">您的机型</text>
+        <view class="compat-device__row">
+          <text class="compat-device__name">{{compatDevice.name}}</text>
+          <view wx:if="{{compatDevice.supported}}" class="compat-device__badge">
+            <image class="compat-device__check" src="/images/compat/check.svg" mode="aspectFit" />
+            <text>支持</text>
+          </view>
+        </view>
+        <text class="compat-device__hint">{{compatDevice.disclaimer}}</text>
+      </view>
+      <view class="compat-sheet__section">
+        <text class="compat-step-label">1. 您的手机是哪个版本</text>
+        <view class="compat-version-row">
+          <view
+            wx:for="{{compatVersions}}"
+            wx:key="id"
+            class="compat-version {{compatVersion === item.id ? 'compat-version--active' : ''}}"
+            data-version="{{item.id}}"
+            bindtap="onCompatVersionTap"
+          >
+            <image class="compat-version__icon" src="{{item.icon}}" mode="aspectFill" />
+            <view class="compat-version__text">
+              <text class="compat-version__title">{{item.title}}</text>
+              <text class="compat-version__subtitle">{{item.subtitle}}</text>
             </view>
           </view>
         </view>
-        <view class="compat-sheet__body">
-          <text class="compat-sheet__label">选择查询方式</text>
+      </view>
+      <scroll-view class="compat-sheet__body" scroll-y enhanced show-scrollbar="{{false}}">
+          <text class="compat-step-label">2. 选择查询方式</text>
           <view class="compat-segment">
             <view
               wx:for="{{compatMethods}}"
@@ -292,24 +350,22 @@
             </view>
             <view class="compat-models">
               <text class="compat-sheet__label">热门机型</text>
-              <view
-                wx:for="{{filteredCompatModels}}"
-                wx:key="id"
-                class="compat-model"
-              >
-                <text class="compat-model__name">{{item.name}}</text>
-                <view wx:if="{{item.supported}}" class="compat-model__badge">
-                  <image class="compat-model__check" src="/images/compat/check.svg" mode="aspectFit" />
-                  <text>支持</text>
+              <block wx:for="{{filteredCompatModels}}" wx:key="id">
+                <view class="compat-model">
+                  <text class="compat-model__name">{{item.name}}</text>
+                  <view wx:if="{{item.supported}}" class="compat-model__badge">
+                    <image class="compat-model__check" src="/images/compat/check.svg" mode="aspectFit" />
+                    <text>支持</text>
+                  </view>
                 </view>
-              </view>
+                <view wx:if="{{index < filteredCompatModels.length - 1}}" class="compat-model__divider" />
+              </block>
             </view>
           </block>
           <view wx:else class="compat-dial">
             <text class="compat-dial__code">*#06#</text>
             <text class="compat-dial__hint">{{compatDialHint}}</text>
           </view>
-        </view>
       </scroll-view>
   </view>
 
@@ -319,56 +375,58 @@
         <text class="date-sheet__title">选择出行日期</text>
         <view class="date-sheet__close" bindtap="onCloseDateSheet" aria-label="关闭">×</view>
       </view>
-      <view class="date-sheet__body">
-        <view class="date-picker-block">
-          <text class="date-picker__label">去：{{startDateLongLabel}}</text>
-          <picker-view
-            class="date-picker__wheel"
-            indicator-class="date-picker__indicator"
-            value="{{startPickerValue}}"
-            bindchange="onStartPickerChange"
-          >
-            <picker-view-column>
-              <view wx:for="{{pickerYears}}" wx:key="*this" class="date-picker__item">{{item}}年</view>
-            </picker-view-column>
-            <picker-view-column>
-              <view wx:for="{{pickerMonths}}" wx:key="*this" class="date-picker__item">{{item}}月</view>
-            </picker-view-column>
-            <picker-view-column>
-              <view wx:for="{{startPickerDays}}" wx:key="*this" class="date-picker__item">{{item}}日</view>
-            </picker-view-column>
-          </picker-view>
-        </view>
-        <view class="date-picker-block">
-          <text class="date-picker__label">返：{{endDateLongLabel}}</text>
-          <picker-view
-            class="date-picker__wheel"
-            indicator-class="date-picker__indicator"
-            value="{{endPickerValue}}"
-            bindchange="onEndPickerChange"
-          >
-            <picker-view-column>
-              <view wx:for="{{pickerYears}}" wx:key="*this" class="date-picker__item">{{item}}年</view>
-            </picker-view-column>
-            <picker-view-column>
-              <view wx:for="{{pickerMonths}}" wx:key="*this" class="date-picker__item">{{item}}月</view>
-            </picker-view-column>
-            <picker-view-column>
-              <view wx:for="{{endPickerDays}}" wx:key="*this" class="date-picker__item">{{item}}日</view>
-            </picker-view-column>
-          </picker-view>
-        </view>
-        <text wx:if="{{customDaysPreview}}" class="date-sheet__hint">共 {{customDaysPreview}} 天</text>
+      <view class="cal-weekdays">
+        <text
+          wx:for="{{weekdayLabels}}"
+          wx:key="*this"
+          class="cal-weekdays__item {{index === 0 || index === 6 ? 'cal-weekdays__item--weekend' : ''}}"
+        >{{item}}</text>
       </view>
-      <button class="date-sheet__confirm btn-primary" bindtap="onConfirmDateRange">确定</button>
+      <scroll-view class="date-sheet__calendar" scroll-y enhanced show-scrollbar="{{false}}">
+        <view wx:for="{{calendarMonths}}" wx:key="key" class="cal-month">
+          <text class="cal-month__title">{{item.label}}</text>
+          <view class="cal-month__grid">
+            <view wx:for="{{item.rows}}" wx:for-item="row" wx:key="key" class="cal-week">
+              <block wx:for="{{row.cells}}" wx:for-item="cell" wx:key="key">
+                <view wx:if="{{cell.type === 'empty'}}" class="cal-day cal-day--empty" />
+                <view
+                  wx:else
+                  class="cal-day{{cell.rangeState ? ' cal-day--' + cell.rangeState : ''}}{{cell.disabled ? ' cal-day--disabled' : ''}}"
+                  data-date="{{cell.dateStr}}"
+                  data-disabled="{{cell.disabled ? 1 : 0}}"
+                  bindtap="onCalendarDayTap"
+                >
+                  <text class="cal-day__num">{{cell.day}}</text>
+                  <text wx:if="{{cell.isToday}}" class="cal-day__tag">今天</text>
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="date-sheet__footer">
+        <view class="date-sheet__summary">
+          <view class="date-sheet__summary-dates">
+            <text>去: {{startFooterLabel}}</text>
+            <text>返: {{endFooterLabel}}</text>
+          </view>
+          <text wx:if="{{customDaysPreview}}" class="date-sheet__summary-days">共 {{customDaysPreview}} 天</text>
+          <text wx:elif="{{startDate && !endDate}}" class="date-sheet__summary-days">请选择返回日期</text>
+        </view>
+        <button class="date-sheet__confirm btn-primary" bindtap="onConfirmDateRange">确定</button>
+      </view>
     </view>
   </view>
 
   <view class="detail-footer" style="padding-bottom: {{safeBottom}}px;">
     <view class="detail-footer__inner">
+      <view class="detail-footer__support" bindtap="onSupportTap">
+        <image class="detail-footer__support-icon" src="/images/detail/footer-support.svg" mode="aspectFit" />
+        <text class="detail-footer__support-label">客服</text>
+      </view>
       <view class="detail-footer__price">
         <text class="detail-footer__currency">¥</text>
-        <text class="detail-footer__amount">{{totalLabel}}</text>
+        <text class="detail-footer__amount">{{dailyAvgLabel}}</text>
         <text class="detail-footer__meta">{{footerMeta}}</text>
       </view>
       <button class="detail-footer__cta btn-primary" bindtap="onCheckout">去结算</button>

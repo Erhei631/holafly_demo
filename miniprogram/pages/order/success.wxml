@@ -1,7 +1,7 @@
 <view class="success-page" style="padding-top: {{statusBarHeight}}px;">
   <view class="success-nav">
-    <view class="success-nav__back" bindtap="onBack" aria-label="返回">
-      <image class="success-nav__back-icon" src="/images/detail/nav-back.svg" mode="aspectFit" />
+    <view class="success-nav__back" bindtap="onBack" aria-label="返回首页">
+      <image class="success-nav__back-icon" src="/images/success/nav-home.svg" mode="aspectFit" />
     </view>
     <text class="success-nav__title">支付成功</text>
     <view class="success-nav__right">
@@ -32,23 +32,25 @@
       <view class="success-esim-card">
         <view class="success-esim-card__inner">
           <block wx:if="{{!esimReady}}">
-            <view class="success-esim-top">
-              <view class="success-esim-head">
-                <text class="success-esim-head__status">正在为您准备 eSIM</text>
-                <text class="success-esim-head__plan">{{planLabel}}</text>
-              </view>
-              <view class="success-esim-qr" bindtap="onQrTap">
-                <image class="success-esim-qr__spinner" src="/images/success/esim-spinner.svg" mode="aspectFit" />
-              </view>
+            <view class="success-esim-head">
+              <text class="success-esim-head__status">正在为您准备 eSIM</text>
+              <text class="success-esim-head__plan">{{planLabel}}</text>
             </view>
-            <view class="success-notice">
-              <text class="success-notice__text">eSIM 正在向运营商申请开通，通常需要 1–3 分钟。准备就绪后会通过微信通知您，无需停留在本页。</text>
+            <view class="success-notice" bindtap="onEsimReady">
+              <text class="success-notice__text">eSIM 正在向运营商申请开通，通常需要 1</text>
+              <text class="success-notice__emph">–3</text>
+              <text class="success-notice__text"> 分钟。准备就绪后会通过微信通知您，无需停留在本页。</text>
             </view>
             <view class="success-divider"></view>
             <button class="success-notify-btn" bindtap="onEnableNotify">
               <image class="success-notify-btn__icon" src="/images/success/icon-wechat-notify.svg" mode="aspectFit" />
               <text>开启微信通知</text>
             </button>
+            <view class="success-divider"></view>
+            <view class="success-esim-actions">
+              <button class="success-esim-actions__btn success-esim-actions__btn--ghost" bindtap="onContinueBuy">继续购买</button>
+              <button class="success-esim-actions__btn success-esim-actions__btn--primary" bindtap="onGoOrders">订单列表</button>
+            </view>
           </block>
 
           <block wx:else>
@@ -63,7 +65,7 @@
             </view>
             <view class="success-divider"></view>
             <view class="success-esim-actions">
-              <button class="success-esim-actions__btn success-esim-actions__btn--ghost" bindtap="onSaveQr">保存到相册</button>
+              <button class="success-esim-actions__btn success-esim-actions__btn--ghost" bindtap="onSaveQr">保存当前二维码</button>
               <button class="success-esim-actions__btn success-esim-actions__btn--primary" bindtap="onInstallGuide">查看安装教程</button>
             </view>
           </block>
