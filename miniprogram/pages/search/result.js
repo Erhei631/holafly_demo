@@ -53,7 +53,7 @@ Page({
     originalDaily: 15,
     savePercent: 40,
     saveLabel: '官方立减40%省6元',
-    footerMeta: '/天',
+    footerMeta: ' / 7天',
     countdownH: '02',
     countdownM: '49',
     countdownS: '16',

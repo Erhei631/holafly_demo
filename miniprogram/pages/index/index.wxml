@@ -292,24 +292,13 @@
         <image class="compat-sheet__close-icon" src="/images/compat/close.svg" mode="aspectFit" />
       </view>
     </view>
-    <view class="compat-device">
-      <text class="compat-sheet__label">您的机型</text>
-      <view class="compat-device__row">
-        <text class="compat-device__name">{{compatDevice.name}}</text>
-        <view wx:if="{{compatDevice.supported}}" class="compat-device__badge">
-          <image class="compat-device__check" src="/images/compat/check.svg" mode="aspectFit" />
-          <text>支持</text>
-        </view>
-      </view>
-      <text class="compat-device__hint">{{compatDevice.disclaimer}}</text>
-    </view>
     <view class="compat-sheet__section">
       <text class="compat-step-label">1. 您的手机是哪个版本</text>
       <view class="compat-version-row">
           <view
             wx:for="{{compatVersions}}"
             wx:key="id"
-            class="compat-version {{compatVersion === item.id ? 'compat-version--active' : ''}}"
+            class="compat-version compat-version--{{item.id}} {{compatVersion === item.id ? 'compat-version--active' : ''}}"
             data-version="{{item.id}}"
             bindtap="onCompatVersionTap"
           >
@@ -334,7 +323,7 @@
             <text>{{item.label}}</text>
           </view>
         </view>
-        <block wx:if="{{compatMethod === 'model'}}">
+        <view wx:if="{{compatMethod === 'model'}}" class="compat-model-panel">
           <view class="compat-search">
             <image class="compat-search__icon" src="/images/compat/search.svg" mode="aspectFit" />
             <input
@@ -346,6 +335,17 @@
             />
           </view>
           <view class="compat-models">
+            <view class="compat-device-block">
+              <text class="compat-sheet__label">您的机型</text>
+              <view class="compat-model">
+                <text class="compat-model__name">{{compatDevice.name}}</text>
+                <view wx:if="{{compatDevice.supported}}" class="compat-model__badge">
+                  <image class="compat-model__check" src="/images/compat/check.svg" mode="aspectFit" />
+                  <text>支持</text>
+                </view>
+              </view>
+            </view>
+            <view class="compat-model__divider" />
             <text class="compat-sheet__label">热门机型</text>
             <block wx:for="{{filteredCompatModels}}" wx:key="id">
               <view class="compat-model">
@@ -358,7 +358,7 @@
               <view wx:if="{{index < filteredCompatModels.length - 1}}" class="compat-model__divider" />
             </block>
           </view>
-        </block>
+        </view>
         <view wx:else class="compat-dial">
           <text class="compat-dial__code">*#06#</text>
           <text class="compat-dial__hint">{{compatDialHint}}</text>

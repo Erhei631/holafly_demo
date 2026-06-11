@@ -851,51 +851,10 @@
   height: 56rpx;
 }
 
-.compat-device {
+.compat-device-block {
   display: flex;
   flex-direction: column;
   gap: 8rpx;
-  padding: 24rpx 40rpx;
-  background: var(--color-bg-muted);
-  flex-shrink: 0;
-  box-sizing: border-box;
-}
-
-.compat-device__row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16rpx;
-}
-
-.compat-device__name {
-  font-size: 30rpx;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  line-height: 44rpx;
-}
-
-.compat-device__badge {
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
-  padding: 8rpx 12rpx;
-  background: var(--green-100);
-  border-radius: 8rpx;
-  font-size: 24rpx;
-  color: var(--green-700);
-  flex-shrink: 0;
-}
-
-.compat-device__check {
-  width: 28rpx;
-  height: 28rpx;
-}
-
-.compat-device__hint {
-  font-size: 24rpx;
-  color: var(--color-text-tertiary);
-  line-height: 32rpx;
 }
 
 .compat-sheet__section {
@@ -951,7 +910,12 @@
   box-sizing: border-box;
 }
 
-.compat-version--active {
+.compat-version--active.compat-version--cn {
+  background: var(--blue-50);
+  border-color: #4db5e8;
+}
+
+.compat-version--active.compat-version--global {
   background: var(--rose-50);
   border-color: var(--color-primary);
 }
@@ -1008,6 +972,12 @@
   box-shadow: 0 4rpx 16rpx -8rpx rgba(0, 0, 0, 0.2);
 }
 
+.compat-model-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
 .compat-search {
   display: flex;
   align-items: center;
@@ -1038,7 +1008,7 @@
 .compat-models {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 0;
 }
 
 .compat-model {
@@ -1046,12 +1016,18 @@
   align-items: center;
   justify-content: space-between;
   gap: 16rpx;
+  padding: 24rpx 0;
+  box-sizing: border-box;
 }
 
 .compat-model__divider {
   height: 1rpx;
   background: var(--color-bg-muted);
   width: 100%;
+}
+
+.compat-model__divider + .compat-sheet__label {
+  margin-top: 32rpx;
 }
 
 .compat-model__name {
@@ -1071,7 +1047,7 @@
   background: var(--green-100);
   border-radius: 8rpx;
   font-size: 24rpx;
-  color: var(--green-700);
+  color: #179b50;
   line-height: 32rpx;
   flex-shrink: 0;
 }

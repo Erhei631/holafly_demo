@@ -24,8 +24,8 @@
     .success-nav__back img{width:30px;height:30px;display:block}
     .success-nav__title{position:absolute;left:50%;transform:translateX(-50%);text-align:center;font-size:16px;font-weight:500;line-height:24px;pointer-events:none;white-space:nowrap}
     .success-nav__right{display:flex;align-items:center;gap:6px;flex-shrink:0}
-    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px}
-    .nav-capsule--support{width:30px}
+    .nav-capsule{display:flex;align-items:center;justify-content:center;height:30px;margin:0;padding:0;font-family:inherit;background:rgba(255,255,255,.7);border:1px solid #dedede;border-radius:15px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+    button.nav-capsule{appearance:none}
     .nav-capsule--menu{width:83px;padding:0 10px}
     .nav-capsule img{display:block}
     .nav-capsule__icon{width:16px;height:16px}
@@ -71,6 +71,9 @@
     .success-reward-item{width:74px;display:flex;flex-direction:column;align-items:center;gap:8px}
     .success-reward-item img{width:32px;height:32px}
     .success-reward-item span{font-size:12px;color:var(--neutral-600);line-height:16px;text-align:center}
+    .detail-support-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:0;padding:12px 24px;font-family:inherit;background:#fff;border:1px solid #e4e6ea;border-radius:10px;box-sizing:border-box;cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .detail-support-btn__icon{width:24px;height:24px;flex-shrink:0}
+    .detail-support-btn__text{font-size:15px;font-weight:500;line-height:22px;color:#7b7c7e}
     .success-toast{position:absolute;left:50%;top:54%;z-index:100;transform:translate(-50%,-50%) scale(.96);padding:12px 20px;background:rgba(41,43,46,.88);color:#fff;font-size:14px;line-height:1.43;border-radius:10px;text-align:center;max-width:280px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
     .success-toast.is-show{opacity:1;transform:translate(-50%,-50%) scale(1)}
   </style>
@@ -83,7 +86,6 @@
       <button class="success-nav__back" type="button" id="success-back" aria-label="返回首页"><img src="images/success/nav-home.svg" alt="" /></button>
       <h1 class="success-nav__title">支付成功</h1>
       <div class="success-nav__right">
-        <div class="nav-capsule nav-capsule--support"><img class="nav-capsule__icon" src="images/detail/nav-support.svg" alt="" /></div>
         <div class="nav-capsule nav-capsule--menu">
           <img class="nav-capsule__icon" src="images/detail/nav-share.svg" alt="" />
           <img class="nav-capsule__sep" src="images/detail/nav-divider.svg" alt="" />
@@ -152,6 +154,10 @@
             </div>
           </div>
         </section>
+        <button class="detail-support-btn" type="button" id="support-btn" aria-label="联系客服">
+          <img class="detail-support-btn__icon" src="images/orders/icon-support-contact.svg" alt="" />
+          <span class="detail-support-btn__text">联系客服</span>
+        </button>
       </div>
     </div>
     <div class="success-toast" id="success-toast" role="status" aria-live="polite"></div>
@@ -174,6 +180,7 @@
       toastTimer=setTimeout(()=>toast.classList.remove('is-show'),2000);
     }
     document.getElementById('success-back').addEventListener('click',()=>{location.href='index.html';});
+    document.getElementById('support-btn').addEventListener('click',()=>showToast('联系客服（待开发）'));
     document.getElementById('notify-btn').addEventListener('click',()=>showToast('已开启微信通知'));
     document.getElementById('continue-buy-btn').addEventListener('click',()=>{location.href='index.html';});
     document.getElementById('orders-list-btn').addEventListener('click',()=>{location.href='orders.html';});

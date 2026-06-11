@@ -37,19 +37,19 @@ const WHY_CHOOSE = [
     id: 'data',
     icon: '/images/home/why-infinity.png',
     title: '不限流量 · 不限速',
-    desc: '4K视频、直播、导航全程不卡顿，绝不偷偷降速',
+    desc: '4K、直播、导航全程不卡顿',
   },
   {
     id: 'support',
     icon: '/images/home/why-headset.png',
     title: '中文客服 7×24h',
-    desc: '全天候真人在线，遇到问题随时秒回',
+    desc: '真人在线，问题秒回',
   },
   {
     id: 'coverage',
     icon: '/images/home/why-globe.png',
     title: '覆盖全球200+国家',
-    desc: '全球200+国家，一次支付，畅行旅程',
+    desc: '一次支付，畅行全程',
   },
 ];
 

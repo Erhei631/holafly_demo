@@ -5,9 +5,6 @@
     </view>
     <text class="detail-nav__title">订单详情</text>
     <view class="detail-nav__right">
-      <view class="nav-capsule nav-capsule--support" bindtap="onSupportTap" aria-label="客服">
-        <image class="nav-capsule__icon" src="/images/detail/nav-support.svg" mode="aspectFit" />
-      </view>
       <view class="nav-capsule nav-capsule--menu">
         <image class="nav-capsule__icon nav-capsule__icon--sm" src="/images/detail/nav-share.svg" mode="aspectFit" />
         <image class="nav-capsule__sep" src="/images/detail/nav-divider.svg" mode="aspectFit" />
@@ -119,6 +116,11 @@
           <text class="detail-info-row__label">申请开票</text>
           <image class="detail-info-row__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
         </view>
+      </view>
+
+      <view class="detail-support-btn" bindtap="onSupportTap" aria-label="联系客服">
+        <image class="detail-support-btn__icon" src="/images/orders/icon-support-contact.svg" mode="aspectFit" />
+        <text class="detail-support-btn__text">联系客服</text>
       </view>
 
       <view class="detail-refund" bindtap="onRefund">

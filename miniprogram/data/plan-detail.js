@@ -113,20 +113,21 @@ function calcPricing(prices, days, quantity, originalDaily) {
     ? presetTotal
     : Math.round((prices[7] / 7) * days);
   const total = unitTotal * quantity;
-  const dailyAvg = Math.round((total / days / quantity) * 10) / 10;
+  const dailyAvg = Math.round((unitTotal / days) * 10) / 10;
   const savePercent = Math.max(0, Math.round((1 - dailyAvg / originalDaily) * 100));
-  const saveAmount = Math.max(0, Math.round((originalDaily - dailyAvg) * 10) / 10);
+  const originalUnitTotal = originalDaily * days;
+  const totalSave = Math.max(0, Math.round((originalUnitTotal - unitTotal) * quantity));
 
   return {
     total,
     dailyAvg,
     originalDaily,
     savePercent,
-    saveAmount,
+    saveAmount: totalSave,
     totalLabel: String(total),
     dailyAvgLabel: Number.isInteger(dailyAvg) ? String(dailyAvg) : dailyAvg.toFixed(1),
-    saveLabel: `官方立减${savePercent}%省${saveAmount}元`,
-    footerMeta: '/天',
+    saveLabel: `官方立减${savePercent}%省${totalSave}元`,
+    footerMeta: ` / ${days}天`,
   };
 }
 

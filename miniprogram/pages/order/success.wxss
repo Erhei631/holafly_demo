@@ -25,6 +25,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .success-nav__back-icon {
@@ -46,11 +47,10 @@
 }
 
 .success-nav__right {
-  width: 166rpx;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 12rpx;
+  flex-shrink: 0;
 }
 
 .nav-capsule {
@@ -61,10 +61,6 @@
   background: rgba(255, 255, 255, 0.7);
   border: 1rpx solid #dedede;
   border-radius: 30rpx;
-}
-
-.nav-capsule--support {
-  width: 60rpx;
 }
 
 .nav-capsule--menu {
@@ -384,4 +380,30 @@
   color: var(--color-text-secondary);
   line-height: 32rpx;
   text-align: center;
+}
+
+.detail-support-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20rpx;
+  width: 100%;
+  padding: 24rpx 48rpx;
+  background: #fff;
+  border: 1rpx solid #e4e6ea;
+  border-radius: 20rpx;
+  box-sizing: border-box;
+}
+
+.detail-support-btn__icon {
+  width: 48rpx;
+  height: 48rpx;
+  flex-shrink: 0;
+}
+
+.detail-support-btn__text {
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 44rpx;
+  color: #7b7c7e;
 }

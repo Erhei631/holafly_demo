@@ -140,14 +140,16 @@
         <image class="compat-card__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
       </view>
 
-      <view class="panel">
-        <text class="panel__title">Holafly服务承诺</text>
-        <view class="promise-grid">
-          <view wx:for="{{plan.servicePromises}}" wx:key="id" class="promise-item">
-            <image class="promise-item__icon" src="{{item.icon}}" mode="aspectFit" />
-            <view class="promise-item__text">
-              <text class="promise-item__line">{{item.lines[0]}}</text>
-              <text class="promise-item__line">{{item.lines[1]}}</text>
+      <view class="panel panel--promise">
+        <text class="panel__title panel__title--inline">Holafly服务承诺</text>
+        <view class="promise-strip">
+          <view class="promise-grid">
+            <view wx:for="{{plan.servicePromises}}" wx:key="id" class="promise-item">
+              <image class="promise-item__icon" src="{{item.icon}}" mode="aspectFit" />
+              <view class="promise-item__text">
+                <text class="promise-item__line">{{item.lines[0]}}</text>
+                <text class="promise-item__line">{{item.lines[1]}}</text>
+              </view>
             </view>
           </view>
         </view>
@@ -165,9 +167,7 @@
             <text class="app-section__title">{{item.title}}</text>
             <view wx:for="{{item.rows}}" wx:for-item="row" wx:key="*this" class="app-row">
               <view wx:for="{{row}}" wx:for-item="app" wx:key="id" class="app-tile">
-                <view class="app-tile__icon-wrap">
-                  <image class="app-tile__icon" src="{{app.icon}}" mode="aspectFit" />
-                </view>
+                <image class="app-tile__icon" src="{{app.icon}}" mode="aspectFit" />
                 <view class="app-tile__text">
                   <text class="app-tile__name">{{app.name}}</text>
                   <text class="app-tile__subtitle">{{app.subtitle}}</text>
@@ -295,24 +295,13 @@
           <image class="compat-sheet__close-icon" src="/images/compat/close.svg" mode="aspectFit" />
         </view>
       </view>
-      <view class="compat-device">
-        <text class="compat-sheet__label">您的机型</text>
-        <view class="compat-device__row">
-          <text class="compat-device__name">{{compatDevice.name}}</text>
-          <view wx:if="{{compatDevice.supported}}" class="compat-device__badge">
-            <image class="compat-device__check" src="/images/compat/check.svg" mode="aspectFit" />
-            <text>支持</text>
-          </view>
-        </view>
-        <text class="compat-device__hint">{{compatDevice.disclaimer}}</text>
-      </view>
       <view class="compat-sheet__section">
         <text class="compat-step-label">1. 您的手机是哪个版本</text>
         <view class="compat-version-row">
           <view
             wx:for="{{compatVersions}}"
             wx:key="id"
-            class="compat-version {{compatVersion === item.id ? 'compat-version--active' : ''}}"
+            class="compat-version compat-version--{{item.id}} {{compatVersion === item.id ? 'compat-version--active' : ''}}"
             data-version="{{item.id}}"
             bindtap="onCompatVersionTap"
           >
@@ -337,7 +326,7 @@
               <text>{{item.label}}</text>
             </view>
           </view>
-          <block wx:if="{{compatMethod === 'model'}}">
+          <view wx:if="{{compatMethod === 'model'}}" class="compat-model-panel">
             <view class="compat-search">
               <image class="compat-search__icon" src="/images/compat/search.svg" mode="aspectFit" />
               <input
@@ -349,6 +338,17 @@
               />
             </view>
             <view class="compat-models">
+              <view class="compat-device-block">
+                <text class="compat-sheet__label">您的机型</text>
+                <view class="compat-model">
+                  <text class="compat-model__name">{{compatDevice.name}}</text>
+                  <view wx:if="{{compatDevice.supported}}" class="compat-model__badge">
+                    <image class="compat-model__check" src="/images/compat/check.svg" mode="aspectFit" />
+                    <text>支持</text>
+                  </view>
+                </view>
+              </view>
+              <view class="compat-model__divider" />
               <text class="compat-sheet__label">热门机型</text>
               <block wx:for="{{filteredCompatModels}}" wx:key="id">
                 <view class="compat-model">
@@ -361,7 +361,7 @@
                 <view wx:if="{{index < filteredCompatModels.length - 1}}" class="compat-model__divider" />
               </block>
             </view>
-          </block>
+          </view>
           <view wx:else class="compat-dial">
             <text class="compat-dial__code">*#06#</text>
             <text class="compat-dial__hint">{{compatDialHint}}</text>
@@ -427,7 +427,7 @@
       <view class="detail-footer__price">
         <text class="detail-footer__currency">¥</text>
         <text class="detail-footer__amount">{{dailyAvgLabel}}</text>
-        <text class="detail-footer__meta">{{footerMeta}}</text>
+        <text class="detail-footer__meta">/天</text>
       </view>
       <button class="detail-footer__cta btn-primary" bindtap="onCheckout">去结算</button>
     </view>

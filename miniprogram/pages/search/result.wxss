@@ -1171,7 +1171,7 @@
 }
 
 /* —— APP 网格 —— */
-.app-section__title {
+.panel--apps .app-section__title {
   display: block;
   font-size: 30rpx;
   font-weight: 500;
@@ -1179,16 +1179,19 @@
   line-height: 44rpx;
 }
 
-.app-row {
+.panel--apps .app-row {
   display: flex;
   gap: 12rpx;
+  width: 100%;
 }
 
-.app-tile {
+.panel--apps .app-tile {
   flex: 1;
   min-width: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 12rpx;
   padding: 16rpx;
   background: var(--neutral-100);
@@ -1196,38 +1199,36 @@
   box-sizing: border-box;
 }
 
-.app-tile__icon-wrap {
-  padding: 12rpx;
-  background: var(--color-bg-base);
-  border-radius: 20rpx;
+.panel--apps .app-tile__icon {
+  width: 72rpx;
+  height: 72rpx;
+  display: block;
   flex-shrink: 0;
 }
 
-.app-tile__icon {
-  width: 56rpx;
-  height: 56rpx;
-  display: block;
-}
-
-.app-tile__text {
+.panel--apps .app-tile__text {
   display: flex;
   flex-direction: column;
   gap: 4rpx;
+  align-items: center;
+  text-align: center;
   min-width: 0;
-  flex: 1;
+  width: 100%;
 }
 
-.app-tile__name {
+.panel--apps .app-tile__name {
   font-size: 28rpx;
   font-weight: 500;
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   line-height: 40rpx;
+  text-align: center;
 }
 
-.app-tile__subtitle {
+.panel--apps .app-tile__subtitle {
   font-size: 24rpx;
   color: var(--color-text-secondary);
   line-height: 36rpx;
+  text-align: center;
 }
 
 /* —— 使用方法 —— */
@@ -1428,51 +1429,10 @@
   height: 56rpx;
 }
 
-.compat-device {
+.compat-device-block {
   display: flex;
   flex-direction: column;
   gap: 8rpx;
-  padding: 24rpx 40rpx;
-  background: var(--color-bg-muted);
-  flex-shrink: 0;
-  box-sizing: border-box;
-}
-
-.compat-device__row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16rpx;
-}
-
-.compat-device__name {
-  font-size: 30rpx;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  line-height: 44rpx;
-}
-
-.compat-device__badge {
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
-  padding: 8rpx 12rpx;
-  background: var(--green-100);
-  border-radius: 8rpx;
-  font-size: 24rpx;
-  color: var(--green-700);
-  flex-shrink: 0;
-}
-
-.compat-device__check {
-  width: 28rpx;
-  height: 28rpx;
-}
-
-.compat-device__hint {
-  font-size: 24rpx;
-  color: var(--color-text-tertiary);
-  line-height: 32rpx;
 }
 
 .compat-sheet__section {
@@ -1528,7 +1488,12 @@
   box-sizing: border-box;
 }
 
-.compat-version--active {
+.compat-version--active.compat-version--cn {
+  background: var(--blue-50);
+  border-color: #4db5e8;
+}
+
+.compat-version--active.compat-version--global {
   background: var(--rose-50);
   border-color: var(--color-primary);
 }
@@ -1585,6 +1550,12 @@
   box-shadow: 0 4rpx 16rpx -8rpx rgba(0, 0, 0, 0.2);
 }
 
+.compat-model-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
 .compat-search {
   display: flex;
   align-items: center;
@@ -1615,7 +1586,7 @@
 .compat-models {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 0;
 }
 
 .compat-model {
@@ -1623,12 +1594,18 @@
   align-items: center;
   justify-content: space-between;
   gap: 16rpx;
+  padding: 24rpx 0;
+  box-sizing: border-box;
 }
 
 .compat-model__divider {
   height: 1rpx;
   background: var(--color-bg-muted);
   width: 100%;
+}
+
+.compat-model__divider + .compat-sheet__label {
+  margin-top: 32rpx;
 }
 
 .compat-model__name {
@@ -1648,7 +1625,7 @@
   background: var(--green-100);
   border-radius: 8rpx;
   font-size: 24rpx;
-  color: var(--green-700);
+  color: #179b50;
   line-height: 32rpx;
   flex-shrink: 0;
 }
@@ -1719,38 +1696,18 @@
   line-height: 1.43;
 }
 
-.app-row {
+.panel--promise {
   display: flex;
-  align-items: center;
-  padding: 16rpx 24rpx;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.promise-strip {
+  padding: 16rpx;
   background: var(--neutral-100);
   border-radius: 20rpx;
-  overflow: hidden;
-}
-
-.app-row__item {
-  position: relative;
-  flex-shrink: 0;
-  width: 92rpx;
-  height: 92rpx;
-  margin-right: -32rpx;
-  border-radius: var(--radius-full);
-  border: 4rpx solid var(--color-bg-base);
-  background: var(--color-bg-base);
-  overflow: hidden;
-}
-
-.app-row__item:last-child {
-  margin-right: 0;
-}
-
-.app-row__icon {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 64%;
-  height: 64%;
-  transform: translate(-50%, -50%);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .promise-grid {
@@ -1765,6 +1722,7 @@
   flex-direction: column;
   align-items: center;
   gap: 16rpx;
+  flex-shrink: 0;
 }
 
 .promise-item__icon {
@@ -1776,14 +1734,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 148rpx;
   font-size: 24rpx;
   color: var(--color-text-secondary);
-  line-height: 32rpx;
+  line-height: 36rpx;
   text-align: center;
 }
 
 .promise-item__line {
-  line-height: 32rpx;
+  line-height: 36rpx;
 }
 
 /* —— 底部结算栏 —— */

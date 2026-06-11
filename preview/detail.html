@@ -10,7 +10,7 @@
       --font-mono:'JetBrains Mono','SF Mono','Menlo','Roboto Mono',monospace;
       --rose-50:#ffefef; --rose-100:#ffe0e0; --rose-500:#e6485c;
       --green-50:#ecfff4; --green-100:#d6ffe7; --green-500:#48ec86; --green-700:#179b50;
-      --blue-50:#edf9fe; --blue-100:#dcf4ff;
+      --blue-50:#edf9fe; --blue-100:#dcf4ff; --blue-500:#4db5e8;
       --neutral-50:#fff; --neutral-100:#f8f8fb; --neutral-200:#e4e6ea;
       --neutral-400:#7b7c7e; --neutral-600:#56575a; --neutral-900:#272729;
       --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
@@ -185,19 +185,15 @@
     .compat-sheet__title{flex:1;font-size:18px;font-weight:500;line-height:24px}
     .compat-sheet__close{border:none;background:transparent;padding:0;cursor:pointer;width:28px;height:28px}
     .compat-sheet__close img{width:28px;height:28px;display:block}
-    .compat-device{display:flex;flex-direction:column;gap:4px;padding:12px 20px;background:var(--neutral-100);flex-shrink:0;box-sizing:border-box}
-    .compat-device__row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-    .compat-device__name{font-size:15px;font-weight:500;line-height:22px;color:var(--neutral-900)}
-    .compat-device__badge{display:flex;align-items:center;gap:4px;padding:4px 6px;background:var(--green-100);border-radius:4px;font-size:12px;line-height:16px;color:#179b50;flex-shrink:0}
-    .compat-device__badge img{width:14px;height:14px}
-    .compat-device__hint{font-size:12px;color:var(--neutral-400);line-height:16px}
+    .compat-device-block{display:flex;flex-direction:column;gap:4px}
     .compat-sheet__section{display:flex;flex-direction:column;gap:8px;padding:8px 20px 0;flex-shrink:0;box-sizing:border-box}
     .compat-sheet__body{display:flex;flex-direction:column;gap:16px;padding:16px 20px 0;flex:1;min-height:0;overflow-y:auto;box-sizing:border-box}
     .compat-sheet__label{display:block;font-size:12px;color:var(--neutral-400);line-height:16px}
     .compat-step-label{display:block;font-size:12px;color:var(--neutral-400);line-height:16px;margin:0;padding-left:18px;text-indent:-18px}
     .compat-version-row{display:flex;gap:8px}
     .compat-version{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid var(--neutral-200);border-radius:16px;background:#fff;cursor:pointer;box-sizing:border-box}
-    .compat-version--active{background:var(--rose-50);border-color:var(--rose-500)}
+    .compat-version--active.compat-version--cn{background:var(--blue-50);border-color:var(--blue-500)}
+    .compat-version--active.compat-version--global{background:var(--rose-50);border-color:var(--rose-500)}
     .compat-version img{width:36px;height:36px;border-radius:50%;flex-shrink:0;object-fit:cover}
     .compat-version__text{display:flex;flex-direction:column;gap:2px;min-width:0}
     .compat-version__title{display:block;font-size:16px;font-weight:500;line-height:24px}
@@ -209,17 +205,18 @@
     .compat-search img{width:16px;height:16px;flex-shrink:0}
     .compat-search input{flex:1;min-width:0;border:none;background:transparent;font-size:14px;color:var(--neutral-900);outline:none}
     .compat-search input::placeholder{color:var(--neutral-600)}
-    .compat-models{display:flex;flex-direction:column;gap:12px}
-    .compat-model{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .compat-models{display:flex;flex-direction:column;gap:0}
+    .compat-model{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 0;box-sizing:border-box}
     .compat-model__divider{height:1px;background:var(--neutral-100);width:100%}
+    .compat-model__divider+.compat-sheet__label{margin-top:16px}
     .compat-model__name{font-size:15px;font-weight:500;line-height:22px}
-    .compat-model__badge{display:flex;align-items:center;gap:4px;padding:4px 6px;background:var(--green-100);border-radius:4px;font-size:12px;color:var(--green-700);flex-shrink:0}
+    .compat-model__badge{display:flex;align-items:center;gap:4px;padding:4px 6px;background:var(--green-100);border-radius:4px;font-size:12px;line-height:16px;color:#179b50;flex-shrink:0}
     .compat-model__badge img{width:14px;height:14px}
     .compat-dial{display:none;flex-direction:column;align-items:center;gap:8px;padding:24px 12px;background:var(--neutral-100);border-radius:16px;text-align:center}
     .compat-dial.is-active{display:flex}
     .compat-dial__code{font-size:24px;font-weight:600;letter-spacing:1px}
     .compat-dial__hint{font-size:14px;color:var(--neutral-600);line-height:1.43}
-    .compat-model-panel{display:block}
+    .compat-model-panel{display:flex;flex-direction:column;gap:16px}
     .compat-model-panel.is-hidden{display:none}
     .info-block{padding:12px 16px;background:var(--neutral-100);border-radius:10px}
     .info-block+.info-block{margin-top:8px}
@@ -228,13 +225,12 @@
     .info-block__label{font-size:15px;font-weight:500}
     .info-block__text{display:block;margin-top:8px;font-size:14px;color:var(--neutral-600);line-height:1.43}
     .app-section__title{display:block;font-size:15px;font-weight:500;line-height:22px;color:var(--neutral-900)}
-    .app-row{display:flex;gap:6px}
-    .app-tile{flex:1;min-width:0;display:flex;align-items:center;gap:6px;padding:8px;background:var(--neutral-100);border-radius:10px;box-sizing:border-box}
-    .app-tile__icon-wrap{padding:6px;background:#fff;border-radius:10px;flex-shrink:0}
-    .app-tile__icon{width:28px;height:28px;display:block;object-fit:contain}
-    .app-tile__text{display:flex;flex-direction:column;gap:2px;min-width:0}
-    .app-tile__name{display:block;font-size:14px;font-weight:500;color:var(--neutral-600);line-height:20px}
-    .app-tile__subtitle{display:block;font-size:12px;color:var(--neutral-600);line-height:18px}
+    .panel--apps .app-row{display:flex;gap:6px;width:100%}
+    .panel--apps .app-tile{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px;background:var(--neutral-100);border-radius:10px;box-sizing:border-box}
+    .panel--apps .app-tile__icon{width:36px;height:36px;display:block;object-fit:contain;flex-shrink:0}
+    .panel--apps .app-tile__text{display:flex;flex-direction:column;gap:2px;align-items:center;text-align:center;min-width:0;width:100%}
+    .panel--apps .app-tile__name{display:block;font-size:14px;font-weight:500;color:var(--neutral-900);line-height:20px;text-align:center}
+    .panel--apps .app-tile__subtitle{display:block;font-size:12px;color:var(--neutral-600);line-height:18px;text-align:center}
     .usage-steps{position:relative;display:flex;align-items:flex-start;justify-content:space-between;padding:8px 0;border-radius:10px}
     .usage-steps__connector{position:absolute;top:30px;height:0;width:57px;border-top:1px dashed var(--neutral-300);pointer-events:none;z-index:0}
     .usage-steps__connector--1{left:69px}
@@ -258,11 +254,14 @@
     .faq-list--simple .faq-item__row{justify-content:space-between;gap:12px}
     .faq-list--simple .faq-item__title{flex:1;min-width:0;font-size:14px;line-height:20px;white-space:nowrap}
     .faq-list--simple .faq-item__arrow{flex-shrink:0;margin-left:auto}
+    .panel--promise{display:flex;flex-direction:column;gap:12px}
+    .panel--promise>.panel__title{margin-bottom:0}
+    .promise-strip{padding:8px;background:var(--neutral-100);border-radius:10px;width:100%;box-sizing:border-box}
     .promise-grid{display:flex;justify-content:space-between;width:100%}
-    .promise-item{width:74px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+    .promise-item{width:74px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;flex-shrink:0}
     .promise-item img{width:32px;height:32px;flex-shrink:0;object-fit:contain}
-    .promise-item__text{display:flex;flex-direction:column;align-items:center;font-size:12px;color:var(--neutral-600);line-height:16px}
-    .promise-item__text span{display:block;line-height:16px}
+    .promise-item__text{display:flex;flex-direction:column;align-items:center;width:74px;font-size:12px;color:var(--neutral-600);line-height:18px;text-align:center}
+    .promise-item__text span{display:block;line-height:18px}
     .detail-footer{position:absolute;left:0;right:0;bottom:0;z-index:30;background:rgba(248,248,248,.8);backdrop-filter:blur(30px);box-shadow:0 -2px 12px rgba(0,0,0,.04);padding:16px 20px calc(16px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
     .detail-footer__inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
     .detail-footer__support{display:flex;flex-direction:column;align-items:center;gap:2px;width:24px;flex-shrink:0;cursor:pointer;border:none;background:transparent;padding:0}
@@ -305,14 +304,6 @@
           <span class="compat-sheet__title">检查我的手机是否支持 eSIM</span>
           <button class="compat-sheet__close" type="button" id="compat-sheet-close" aria-label="关闭"><img src="images/compat/close.svg" alt="" /></button>
         </div>
-        <div class="compat-device">
-          <span class="compat-sheet__label">您的机型</span>
-          <div class="compat-device__row">
-            <span class="compat-device__name">iPhone 17e</span>
-            <span class="compat-device__badge"><img src="images/compat/check.svg" alt="" />支持</span>
-          </div>
-          <span class="compat-device__hint">系统检查结果仅供参考，建议按照以下方式手动确认</span>
-        </div>
         <div class="compat-sheet__section">
           <span class="compat-step-label">1. 您的手机是哪个版本</span>
           <div class="compat-version-row" id="compat-version-row"></div>
@@ -326,6 +317,14 @@
                 <input type="search" id="compat-search" placeholder="搜索手机品牌或型号" />
               </div>
               <div class="compat-models">
+                <div class="compat-device-block">
+                  <span class="compat-sheet__label">您的机型</span>
+                  <div class="compat-model">
+                    <span class="compat-model__name">iPhone 17e</span>
+                    <span class="compat-model__badge"><img src="images/compat/check.svg" alt="" />支持</span>
+                  </div>
+                </div>
+                <div class="compat-model__divider"></div>
                 <span class="compat-sheet__label">热门机型</span>
                 <div id="compat-models-list"></div>
               </div>
@@ -432,15 +431,16 @@
     function formatRangeLabel(start,end){return `${formatShortLabel(start)} — ${formatShortLabel(end)}`;}
     function getDefaultDates(days){const t=new Date();return {start:formatDateStr(t),end:formatDateStr(addDays(t,days-1))};}
     function calcTotal(days,qty){return (PLAN.prices[days]||Math.round(PLAN.prices[7]/7*days))*qty;}
-    function calcDaily(days,qty){const total=calcTotal(days,qty);return Math.round(total/days/qty*10)/10;}
+    function calcDaily(days){const unit=PLAN.prices[days]||Math.round(PLAN.prices[7]/7*days);return Math.round(unit/days*10)/10;}
     function calcSave(days,qty){
-      const daily=calcDaily(days,qty);
+      const unitTotal=PLAN.prices[days]||Math.round(PLAN.prices[7]/7*days);
+      const daily=calcDaily(days);
       const savePercent=Math.max(0,Math.round((1-daily/PLAN.originalDaily)*100));
-      const saveAmount=Math.max(0,Math.round((PLAN.originalDaily-daily)*10)/10);
-      return {daily,savePercent,saveAmount,saveLabel:`官方立减${savePercent}%省${saveAmount}元`};
+      const totalSave=Math.max(0,Math.round((PLAN.originalDaily*days-unitTotal)*qty));
+      return {daily,total:calcTotal(days,qty),savePercent,saveAmount:totalSave,saveLabel:`官方立减${savePercent}%省${totalSave}元`};
     }
     function renderDayChip(days){return `<button type="button" class="day-chip" data-days="${days}"><span class="day-chip__label">${days}天</span></button>`;}
-    function renderAppTile(a){return `<div class="app-tile"><div class="app-tile__icon-wrap"><img class="app-tile__icon" src="${a.icon}" alt="" /></div><div class="app-tile__text"><span class="app-tile__name">${a.name}</span><span class="app-tile__subtitle">${a.subtitle}</span></div></div>`;}
+    function renderAppTile(a){return `<div class="app-tile"><img class="app-tile__icon" src="${a.icon}" alt="" /><div class="app-tile__text"><span class="app-tile__name">${a.name}</span><span class="app-tile__subtitle">${a.subtitle}</span></div></div>`;}
     function renderAppRows(apps){const rows=[];for(let i=0;i<apps.length;i+=2)rows.push(apps.slice(i,i+2));return rows.map(row=>`<div class="app-row">${row.map(renderAppTile).join('')}</div>`).join('');}
     function renderReviewItems(reviews){return reviews.map(r=>`<div class="review-item"><div class="review-item__top"><span class="review-item__name">${r.name}</span><span class="review-item__badge"><span class="review-item__badge-text">${r.rating}</span></span></div><p class="review-item__text">${r.text}</p><span class="review-item__meta">${r.meta}</span></div>`).join('');}
     function padCountdown(n){return n<10?`0${n}`:String(n);}
@@ -480,7 +480,7 @@
         </div>
         <div class="config-card__promo"><div class="config-card__promo-left"><div class="config-card__promo-daily"><span class="config-card__promo-daily-label">限时补贴低至日均</span><span class="config-card__promo-daily-currency">¥</span><span class="config-card__promo-daily-amount" id="promo-daily-amount">${save.daily}</span><span class="config-card__promo-daily-unit">/天</span></div><div class="config-card__promo-tags"><span class="config-card__promo-tag">原价¥${PLAN.originalDaily}起</span><span class="config-card__promo-tag" id="promo-save-label">${save.saveLabel}</span></div></div><div class="config-card__promo-countdown"><span class="config-card__promo-countdown-label">距离优惠结束</span><div class="config-card__promo-timer" id="promo-countdown"></div></div></div></div></div>
         <div class="compat-card" id="compat-card"><img class="compat-card__icon" src="${PLAN.compatCard.icon}" alt="" /><div class="compat-card__content"><span class="compat-card__title">${PLAN.compatCard.title}</span><span class="compat-card__subtitle">${PLAN.compatCard.subtitle}</span></div><img class="compat-card__arrow" src="images/detail/icon-arrow-right.svg" alt="" /></div>
-        <div class="panel"><span class="panel__title">Holafly服务承诺</span><div class="promise-grid">${PLAN.promises.map(p=>`<div class="promise-item"><img src="${p.icon}" alt="" /><div class="promise-item__text"><span>${p.lines[0]}</span><span>${p.lines[1]}</span></div></div>`).join('')}</div></div>
+        <div class="panel panel--promise"><span class="panel__title">Holafly服务承诺</span><div class="promise-strip"><div class="promise-grid">${PLAN.promises.map(p=>`<div class="promise-item"><img src="${p.icon}" alt="" /><div class="promise-item__text"><span>${p.lines[0]}</span><span>${p.lines[1]}</span></div></div>`).join('')}</div></div></div>
         <div class="panel panel--apps"><img class="panel__deco panel__deco--apps" src="images/detail/app-deco.png" alt="" /><div class="panel__intro"><span class="panel__title">畅连国内外APP</span><span class="panel__subtitle">${PLAN.appIntro}</span></div><div class="panel__divider"></div><div class="panel__apps-body">${PLAN.appSections.map(s=>`<span class="app-section__title">${s.title}</span>${renderAppRows(s.apps)}`).join('')}</div></div>
         <div class="reviews-card"><div class="reviews-card__header"><div class="reviews-card__brand"><img class="reviews-card__logo" src="images/home/trustpilot-logo.svg" alt="Trustpilot" /><p class="reviews-card__count">来自 ${PLAN.reviewSummary.total} 位用户评价</p></div><div class="reviews-card__rating"><span class="reviews-card__score">${PLAN.reviewSummary.rating}</span><span class="reviews-card__max">/5</span><img class="reviews-card__arrow" src="images/home/icon-arrow-right.svg" alt="" /></div></div><div class="reviews-card__divider"></div><div class="reviews-list">${renderReviewItems(PLAN.reviews)}</div></div>
         <div class="panel"><div class="panel__head"><span class="panel__title">使用方法</span><span class="panel__link" id="usage-guide-link" role="button" tabindex="0">查看完整教程 <img src="images/detail/icon-arrow-right.svg" alt="" /></span></div><div class="usage-steps"><div class="usage-steps__connector usage-steps__connector--1"></div><div class="usage-steps__connector usage-steps__connector--2"></div>${PLAN.usageSteps.map(s=>`<div class="usage-step"><div class="usage-step__icon-wrap"><img class="usage-step__icon" src="${s.icon}" alt="" /></div><span class="usage-step__label">${s.label}</span></div>`).join('')}</div></div>
@@ -518,7 +518,7 @@
       panel.innerHTML=`<span class="panel__title">常见问题</span><div class="faq-list faq-list--simple">${PLAN.faq.map(f=>`<div class="faq-item faq-item--simple ${expandedFaqId===f.id?'faq-item--open':''}" data-faq-id="${f.id}"><div class="faq-item__row"><span class="faq-item__title">${f.title}</span><img class="faq-item__arrow ${expandedFaqId===f.id?'faq-item__arrow--open':''}" src="images/detail/icon-arrow-right.svg" alt="" /></div>${f.answer?`<p class="faq-item__answer">${f.answer}</p>`:''}</div>`).join('')}</div>`;
     }
     function mountCompatSheet(){
-      document.getElementById('compat-version-row').innerHTML=PLAN.compatVersions.map(v=>`<button type="button" class="compat-version" data-version="${v.id}"><img src="${v.icon}" alt="" /><span class="compat-version__text"><span class="compat-version__title">${v.title}</span><span class="compat-version__subtitle">${v.subtitle}</span></span></button>`).join('');
+      document.getElementById('compat-version-row').innerHTML=PLAN.compatVersions.map(v=>`<button type="button" class="compat-version compat-version--${v.id}" data-version="${v.id}"><img src="${v.icon}" alt="" /><span class="compat-version__text"><span class="compat-version__title">${v.title}</span><span class="compat-version__subtitle">${v.subtitle}</span></span></button>`).join('');
       document.getElementById('compat-segment').innerHTML=PLAN.compatMethods.map(m=>`<button type="button" class="compat-segment__item" data-method="${m.id}">${m.label}</button>`).join('');
       updateCompatSheetUI();
     }
@@ -528,7 +528,12 @@
       document.getElementById('compat-models-list').innerHTML=models.map((m,i)=>`<div class="compat-model"><span class="compat-model__name">${m.name}</span>${m.supported?`<span class="compat-model__badge"><img src="images/compat/check.svg" alt="" />支持</span>`:''}</div>${i<models.length-1?'<div class="compat-model__divider"></div>':''}`).join('');
     }
     function updateCompatSheetUI(){
-      document.querySelectorAll('[data-version]').forEach(btn=>btn.classList.toggle('compat-version--active',btn.dataset.version===compatVersion));
+      document.querySelectorAll('[data-version]').forEach(btn=>{
+        const isActive=btn.dataset.version===compatVersion;
+        btn.classList.toggle('compat-version--active',isActive);
+        btn.classList.toggle('compat-version--cn',btn.dataset.version==='cn');
+        btn.classList.toggle('compat-version--global',btn.dataset.version==='global');
+      });
       document.querySelectorAll('[data-method]').forEach(btn=>btn.classList.toggle('compat-segment__item--active',btn.dataset.method===compatMethod));
       updateCompatModelsList();
       document.getElementById('compat-model-panel').classList.toggle('is-hidden',compatMethod!=='model');

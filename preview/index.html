@@ -18,6 +18,9 @@
       --rose-500: #e6485c;
       --blue-50: #edf9fe;
       --blue-100: #dcf4ff;
+      --blue-500: #4db5e8;
+      --green-100: #d6ffe7;
+      --green-700: #179b50;
       --green-50: #ecfff4;
       --green-500: #48ec86;
       --yellow-50: #fff8e7;
@@ -938,19 +941,15 @@
     .compat-sheet__title { flex: 1; font-size: 18px; font-weight: 500; line-height: 24px; }
     .compat-sheet__close { border: none; background: transparent; padding: 0; cursor: pointer; width: 28px; height: 28px; }
     .compat-sheet__close img { width: 28px; height: 28px; display: block; }
-    .compat-device { display: flex; flex-direction: column; gap: 4px; padding: 12px 20px; background: var(--neutral-100); flex-shrink: 0; box-sizing: border-box; }
-    .compat-device__row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .compat-device__name { font-size: 15px; font-weight: 500; line-height: 22px; color: var(--neutral-900); }
-    .compat-device__badge { display: flex; align-items: center; gap: 4px; padding: 4px 6px; background: var(--green-100); border-radius: 4px; font-size: 12px; line-height: 16px; color: #179b50; flex-shrink: 0; }
-    .compat-device__badge img { width: 14px; height: 14px; }
-    .compat-device__hint { font-size: 12px; color: var(--neutral-400); line-height: 16px; }
+    .compat-device-block { display: flex; flex-direction: column; gap: 4px; }
     .compat-sheet__section { display: flex; flex-direction: column; gap: 8px; padding: 8px 20px 0; flex-shrink: 0; box-sizing: border-box; }
     .compat-sheet__body { display: flex; flex-direction: column; gap: 16px; padding: 16px 20px 0; flex: 1; min-height: 0; overflow-y: auto; box-sizing: border-box; }
     .compat-sheet__label { display: block; font-size: 12px; color: var(--neutral-400); line-height: 16px; }
     .compat-step-label { display: block; font-size: 12px; color: var(--neutral-400); line-height: 16px; margin: 0; padding-left: 18px; text-indent: -18px; }
     .compat-version-row { display: flex; gap: 8px; }
     .compat-version { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid var(--neutral-200); border-radius: 16px; background: #fff; cursor: pointer; box-sizing: border-box; }
-    .compat-version--active { background: var(--rose-50); border-color: var(--rose-500); }
+    .compat-version--active.compat-version--cn { background: var(--blue-50); border-color: var(--blue-500); }
+    .compat-version--active.compat-version--global { background: var(--rose-50); border-color: var(--rose-500); }
     .compat-version img { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
     .compat-version__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
     .compat-version__title { display: block; font-size: 16px; font-weight: 500; line-height: 24px; }
@@ -962,17 +961,18 @@
     .compat-search img { width: 16px; height: 16px; flex-shrink: 0; }
     .compat-search input { flex: 1; min-width: 0; border: none; background: transparent; font-size: 14px; color: var(--neutral-900); outline: none; }
     .compat-search input::placeholder { color: var(--neutral-600); }
-    .compat-models { display: flex; flex-direction: column; gap: 12px; }
-    .compat-model { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .compat-models { display: flex; flex-direction: column; gap: 0; }
+    .compat-model { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 0; box-sizing: border-box; }
     .compat-model__divider { height: 1px; background: var(--neutral-100); width: 100%; }
+    .compat-model__divider + .compat-sheet__label { margin-top: 16px; }
     .compat-model__name { font-size: 15px; font-weight: 500; line-height: 22px; }
-    .compat-model__badge { display: flex; align-items: center; gap: 4px; padding: 4px 6px; background: var(--green-100); border-radius: 4px; font-size: 12px; color: var(--green-700); flex-shrink: 0; }
+    .compat-model__badge { display: flex; align-items: center; gap: 4px; padding: 4px 6px; background: var(--green-100); border-radius: 4px; font-size: 12px; line-height: 16px; color: #179b50; flex-shrink: 0; }
     .compat-model__badge img { width: 14px; height: 14px; }
     .compat-dial { display: none; flex-direction: column; align-items: center; gap: 8px; padding: 24px 12px; background: var(--neutral-100); border-radius: 16px; text-align: center; }
     .compat-dial.is-active { display: flex; }
     .compat-dial__code { font-size: 24px; font-weight: 600; letter-spacing: 1px; }
     .compat-dial__hint { font-size: 14px; color: var(--neutral-600); line-height: 1.43; }
-    .compat-model-panel { display: block; }
+    .compat-model-panel { display: flex; flex-direction: column; gap: 16px; }
     .compat-model-panel.is-hidden { display: none; }
 
     .drawer__handle-wrap {
@@ -1226,7 +1226,7 @@
                 </div>
                 <div class="why-feature__body">
                   <span class="why-feature__title">不限流量 · 不限速</span>
-                  <span class="why-feature__desc">4K视频、直播、导航全程不卡顿，绝不偷偷降速</span>
+                  <span class="why-feature__desc">4K、直播、导航全程不卡顿</span>
                 </div>
               </div>
               <div class="why-feature">
@@ -1235,7 +1235,7 @@
                 </div>
                 <div class="why-feature__body">
                   <span class="why-feature__title">中文客服 7×24h</span>
-                  <span class="why-feature__desc">全天候真人在线，遇到问题随时秒回</span>
+                  <span class="why-feature__desc">真人在线，问题秒回</span>
                 </div>
               </div>
               <div class="why-feature">
@@ -1244,7 +1244,7 @@
                 </div>
                 <div class="why-feature__body">
                   <span class="why-feature__title">覆盖全球200+国家</span>
-                  <span class="why-feature__desc">全球200+国家，一次支付，畅行旅程</span>
+                  <span class="why-feature__desc">一次支付，畅行全程</span>
                 </div>
               </div>
             </div>
@@ -1399,14 +1399,6 @@
           <img src="images/compat/close.svg" alt="" />
         </button>
       </div>
-      <div class="compat-device">
-        <span class="compat-sheet__label">您的机型</span>
-        <div class="compat-device__row">
-          <span class="compat-device__name">iPhone 17e</span>
-          <span class="compat-device__badge"><img src="images/compat/check.svg" alt="" />支持</span>
-        </div>
-        <span class="compat-device__hint">系统检查结果仅供参考，建议按照以下方式手动确认</span>
-      </div>
       <div class="compat-sheet__section">
         <span class="compat-step-label">1. 您的手机是哪个版本</span>
         <div class="compat-version-row" id="compat-version-row"></div>
@@ -1420,6 +1412,14 @@
               <input type="search" id="compat-search" placeholder="搜索手机品牌或型号" />
             </div>
             <div class="compat-models">
+              <div class="compat-device-block">
+                <span class="compat-sheet__label">您的机型</span>
+                <div class="compat-model">
+                  <span class="compat-model__name">iPhone 17e</span>
+                  <span class="compat-model__badge"><img src="images/compat/check.svg" alt="" />支持</span>
+                </div>
+              </div>
+              <div class="compat-model__divider"></div>
               <span class="compat-sheet__label">热门机型</span>
               <div id="compat-models-list"></div>
             </div>
@@ -1645,7 +1645,10 @@
 
     function updateCompatSheetUI() {
       document.querySelectorAll('[data-version]').forEach((btn) => {
-        btn.classList.toggle('compat-version--active', btn.dataset.version === compatVersion);
+        const isActive = btn.dataset.version === compatVersion;
+        btn.classList.toggle('compat-version--active', isActive);
+        btn.classList.toggle('compat-version--cn', btn.dataset.version === 'cn');
+        btn.classList.toggle('compat-version--global', btn.dataset.version === 'global');
       });
       document.querySelectorAll('[data-method]').forEach((btn) => {
         btn.classList.toggle('compat-segment__item--active', btn.dataset.method === compatMethod);
@@ -1657,7 +1660,7 @@
 
     function mountCompatSheet() {
       document.getElementById('compat-version-row').innerHTML = COMPAT.versions.map((v) => `
-        <button type="button" class="compat-version" data-version="${v.id}">
+        <button type="button" class="compat-version compat-version--${v.id}" data-version="${v.id}">
           <img src="${v.icon}" alt="" />
           <span class="compat-version__text">
             <span class="compat-version__title">${v.title}</span>
