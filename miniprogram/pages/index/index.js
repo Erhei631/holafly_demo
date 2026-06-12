@@ -1,9 +1,4 @@
 const {
-  POPULAR_COUNTRIES,
-  MULTI_REGIONS,
-  filterChips,
-} = require('../../data/destinations');
-const {
   HOME_POPULAR,
   ACTIVITY_FEED,
   HOME_REVIEWS,
@@ -41,12 +36,6 @@ Page({
     destinationDisplay: '去选择',
     destinationSelected: false,
     selectedDestinationId: '',
-    showDestinationDrawer: false,
-    drawerKeyword: '',
-    popularCountries: POPULAR_COUNTRIES,
-    multiRegions: MULTI_REGIONS,
-    filteredPopularCountries: POPULAR_COUNTRIES,
-    filteredMultiRegions: MULTI_REGIONS,
     popularRecommendations: HOME_POPULAR,
     activityFeed: ACTIVITY_FEED,
     reviews: HOME_REVIEWS,
@@ -70,7 +59,6 @@ Page({
       statusBarHeight: getStatusBarHeight(),
       safeBottom: getSafeAreaBottom(),
     });
-    this.refreshDrawerLists();
   },
 
   onShow() {
@@ -81,40 +69,17 @@ Page({
 
   noop() {},
 
-  refreshDrawerLists() {
-    const { drawerKeyword } = this.data;
-    this.setData({
-      filteredPopularCountries: filterChips(POPULAR_COUNTRIES, drawerKeyword),
-      filteredMultiRegions: filterChips(MULTI_REGIONS, drawerKeyword),
-    });
-  },
-
   openDestinationDrawer() {
-    this.setData({ showDestinationDrawer: true });
-    this.refreshDrawerLists();
+    wx.navigateTo({ url: '/pages/destination/index' });
   },
 
-  closeDestinationDrawer() {
-    this.setData({ showDestinationDrawer: false, drawerKeyword: '' });
-    this.refreshDrawerLists();
-  },
-
-  onDrawerSearchInput(e) {
-    this.setData({ drawerKeyword: e.detail.value });
-    this.refreshDrawerLists();
-  },
-
-  onSelectDestinationChip(e) {
-    const { id, name } = e.currentTarget.dataset;
+  onDestinationPicked({ id, name }) {
     this.setData({
       selectedDestinationId: id,
       destinationQuery: name,
       destinationDisplay: name,
       destinationSelected: true,
-      showDestinationDrawer: false,
-      drawerKeyword: '',
     });
-    this.refreshDrawerLists();
   },
 
   onPopularRecommendTap(e) {

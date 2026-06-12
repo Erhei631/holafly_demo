@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>全部目的地 · Holafly</title>
+  <style>
+    :root {
+      --rose-50: #ffefef;
+      --rose-500: #e6485c;
+      --neutral-50: #fff;
+      --neutral-100: #f8f8fb;
+      --neutral-200: #e4e6ea;
+      --neutral-400: #7b7c7e;
+      --neutral-600: #56575a;
+      --neutral-900: #272729;
+      --mp-width: 393px;
+      --mp-height: 852px;
+      --safe-area-bottom: 34px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      background: #e8e8ec;
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+      color: var(--neutral-900);
+    }
+    .preview-label { font-size: 14px; color: var(--neutral-600); margin-bottom: 16px; }
+    .device {
+      width: var(--mp-width);
+      height: var(--mp-height);
+      border-radius: 40px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+      background: #fff;
+    }
+    .status-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      height: 47px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 8px;
+      font-size: 17px;
+      font-weight: 600;
+      pointer-events: none;
+    }
+    .dest-nav {
+      position: absolute;
+      top: 47px;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 0 7px;
+      background: #fff;
+    }
+    .dest-nav__back {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+    }
+    .dest-nav__back img { width: 9px; height: 16.5px; display: block; }
+    .dest-nav__title {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+    }
+    .nav-capsule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #dedede;
+      border-radius: 15px;
+      width: 83px;
+      gap: 0;
+      padding: 0 10px;
+    }
+    .nav-capsule img { display: block; width: 16px; height: 16px; }
+    .nav-capsule__sep { width: 1px; height: 13px; margin: 0 8px; background: #d2d2d2; }
+    .dest-page {
+      position: absolute;
+      top: 91px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+    }
+    .dest-search-wrap { padding: 0 20px; flex-shrink: 0; }
+    .dest-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--neutral-100);
+      border-radius: 24px;
+    }
+    .dest-search img { width: 16px; height: 16px; flex-shrink: 0; }
+    .dest-search input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      color: var(--neutral-900);
+      outline: none;
+      font-family: inherit;
+    }
+    .dest-search input::placeholder { color: var(--neutral-600); }
+    .dest-segment {
+      display: flex;
+      gap: 4px;
+      margin: 12px 20px 0;
+      padding: 4px;
+      background: var(--neutral-200);
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+    .dest-segment__item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      font-size: 14px;
+      line-height: 20px;
+      color: #000;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .dest-segment__item--active {
+      background: #fff;
+      box-shadow: 0 2px 8px -4px rgba(0, 0, 0, 0.2);
+    }
+    .dest-body { position: relative; flex: 1; min-height: 0; margin-top: 20px; }
+    .dest-scroll {
+      height: 100%;
+      overflow-y: auto;
+      padding: 0 20px 24px;
+      scrollbar-width: none;
+    }
+    .dest-scroll::-webkit-scrollbar { display: none; }
+    .dest-section { margin-bottom: 20px; }
+    .dest-section__title {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 22px;
+      color: var(--neutral-600);
+    }
+    .dest-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .dest-chip {
+      width: calc((100% - 16px) / 3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px solid var(--neutral-200);
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    .dest-chip--active {
+      background: var(--rose-50);
+      border-color: var(--rose-500);
+    }
+    .dest-chip__icon { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+    .dest-chip__label { font-size: 15px; line-height: 22px; color: var(--neutral-900); }
+    .dest-chip--active .dest-chip__label { color: var(--rose-500); }
+    .dest-alpha { margin-bottom: 12px; }
+    .dest-alpha__letter {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 18px;
+      color: var(--neutral-600);
+    }
+    .dest-list {
+      background: var(--neutral-100);
+      border-radius: 10px;
+      padding: 0 12px;
+      overflow: hidden;
+    }
+    .dest-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      cursor: pointer;
+    }
+    .dest-row + .dest-row { border-top: 1px solid var(--neutral-200); }
+    .dest-row__left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .dest-row__flag {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--neutral-200);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .dest-row__flag--style { background-size: cover; }
+    .dest-row__name { font-size: 16px; font-weight: 500; line-height: 24px; }
+    .dest-row__arrow { width: 12px; height: 12px; flex-shrink: 0; opacity: 0.7; }
+    .dest-index {
+      position: absolute;
+      right: 4px;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 0;
+      z-index: 2;
+    }
+    .dest-index__letter {
+      width: 14px;
+      font-size: 12px;
+      line-height: 15px;
+      font-weight: 500;
+      color: #8b929d;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      padding: 0;
+      font-family: inherit;
+    }
+    .dest-empty { padding: 40px 0; text-align: center; font-size: 14px; color: var(--neutral-600); }
+  </style>
+</head>
+<body>
+  <p class="preview-label">全部目的地 · Figma 129:319</p>
+  <div class="device">
+    <div class="status-bar">9:41</div>
+    <div class="dest-nav">
+      <button class="dest-nav__back" type="button" id="dest-back" aria-label="返回">
+        <img src="images/detail/nav-back.svg" alt="" />
+      </button>
+      <span class="dest-nav__title">全部目的地</span>
+      <div class="dest-nav__spacer" style="width:32px"></div>
+    </div>
+    <div class="dest-page">
+      <div class="dest-search-wrap">
+        <div class="dest-search">
+          <img src="images/home/drawer-search.svg" alt="" />
+          <input id="dest-search" type="search" placeholder="搜索国家/地区" />
+        </div>
+      </div>
+      <div class="dest-segment" id="dest-segment">
+        <button class="dest-segment__item dest-segment__item--active" type="button" data-tab="country">按国家/地区</button>
+        <button class="dest-segment__item" type="button" data-tab="region">按区域</button>
+      </div>
+      <div class="dest-body">
+        <div class="dest-scroll" id="dest-scroll"></div>
+        <div class="dest-index" id="dest-index"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const POPULAR = [
+      { id: 'jp', name: '日本', icon: 'images/home/drawer-flag-jp.png' },
+      { id: 'hk', name: '香港', icon: 'images/home/drawer-flag-hk.png' },
+      { id: 'th', name: '泰国', icon: 'images/home/drawer-flag-th.png' },
+      { id: 'us', name: '美国', icon: 'images/home/drawer-flag-us.png' },
+      { id: 'uk', name: '英国', icon: 'images/home/drawer-flag-uk.png' },
+      { id: 'sg', name: '新加坡', icon: 'images/home/drawer-flag-sg.png' },
+    ];
+    const COUNTRIES = [
+      { id: 'ae', name: '阿联酋', initial: 'A', icon: 'images/home/drawer-region-global.png' },
+      { id: 'au', name: '澳大利亚', initial: 'A', icon: 'images/home/drawer-flag-uk.png' },
+      { id: 'de', name: '德国', initial: 'D', icon: 'images/home/drawer-region-eu.png' },
+      { id: 'ru', name: '俄罗斯', initial: 'E', flagStyle: 'linear-gradient(180deg, #fff 0%, #fff 33%, #0039a6 33%, #0039a6 66%, #d52b1e 66%, #d52b1e 100%)' },
+      { id: 'fr', name: '法国', initial: 'F', flagStyle: 'linear-gradient(90deg, #002654 0%, #002654 33%, #fff 33%, #fff 66%, #ed2939 66%, #ed2939 100%)' },
+      { id: 'ph', name: '菲律宾', initial: 'F', flagStyle: 'linear-gradient(180deg, #0038a8 0%, #0038a8 50%, #ce1126 50%, #ce1126 100%)' },
+      { id: 'kr', name: '韩国', initial: 'H', icon: 'images/home/drawer-flag-jp.png' },
+      { id: 'kh', name: '柬埔寨', initial: 'J', icon: 'images/home/drawer-flag-th.png' },
+      { id: 'my', name: '马来西亚', initial: 'M', icon: 'images/home/drawer-flag-sg.png' },
+      { id: 'us', name: '美国', initial: 'M', icon: 'images/home/drawer-flag-us.png' },
+      { id: 'jp', name: '日本', initial: 'R', icon: 'images/home/drawer-flag-jp.png' },
+      { id: 'th', name: '泰国', initial: 'T', icon: 'images/home/drawer-flag-th.png' },
+      { id: 'sg', name: '新加坡', initial: 'X', icon: 'images/home/drawer-flag-sg.png' },
+      { id: 'uk', name: '英国', initial: 'Y', icon: 'images/home/drawer-flag-uk.png' },
+      { id: 'vn', name: '越南', initial: 'Y', icon: 'images/home/drawer-flag-th.png' },
+    ];
+    const REGIONS = [
+      { id: 'eu-multi', name: '欧洲', icon: 'images/home/drawer-region-eu.png' },
+      { id: 'asia-multi', name: '亚洲', icon: 'images/home/drawer-region-asia.png' },
+      { id: 'global', name: '全球', icon: 'images/home/drawer-region-global.png' },
+    ];
+    const INDEX_LETTERS = ['A', 'D', 'E', 'F', 'H', 'J', 'M', 'R', 'T', 'X', 'Y'];
+
+    let tab = 'country';
+    let selectedId = '';
+
+    const scrollEl = document.getElementById('dest-scroll');
+    const indexEl = document.getElementById('dest-index');
+    const searchInput = document.getElementById('dest-search');
+
+    function filter(list, q) {
+      const keyword = (q || '').trim().toLowerCase();
+      if (!keyword) return list;
+      return list.filter((item) => item.name.toLowerCase().includes(keyword));
+    }
+
+    function groupCountries(list) {
+      const map = {};
+      list.forEach((item) => {
+        if (!map[item.initial]) map[item.initial] = [];
+        map[item.initial].push(item);
+      });
+      return INDEX_LETTERS.filter((l) => map[l]?.length).map((letter) => ({ letter, items: map[letter] }));
+    }
+
+    function flagHtml(item) {
+      if (item.icon) return `<img class="dest-row__flag" src="${item.icon}" alt="" />`;
+      return `<span class="dest-row__flag dest-row__flag--style" style="background:${item.flagStyle}"></span>`;
+    }
+
+    function rowHtml(item) {
+      return `
+        <div class="dest-row" data-name="${item.name}" role="button" tabindex="0">
+          <div class="dest-row__left">
+            ${flagHtml(item)}
+            <span class="dest-row__name">${item.name}</span>
+          </div>
+          <img class="dest-row__arrow" src="images/orders/icon-chevron-right.svg" alt="" />
+        </div>
+      `;
+    }
+
+    function render() {
+      const q = searchInput.value;
+      scrollEl.innerHTML = '';
+      indexEl.innerHTML = '';
+
+      if (tab === 'region') {
+        const regions = filter(REGIONS, q);
+        if (!regions.length) {
+          scrollEl.innerHTML = '<p class="dest-empty">未找到相关国家/地区</p>';
+          return;
+        }
+        const list = regions.map((item) => rowHtml(item)).join('');
+        scrollEl.innerHTML = `
+          <div class="dest-section">
+            <span class="dest-section__title">多国通用</span>
+            <div class="dest-list">${list}</div>
+          </div>
+        `;
+        bindRows();
+        return;
+      }
+
+      const popular = filter(POPULAR, q);
+      const groups = groupCountries(filter(COUNTRIES, q));
+      if (!popular.length && !groups.length) {
+        scrollEl.innerHTML = '<p class="dest-empty">未找到相关国家/地区</p>';
+        return;
+      }
+
+      let html = '';
+      if (popular.length) {
+        html += `
+          <div class="dest-section">
+            <span class="dest-section__title">热门推荐</span>
+            <div class="dest-chips">
+              ${popular.map((item) => `
+                <button type="button" class="dest-chip ${selectedId === item.id ? 'dest-chip--active' : ''}" data-id="${item.id}" data-name="${item.name}">
+                  <img class="dest-chip__icon" src="${item.icon}" alt="" />
+                  <span class="dest-chip__label">${item.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      groups.forEach((group) => {
+        html += `
+          <div class="dest-alpha" id="section-${group.letter}">
+            <span class="dest-alpha__letter">${group.letter}</span>
+            <div class="dest-list">${group.items.map((item) => rowHtml(item)).join('')}</div>
+          </div>
+        `;
+      });
+
+      scrollEl.innerHTML = html;
+      indexEl.innerHTML = groups.map((g) => `<button type="button" class="dest-index__letter" data-letter="${g.letter}">${g.letter}</button>`).join('');
+
+      scrollEl.querySelectorAll('.dest-chip').forEach((chip) => {
+        chip.addEventListener('click', () => selectDestination(chip.dataset.id, chip.dataset.name));
+      });
+      bindRows();
+      indexEl.querySelectorAll('.dest-index__letter').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(`section-${btn.dataset.letter}`);
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    }
+
+    function bindRows() {
+      scrollEl.querySelectorAll('.dest-row').forEach((row) => {
+        const go = () => {
+          location.href = `detail.html?destination=${encodeURIComponent(row.dataset.name)}`;
+        };
+        row.addEventListener('click', go);
+        row.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+        });
+      });
+    }
+
+    function selectDestination(_id, name) {
+      location.href = `detail.html?destination=${encodeURIComponent(name)}`;
+    }
+
+    document.getElementById('dest-segment').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-tab]');
+      if (!btn) return;
+      tab = btn.dataset.tab;
+      document.querySelectorAll('.dest-segment__item').forEach((el) => {
+        el.classList.toggle('dest-segment__item--active', el.dataset.tab === tab);
+      });
+      render();
+    });
+
+    document.getElementById('dest-back').addEventListener('click', () => {
+      location.href = 'index.html';
+    });
+
+    searchInput.addEventListener('input', render);
+    render();
+  </script>
+</body>
+</html>

@@ -1672,26 +1672,6 @@
       <div class="tab-bar__safe" aria-hidden="true"></div>
     </nav>
 
-    <div class="drawer-mask" id="drawer-mask"></div>
-    <div class="drawer" id="drawer">
-      <div class="drawer__handle-wrap">
-        <div class="drawer__handle"></div>
-      </div>
-      <div class="drawer__header">
-        <span class="drawer__title">选择国家/地区</span>
-        <button type="button" class="drawer__close" id="close-drawer" aria-label="关闭">
-          <img class="drawer__close-icon" src="images/home/drawer-close.png" alt="" />
-        </button>
-      </div>
-      <div class="drawer__search-wrap">
-        <div class="drawer__search">
-          <img class="drawer__search-icon" src="images/home/drawer-search.svg" alt="" />
-          <input class="drawer__search-input" id="drawer-search" type="search" placeholder="搜索国家/地区" />
-        </div>
-      </div>
-      <div class="drawer__scroll" id="drawer-scroll"></div>
-    </div>
-
     <div class="compat-sheet-mask" id="compat-sheet-mask"></div>
     <div class="compat-sheet" id="compat-sheet" onclick="event.stopPropagation()">
       <div class="compat-sheet__handle-wrap"><div class="compat-sheet__handle"></div></div>
@@ -1737,19 +1717,6 @@
   <script>
     document.getElementById('build-time').textContent = new Date().toLocaleString('zh-CN');
 
-    const POPULAR = [
-      { id: 'jp', name: '日本', icon: 'images/home/drawer-flag-jp.png' },
-      { id: 'hk', name: '香港', icon: 'images/home/drawer-flag-hk.png' },
-      { id: 'th', name: '泰国', icon: 'images/home/drawer-flag-th.png' },
-      { id: 'us', name: '美国', icon: 'images/home/drawer-flag-us.png' },
-      { id: 'uk', name: '英国', icon: 'images/home/drawer-flag-uk.png' },
-      { id: 'sg', name: '新加坡', icon: 'images/home/drawer-flag-sg.png' },
-    ];
-    const MULTI = [
-      { id: 'eu-multi', name: '欧洲', icon: 'images/home/drawer-region-eu.png' },
-      { id: 'asia-multi', name: '亚洲', icon: 'images/home/drawer-region-asia.png' },
-      { id: 'global', name: '全球', icon: 'images/home/drawer-region-global.png' },
-    ];
     const HOME_POPULAR = [
       { id: 'jp', name: '日本', flag: 'images/detail/flag-jp.png' },
       { id: 'th', name: '泰国', flag: 'images/home/drawer-flag-th.png' },
@@ -1763,14 +1730,13 @@
       window.location.href = 'detail.html?destination=日本';
     }
 
-    let selectedId = '';
     let destinationSelected = false;
-    const mask = document.getElementById('drawer-mask');
-    const drawer = document.getElementById('drawer');
     const destDisplay = document.getElementById('dest-display');
-    const scroll = document.getElementById('drawer-scroll');
-    const searchInput = document.getElementById('drawer-search');
     const popularGrid = document.getElementById('popular-grid');
+
+    function openDestinationPage() {
+      location.href = 'destination.html';
+    }
 
     HOME_POPULAR.forEach((item) => {
       const chip = document.createElement('div');
@@ -1783,7 +1749,6 @@
         <img class="popular-chip__arrow" src="images/home/icon-arrow-right-bold.svg" alt="" />
       `;
       chip.addEventListener('click', () => {
-        selectedId = item.id.replace(/-2$/, '');
         destinationSelected = true;
         destDisplay.textContent = item.name;
         destDisplay.classList.add('search-card__value--selected');
@@ -1852,93 +1817,8 @@
 
     setInterval(tickActivity, 3000);
 
-    function filter(list, q) {
-      const keyword = (q || '').trim().toLowerCase();
-      if (!keyword) return list;
-      return list.filter((item) => item.name.toLowerCase().includes(keyword));
-    }
-
-    function renderChip(item) {
-      const active = selectedId === item.id;
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'dest-chip' + (active ? ' dest-chip--active' : '');
-      btn.dataset.id = item.id;
-      btn.dataset.name = item.name;
-      btn.innerHTML = `
-        <img class="dest-chip__icon" src="${item.icon}" alt="" />
-        <span class="dest-chip__label">${item.name}</span>
-      `;
-      btn.addEventListener('click', () => selectDestination(item));
-      return btn;
-    }
-
-    function renderDrawer() {
-      const q = searchInput.value;
-      const popular = filter(POPULAR, q);
-      const multi = filter(MULTI, q);
-      scroll.innerHTML = '';
-
-      if (!popular.length && !multi.length) {
-        scroll.innerHTML = '<p class="drawer__empty">未找到相关国家/地区</p>';
-        return;
-      }
-
-      if (popular.length) {
-        const section = document.createElement('div');
-        section.className = 'drawer__section';
-        section.innerHTML = '<span class="drawer__section-title">热门目的地</span>';
-        const chips = document.createElement('div');
-        chips.className = 'dest-chips';
-        popular.forEach((item) => chips.appendChild(renderChip(item)));
-        section.appendChild(chips);
-        scroll.appendChild(section);
-      }
-
-      if (popular.length && multi.length) {
-        const div = document.createElement('div');
-        div.className = 'drawer__divider';
-        scroll.appendChild(div);
-      }
-
-      if (multi.length) {
-        const section = document.createElement('div');
-        section.className = 'drawer__section';
-        section.innerHTML = '<span class="drawer__section-title">多国通用</span>';
-        const chips = document.createElement('div');
-        chips.className = 'dest-chips';
-        multi.forEach((item) => chips.appendChild(renderChip(item)));
-        section.appendChild(chips);
-        scroll.appendChild(section);
-      }
-    }
-
-    function openDrawer() {
-      mask.classList.add('drawer-mask--show');
-      drawer.classList.add('drawer--show');
-      renderDrawer();
-    }
-
-    function closeDrawer() {
-      mask.classList.remove('drawer-mask--show');
-      drawer.classList.remove('drawer--show');
-      searchInput.value = '';
-    }
-
-    function selectDestination(item) {
-      selectedId = item.id;
-      destinationSelected = true;
-      destDisplay.textContent = item.name;
-      destDisplay.classList.add('search-card__value--selected');
-      closeDrawer();
-      renderDrawer();
-    }
-
-    document.getElementById('open-drawer').addEventListener('click', openDrawer);
-    document.getElementById('popular-more-btn').addEventListener('click', openDrawer);
-    document.getElementById('close-drawer').addEventListener('click', closeDrawer);
-    mask.addEventListener('click', closeDrawer);
-    searchInput.addEventListener('input', renderDrawer);
+    document.getElementById('open-drawer').addEventListener('click', openDestinationPage);
+    document.getElementById('popular-more-btn').addEventListener('click', openDestinationPage);
 
     const COMPAT = {
       versions: [

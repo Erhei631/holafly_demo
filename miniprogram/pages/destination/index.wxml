@@ -1,0 +1,142 @@
+<view class="dest-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="dest-nav">
+    <view class="dest-nav__back" bindtap="onBack" aria-label="返回">
+      <image class="dest-nav__back-icon" src="/images/detail/nav-back.svg" mode="aspectFit" />
+    </view>
+    <text class="dest-nav__title">全部目的地</text>
+    <view class="dest-nav__spacer" />
+  </view>
+
+  <view class="dest-search-wrap">
+    <view class="dest-search">
+      <image class="dest-search__icon" src="/images/home/drawer-search.svg" mode="aspectFit" />
+      <input
+        class="dest-search__input"
+        placeholder="搜索国家/地区"
+        placeholder-class="dest-search__placeholder"
+        value="{{keyword}}"
+        bindinput="onSearchInput"
+        confirm-type="search"
+      />
+    </view>
+  </view>
+
+  <view class="dest-segment">
+    <view
+      class="dest-segment__item {{tab === 'country' ? 'dest-segment__item--active' : ''}}"
+      data-tab="country"
+      bindtap="onTabChange"
+    >
+      按国家/地区
+    </view>
+    <view
+      class="dest-segment__item {{tab === 'region' ? 'dest-segment__item--active' : ''}}"
+      data-tab="region"
+      bindtap="onTabChange"
+    >
+      按区域
+    </view>
+  </view>
+
+  <view class="dest-body">
+    <scroll-view
+      class="dest-scroll"
+      scroll-y
+      enhanced
+      show-scrollbar="{{false}}"
+      scroll-into-view="{{scrollIntoView}}"
+      scroll-with-animation
+    >
+      <view wx:if="{{empty}}" class="dest-empty">未找到相关国家/地区</view>
+
+      <block wx:if="{{tab === 'country'}}">
+        <view wx:if="{{popular.length}}" class="dest-section">
+          <text class="dest-section__title">热门推荐</text>
+          <view class="dest-chips">
+            <view
+              wx:for="{{popular}}"
+              wx:key="id"
+              class="dest-chip {{selectedId === item.id ? 'dest-chip--active' : ''}}"
+              data-id="{{item.id}}"
+              data-name="{{item.name}}"
+              bindtap="onSelectDestination"
+            >
+              <image class="dest-chip__icon" src="{{item.icon}}" mode="aspectFill" />
+              <text class="dest-chip__label">{{item.name}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view
+          wx:for="{{groups}}"
+          wx:key="letter"
+          id="section-{{item.letter}}"
+          class="dest-alpha"
+        >
+          <text class="dest-alpha__letter">{{item.letter}}</text>
+          <view class="dest-list">
+            <view
+              wx:for="{{item.items}}"
+              wx:for-item="country"
+              wx:key="id"
+              class="dest-row {{index < item.items.length - 1 ? 'dest-row--border' : ''}}"
+              data-id="{{country.id}}"
+              data-name="{{country.name}}"
+              bindtap="onSelectDestination"
+            >
+              <view class="dest-row__left">
+                <image
+                  wx:if="{{country.icon}}"
+                  class="dest-row__flag"
+                  src="{{country.icon}}"
+                  mode="aspectFill"
+                />
+                <view
+                  wx:else
+                  class="dest-row__flag dest-row__flag--style"
+                  style="background: {{country.flagStyle}}"
+                />
+                <text class="dest-row__name">{{country.name}}</text>
+              </view>
+              <image class="dest-row__arrow" src="/images/orders/icon-chevron-right.svg" mode="aspectFit" />
+            </view>
+          </view>
+        </view>
+      </block>
+
+      <block wx:else>
+        <view class="dest-section">
+          <text class="dest-section__title">多国通用</text>
+          <view class="dest-list dest-list--region">
+            <view
+              wx:for="{{regions}}"
+              wx:key="id"
+              class="dest-row {{index < regions.length - 1 ? 'dest-row--border' : ''}}"
+              data-id="{{item.id}}"
+              data-name="{{item.name}}"
+              bindtap="onSelectDestination"
+            >
+              <view class="dest-row__left">
+                <image class="dest-row__flag" src="{{item.icon}}" mode="aspectFill" />
+                <text class="dest-row__name">{{item.name}}</text>
+              </view>
+              <image class="dest-row__arrow" src="/images/orders/icon-chevron-right.svg" mode="aspectFit" />
+            </view>
+          </view>
+        </view>
+      </block>
+
+      <view style="height: {{safeBottom + 24}}px;" />
+    </scroll-view>
+
+    <view wx:if="{{tab === 'country' && indexLetters.length}}" class="dest-index">
+      <text
+        wx:for="{{indexLetters}}"
+        wx:key="*this"
+        class="dest-index__letter"
+        data-letter="{{item}}"
+        bindtap="onIndexTap"
+      >{{item}}</text>
+    </view>
+  </view>
+</view>
