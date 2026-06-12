@@ -19,7 +19,7 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
     .preview-label{font-size:14px;color:var(--neutral-600);margin-bottom:16px}
-    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:linear-gradient(127deg,#c8ebfe 2.09%,#fcecfc 15.98%,var(--rose-50) 35.2%,var(--neutral-50) 54.59%)}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:linear-gradient(151.84deg,#c8ebfe 2.09%,#fcecfc 15.98%,var(--rose-50) 35.2%,var(--neutral-50) 54.59%)}
     .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
     .detail-nav{position:absolute;top:47px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 7px;height:44px}
     .detail-nav__back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0;flex-shrink:0}
@@ -31,18 +31,34 @@
     .nav-capsule__icon{width:16px;height:16px}
     .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
     .detail-nav__right{display:flex;gap:6px}
-    .detail-scroll{position:absolute;top:91px;left:0;right:0;bottom:110px;overflow-y:auto;padding:4px 20px 24px}
+    .detail-scroll{position:absolute;top:91px;left:0;right:0;bottom:150px;overflow-y:auto;padding:4px 20px 24px}
     .stack{display:flex;flex-direction:column;gap:16px}
-    .hero-card,.panel{background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
-    .hero-card{position:relative;overflow:hidden;min-height:122px}
-    .hero-card__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left center;pointer-events:none}
-    .hero-card__body{position:relative;z-index:1;padding:16px}
-    .hero-card__row{display:flex;align-items:center;gap:6px;position:relative;z-index:1}
-    .hero-card__flag{width:50px;height:50px;border-radius:50%;object-fit:cover}
-    .hero-card__title{font-size:20px;font-weight:500}
-    .hero-card__tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;position:relative;z-index:1}
-    .hero-card__tag{display:flex;align-items:center;gap:6px;padding:4px 8px;background:var(--rose-50);border-radius:6px;font-size:12px;font-weight:500;color:var(--rose-500)}
-    .hero-card__tag img{width:12px;height:12px}
+    .panel{background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
+    .product-header{display:flex;flex-direction:column;gap:10px;padding:2px 12px}
+    .product-header__row{display:flex;align-items:center;gap:12px}
+    .product-header__flag{width:50px;height:50px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .product-header__title{font-size:20px;font-weight:500;line-height:28px}
+    .product-header__tags{display:flex;flex-wrap:wrap;gap:6px}
+    .product-header__tag{display:flex;align-items:center;gap:6px;padding:4px 8px;background:#fff;border-radius:6px;font-size:14px;font-weight:500;color:var(--rose-500)}
+    .product-header__tag img{width:14px;height:14px}
+    .why-card{padding:20px 16px 16px;background:linear-gradient(159.83deg,#fff3ec 21.15%,#fff 66.95%);border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
+    .why-card__hero{display:flex;flex-direction:column;gap:4px}
+    .why-card__brand{width:87px;height:24px;display:block}
+    .why-card__tagline{font-size:18px;font-weight:500;line-height:24px;color:var(--neutral-900)}
+    .why-card__tagline em{font-style:normal;color:var(--rose-500)}
+    .why-card__body{display:flex;flex-direction:column;gap:24px;margin-top:12px}
+    .why-features{display:flex;flex-direction:column;gap:4px}
+    .why-feature{display:flex;align-items:center;gap:12px;padding:8px 0}
+    .why-feature__icon-wrap{flex-shrink:0;padding:7.5px;background:#fff;border-radius:12.5px}
+    .why-feature__icon{width:35px;height:35px;display:block;object-fit:cover}
+    .why-feature__body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+    .why-feature__title{font-size:15px;font-weight:500;color:var(--neutral-600);line-height:22px}
+    .why-feature__desc{font-size:12px;color:var(--neutral-600);line-height:18px}
+    .why-promise{display:flex;flex-direction:column;gap:12px}
+    .why-promise__title{font-size:16px;font-weight:500;line-height:24px}
+    .config-section__qty-labels{display:flex;align-items:center;gap:8px}
+    .config-section__qty-divider{width:1px;height:13px;background:var(--neutral-200)}
+    .config-label.config-section__label--sub{font-size:12px;font-weight:400;color:var(--neutral-600);line-height:18px}
     .config-card{border-radius:24px;border:2px solid var(--rose-500);overflow:hidden}
     .config-card__wrap{background:linear-gradient(180deg,var(--rose-50) 6.5%,#fff 100%);box-shadow:0 15px 20px #ffece1}
     .config-card__inner{padding:16px 16px 12px;display:flex;flex-direction:column;gap:24px}
@@ -82,8 +98,11 @@
     .date-sheet-mask.is-open{display:flex}
     .date-sheet{width:100%;max-height:88%;display:flex;flex-direction:column;padding:16px 16px calc(16px + env(safe-area-inset-bottom,var(--safe-area-bottom)));background:#fff;border-radius:16px 16px 0 0;box-sizing:border-box}
     .date-sheet__header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-shrink:0}
-    .date-sheet__title{font-size:16px;font-weight:500}
-    .date-sheet__close{border:none;background:transparent;font-size:24px;color:var(--neutral-400);cursor:pointer;padding:0 4px}
+    .date-sheet__header-left{display:flex;align-items:center;gap:8px;min-width:0}
+    .date-sheet__title{font-size:16px;font-weight:500;flex-shrink:0}
+    .date-sheet__divider{width:1px;height:14px;background:var(--neutral-200);flex-shrink:0}
+    .date-sheet__header-days{font-size:16px;font-weight:500;color:var(--neutral-600);flex-shrink:0}
+    .date-sheet__close{border:none;background:transparent;font-size:24px;color:var(--neutral-400);cursor:pointer;padding:0 4px;flex-shrink:0}
     .cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:0;margin-bottom:8px;flex-shrink:0}
     .cal-weekdays span{display:flex;align-items:center;justify-content:center;height:28px;font-size:12px;color:var(--neutral-600)}
     .cal-weekdays span.is-weekend{color:var(--rose-500)}
@@ -103,11 +122,9 @@
     .cal-day--end:not(.cal-day--start){border-radius:0 10px 10px 0}
     .cal-day--start.cal-day--end,.cal-day--single{border-radius:10px}
     .cal-day--start .cal-day__tag,.cal-day--end .cal-day__tag,.cal-day--single .cal-day__tag{color:#272729;opacity:.8}
-    .date-sheet__footer{flex-shrink:0;padding-top:12px;border-top:1px solid var(--neutral-200)}
-    .date-sheet__summary{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:14px;line-height:20px}
-    .date-sheet__summary-dates{display:flex;gap:16px;color:var(--neutral-900)}
-    .date-sheet__summary-days{color:var(--neutral-600)}
-    .date-sheet__confirm{width:100%;height:48px;margin-top:8px;border:none;border-radius:10px;background:var(--green-500);font-size:16px;font-weight:500;cursor:pointer}
+    .date-sheet__footer{flex-shrink:0;padding-top:12px}
+    .date-sheet__confirm{width:100%;height:48px;border:none;border-radius:10px;background:var(--green-500);font-size:16px;font-weight:500;cursor:pointer}
+    .date-sheet__confirm-sep{margin:0 6px;font-weight:300;font-size:14px;color:rgba(39,39,41,.28)}
     .day-custom img{width:20px;height:20px;object-fit:contain;flex-shrink:0}
     .qty-stepper{display:flex;height:44px;border:1px solid var(--neutral-200);border-radius:10px;overflow:hidden}
     .qty-stepper__btn{width:44px;display:flex;align-items:center;justify-content:center;background:#fff;border:none;border-right:1px solid var(--neutral-200);padding:0;appearance:none;-webkit-appearance:none;cursor:pointer}
@@ -153,8 +170,9 @@
     .reviews-card__max{font-family:var(--font-mono);font-size:16px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--neutral-900);line-height:1;padding-bottom:1px}
     .reviews-card__arrow{width:16px;height:16px}
     .reviews-card__divider{height:1px;margin:16px 0;background:var(--neutral-200)}
-    .reviews-list{display:flex;flex-direction:column;gap:12px}
-    .review-item{padding:10px 16px;background:var(--neutral-100);border-radius:16px;display:flex;flex-direction:column;gap:8px}
+    .reviews-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .reviews-list{display:flex;flex-direction:row;gap:12px;padding-right:4px}
+    .review-item{width:148px;flex-shrink:0;padding:10px 16px;background:var(--neutral-100);border-radius:10px;display:flex;flex-direction:column;gap:8px;box-shadow:0 2px 2px rgba(0,0,0,.05)}
     .review-item__top{display:flex;align-items:center;justify-content:space-between}
     .review-item__name{font-size:15px;font-weight:500;color:var(--neutral-900)}
     .review-item__badge{padding:2px 4px;background:var(--rose-100);border-radius:4px}
@@ -226,11 +244,23 @@
     .info-block__text{display:block;margin-top:8px;font-size:14px;color:var(--neutral-600);line-height:1.43}
     .app-section__title{display:block;font-size:15px;font-weight:500;line-height:22px;color:var(--neutral-900)}
     .panel--apps .app-row{display:flex;gap:6px;width:100%}
-    .panel--apps .app-tile{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px;background:var(--neutral-100);border-radius:10px;box-sizing:border-box}
-    .panel--apps .app-tile__icon{width:36px;height:36px;display:block;object-fit:contain;flex-shrink:0}
-    .panel--apps .app-tile__text{display:flex;flex-direction:column;gap:2px;align-items:center;text-align:center;min-width:0;width:100%}
-    .panel--apps .app-tile__name{display:block;font-size:14px;font-weight:500;color:var(--neutral-900);line-height:20px;text-align:center}
-    .panel--apps .app-tile__subtitle{display:block;font-size:12px;color:var(--neutral-600);line-height:18px;text-align:center}
+    .panel--apps .app-tile{flex:1;min-width:0;display:flex;flex-direction:row;align-items:center;gap:6px;padding:8px;background:var(--neutral-100);border-radius:10px;box-sizing:border-box}
+    .panel--apps .app-tile__icon-wrap{flex-shrink:0;padding:6px;background:#fff;border-radius:10px}
+    .panel--apps .app-tile__icon-wrap--full,
+    .panel--apps .app-tile__icon-wrap:has(.app-tile__icon[src*="app-more-apps"]){width:40px;height:40px;padding:0;background:transparent;border-radius:10px;overflow:hidden}
+    .panel--apps .app-tile__icon{width:28px;height:28px;display:block;object-fit:contain}
+    .panel--apps .app-tile__icon--full,
+    .panel--apps .app-tile__icon-wrap:has(.app-tile__icon[src*="app-more-apps"]) .app-tile__icon{width:100%;height:100%}
+    .panel--apps .app-tile__text{display:flex;flex-direction:column;gap:2px;align-items:flex-start;text-align:left;min-width:0;flex:1}
+    .panel--apps .app-tile__name{display:block;font-size:15px;font-weight:500;color:var(--neutral-600);line-height:22px}
+    .panel--apps .app-tile__subtitle{display:block;font-size:12px;color:var(--neutral-600);line-height:18px}
+    .panel--compat{display:flex;flex-direction:column;gap:12px}
+    .panel--compat>.panel__title{margin-bottom:0}
+    .panel--compat .compat-card__title{font-size:15px;line-height:22px}
+    .faq-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:12px}
+    .faq-tabs__inner{display:flex;gap:4px;border-bottom:1px solid var(--neutral-200)}
+    .faq-tab{flex-shrink:0;padding:13px 8px;font-size:15px;font-weight:500;color:var(--neutral-600);cursor:pointer}
+    .faq-tab--active{color:var(--rose-500);border-bottom:2px solid var(--rose-500);margin-bottom:-1px}
     .usage-steps{position:relative;display:flex;align-items:flex-start;justify-content:space-between;padding:8px 0;border-radius:10px}
     .usage-steps__connector{position:absolute;top:30px;height:0;width:57px;border-top:1px dashed var(--neutral-300);pointer-events:none;z-index:0}
     .usage-steps__connector--1{left:69px}
@@ -262,19 +292,26 @@
     .promise-item img{width:32px;height:32px;flex-shrink:0;object-fit:contain}
     .promise-item__text{display:flex;flex-direction:column;align-items:center;width:74px;font-size:12px;color:var(--neutral-600);line-height:18px;text-align:center}
     .promise-item__text span{display:block;line-height:18px}
-    .detail-footer{position:absolute;left:0;right:0;bottom:0;z-index:30;background:rgba(248,248,248,.8);backdrop-filter:blur(30px);box-shadow:0 -2px 12px rgba(0,0,0,.04);padding:16px 20px calc(16px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
-    .detail-footer__inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .detail-footer{position:absolute;left:0;right:0;bottom:0;z-index:30;display:flex;flex-direction:column;gap:10px;background:rgba(248,248,248,.8);backdrop-filter:blur(30px);box-shadow:0 -2px 12px rgba(0,0,0,.04);padding:16px 20px calc(16px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
+    .detail-footer__summary{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .detail-footer__summary-left{display:flex;align-items:center;gap:16px}
+    .detail-footer__summary-item{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--neutral-900)}
+    .detail-footer__summary-item img{width:20px;height:20px}
+    .detail-footer__summary-divider{width:1px;height:16px;background:var(--neutral-200)}
+    .detail-footer__actions{display:flex;align-items:center;justify-content:space-between;gap:12px}
     .detail-footer__support{display:flex;flex-direction:column;align-items:center;gap:2px;width:24px;flex-shrink:0;cursor:pointer;border:none;background:transparent;padding:0}
     .detail-footer__support img{width:24px;height:24px}
     .detail-footer__support span{font-size:10px;color:var(--neutral-900)}
-    .detail-footer__price{display:flex;align-items:baseline;justify-content:flex-end;width:113px;margin-left:auto;color:var(--rose-500);font-weight:600;flex-shrink:0}
-    .detail-footer__price strong{font-size:24px;font-weight:600}
-    .detail-footer__meta{margin-left:6px;font-size:14px;color:var(--neutral-600);font-weight:400}
-    .detail-footer__cta{flex:1;max-width:246px;height:48px;border:none;border-radius:10px;background:var(--green-500);font-size:16px;font-weight:500;cursor:pointer;box-shadow:0 10px 20px rgba(57,224,57,.35)}
+    .detail-footer__price{display:flex;align-items:baseline;justify-content:flex-end;gap:12px;flex-shrink:0}
+    .detail-footer__price-main{display:flex;align-items:baseline;gap:2px;color:var(--rose-500);font-weight:600}
+    .detail-footer__currency{font-size:18px;line-height:24px}
+    .detail-footer__price-main strong{font-size:24px;font-weight:600;line-height:32px}
+    .detail-footer__meta{font-size:14px;line-height:20px;color:var(--neutral-600);font-weight:400}
+    .detail-footer__cta{flex:1;max-width:300px;height:48px;border:none;border-radius:10px;background:var(--green-500);font-size:16px;font-weight:500;cursor:pointer;box-shadow:0 10px 20px rgba(57,224,57,.35)}
   </style>
 </head>
 <body>
-  <p class="preview-label">日本eSIM 详情 · Figma 490:5737</p>
+  <p class="preview-label">日本eSIM 详情 · Figma 592:12346</p>
   <div class="device">
     <div class="status-bar">9:41</div>
     <div class="detail-nav">
@@ -291,9 +328,22 @@
       <div class="stack" id="content"></div>
     </div>
     <div class="detail-footer">
-      <div class="detail-footer__inner">
+      <div class="detail-footer__summary">
+        <div class="detail-footer__summary-left">
+          <div class="detail-footer__summary-item"><img src="images/detail/footer-calendar.svg" alt="" /><span id="footer-days">7天</span></div>
+          <div class="detail-footer__summary-item"><img src="images/detail/footer-esim.svg" alt="" /><span id="footer-qty">× 1 eSIM</span></div>
+          <div class="detail-footer__summary-divider"></div>
+        </div>
+        <div class="detail-footer__price" id="footer-price">
+          <div class="detail-footer__price-main">
+            <span class="detail-footer__currency">¥</span>
+            <strong id="footer-amount">9.0</strong>
+          </div>
+          <span class="detail-footer__meta" id="footer-meta">/天</span>
+        </div>
+      </div>
+      <div class="detail-footer__actions">
         <button type="button" class="detail-footer__support" id="footer-support"><img src="images/detail/footer-support.svg" alt="" /><span>客服</span></button>
-        <div class="detail-footer__price" id="footer-price"><span>¥</span><strong id="footer-amount">9.0</strong><span class="detail-footer__meta" id="footer-meta">/天</span></div>
         <button class="detail-footer__cta" type="button">去结算</button>
       </div>
     </div>
@@ -338,19 +388,16 @@
     <div class="date-sheet-mask" id="date-sheet-mask">
       <div class="date-sheet" onclick="event.stopPropagation()">
         <div class="date-sheet__header">
-          <span class="date-sheet__title">选择出行日期</span>
+          <div class="date-sheet__header-left">
+            <span class="date-sheet__title">计算旅行天数</span>
+            <span class="date-sheet__divider" id="sheet-header-divider" hidden></span>
+            <span class="date-sheet__header-days" id="sheet-header-days" hidden></span>
+          </div>
           <button class="date-sheet__close" type="button" id="date-sheet-close" aria-label="关闭">×</button>
         </div>
         <div class="cal-weekdays" id="cal-weekdays"></div>
         <div class="date-sheet__calendar" id="date-calendar"></div>
         <div class="date-sheet__footer">
-          <div class="date-sheet__summary">
-            <div class="date-sheet__summary-dates">
-              <span id="sheet-start-label">去: 请选择</span>
-              <span id="sheet-end-label">返: 请选择</span>
-            </div>
-            <span class="date-sheet__summary-days" id="sheet-days-hint"></span>
-          </div>
           <button class="date-sheet__confirm" type="button" id="date-sheet-confirm">确定</button>
         </div>
       </div>
@@ -358,19 +405,28 @@
   </div>
   <script src="js/calendar-range.js"></script>
   <script>
+    const WHY_CHOOSE=[
+      {icon:'images/home/why-data.png',title:'不限流量 · 不限速',desc:'4K、直播、导航全程不卡顿'},
+      {icon:'images/home/why-support.png',title:'中文客服 7×24h',desc:'真人在线，问题秒回'},
+      {icon:'images/home/why-bind.png',title:'一次绑定，随时续购',desc:'再次出行，买完直接用，无需重新安装'},
+    ];
     const PLAN = {
-      title:'日本eSIM', flag:'images/detail/flag-jp.png', hero:'images/detail/hero-jp.png',
+      title:'日本 eSIM·无限流量', flag:'images/detail/flag-jp.png',
       prices:{1:15,3:35,5:48,7:63,10:85,15:120}, originalDaily:15,
       features:[
-        {label:'无限流量',icon:'images/detail/tag-data.svg'},
         {label:'高速稳网',icon:'images/detail/tag-speed.svg'},
         {label:'无漫游费',icon:'images/detail/tag-roam.svg'},
       ],
-      compatCard:{icon:'images/detail/compat-card.svg',title:'我的手机手机是否支持 eSIM？',subtitle:'支持大陆版与国际版机型查询'},
+      compatCard:{icon:'images/home/compat-check-icon.svg',title:'一键检测兼容性',subtitle:'支持大陆版与国际版机型查询'},
       reviewSummary:{rating:'4.7',total:'95,304'},
       reviews:[
         {id:'r1',name:'Tina',rating:'4.7',text:'到机场出关 30 秒装好就有信号，比租 Wifi 划算太多了，客服回得也快！',meta:'6小时前 | 日本7天'},
         {id:'r2',name:'Tina',rating:'4.7',text:'到机场出关 30 秒装好就有信号，比租 Wifi 划算太多了，客服回得也快！',meta:'6小时前 | 日本7天'},
+        {id:'r3',name:'Tina',rating:'4.7',text:'到机场出关 30 秒装好就有信号，比租 Wifi 划算太多了，客服回得也快！',meta:'6小时前 | 日本7天'},
+      ],
+      faqTabs:[
+        {id:'install',label:'安装使用'},{id:'plan',label:'套餐流量'},{id:'device',label:'设备兼容'},
+        {id:'hotspot',label:'热点共享'},{id:'other',label:'其他问题'},
       ],
       appIntro:'足够4K视频、直播、视频通话与实时导航，全程不降速、不限量。',
       appSections:[
@@ -378,13 +434,13 @@
           {name:'谷歌地图',subtitle:'实时导航不卡顿',icon:'images/detail/app-maps.png'},
           {name:'YouTube',subtitle:'畅看 4K 视频',icon:'images/detail/app-youtube.png'},
           {name:'Instagram',subtitle:'刷图发限时动态',icon:'images/detail/app-instagram.png'},
-          {name:'WhatsApp',subtitle:'高清视频通话',icon:'images/detail/app-whatsapp.png'},
+          {name:'更多应用',subtitle:'海外应用畅行无阻',icon:'images/detail/app-more-apps.svg?v=2',fullIcon:true},
         ]},
         {id:'domestic',title:'国内应用 · 照常使用',apps:[
           {name:'微信',subtitle:'视频通话报平安',icon:'images/detail/app-wechat.png'},
           {name:'小红书',subtitle:'边玩边直播',icon:'images/detail/app-xhs.png'},
           {name:'抖音',subtitle:'直播 / 发高清视频',icon:'images/detail/app-douyin.png'},
-          {name:'支付宝',subtitle:'扫码付款',icon:'images/detail/app-alipay.png'},
+          {name:'更多应用',subtitle:'国内应用不受影响',icon:'images/detail/app-more-apps.svg?v=2',fullIcon:true},
         ]},
       ],
       usageSteps:[
@@ -398,9 +454,11 @@
       ],
       networkSpeedText:'我们的日本国际 eSIM 提供高速 4G LTE 与 5G 网路服务（视当地覆盖情况而定）',
       faq:[
-        {id:'install',title:'eSIM 如何安装, 到了目的地会自动连接吗？',answer:'建议出发前在有 Wi-Fi 的环境扫码安装 eSIM。抵达日本后开启蜂窝数据与数据漫游，系统会自动连接当地网络，无需手动选运营商。'},
-        {id:'hotspot',title:'可以热点共享给其他设备吗？',answer:'支持。安装并激活后，可在手机设置中开启个人热点，将流量共享给平板、电脑或其他设备（具体入口因机型系统略有差异）。'},
-        {id:'refund',title:'购买后可以退款吗？',answer:'未安装或未激活的订单可申请全额退款；已激活订单将按平台退款政策处理，详情可联系 7×24 小时在线客服。'},
+        {id:'install',tab:'install',title:'eSIM 如何安装, 到了目的地会自动连接吗？',answer:'建议出发前在有 Wi-Fi 的环境扫码安装 eSIM。抵达日本后开启蜂窝数据与数据漫游，系统会自动连接当地网络，无需手动选运营商。'},
+        {id:'plan-data',tab:'plan',title:'流量真的是无限吗？会限速吗？',answer:'日本套餐为无限流量且全程不限速，可流畅使用 4K 视频、直播与导航，具体网速视当地网络覆盖情况而定。'},
+        {id:'device-check',tab:'device',title:'如何确认我的手机支持 eSIM？',answer:'可在本页点击「一键检测兼容性」，按机型或拨号 *#06# 查询；若出现 EID 号码，通常表示设备支持 eSIM。'},
+        {id:'hotspot',tab:'hotspot',title:'可以热点共享给其他设备吗？',answer:'支持。安装并激活后，可在手机设置中开启个人热点，将流量共享给平板、电脑或其他设备（具体入口因机型系统略有差异）。'},
+        {id:'refund',tab:'other',title:'购买后可以退款吗？',answer:'未安装或未激活的订单可申请全额退款；已激活订单将按平台退款政策处理，详情可联系 7×24 小时在线客服。'},
       ],
       compatVersions:[
         {id:'cn',title:'中国大陆版',subtitle:'国货·行货',icon:'images/compat/flag-cn.png'},
@@ -421,7 +479,8 @@
       ],
     };
     const DAYS=[1,3,5,7,10,15];
-    let selectedDays=7, quantity=1, isCustomDays=false, customDaysLabel='', expandedFaqId='', compatVersion='global', compatMethod='model', compatSearch='', countdownRemaining=2*3600+49*60+16, countdownTimer=null;
+    let selectedDays=7, quantity=1, isCustomDays=false, customDaysLabel='', expandedFaqId='', selectedFaqTab='plan', compatVersion='global', compatMethod='model', compatSearch='', countdownRemaining=2*3600+49*60+16, countdownTimer=null;
+    function filterFaqByTab(tab){return PLAN.faq.filter(f=>f.tab===tab);}
     function pad(n){return n<10?`0${n}`:`${n}`;}
     function formatDateStr(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;}
     function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
@@ -440,7 +499,8 @@
       return {daily,total:calcTotal(days,qty),savePercent,saveAmount:totalSave,saveLabel:`官方立减${savePercent}%省${totalSave}元`};
     }
     function renderDayChip(days){return `<button type="button" class="day-chip" data-days="${days}"><span class="day-chip__label">${days}天</span></button>`;}
-    function renderAppTile(a){return `<div class="app-tile"><img class="app-tile__icon" src="${a.icon}" alt="" /><div class="app-tile__text"><span class="app-tile__name">${a.name}</span><span class="app-tile__subtitle">${a.subtitle}</span></div></div>`;}
+    function isFullIconApp(a){return a.fullIcon||/app-more-apps\.svg/.test(a.icon||'');}
+    function renderAppTile(a){const full=isFullIconApp(a);const iconSrc=full&&!a.icon.includes('?')?`${a.icon}?v=2`:a.icon;const wrapClass=full?'app-tile__icon-wrap app-tile__icon-wrap--full':'app-tile__icon-wrap';const iconClass=full?'app-tile__icon app-tile__icon--full':'app-tile__icon';return `<div class="app-tile"><div class="${wrapClass}"><img class="${iconClass}" src="${iconSrc}" alt="" /></div><div class="app-tile__text"><span class="app-tile__name">${a.name}</span><span class="app-tile__subtitle">${a.subtitle}</span></div></div>`;}
     function renderAppRows(apps){const rows=[];for(let i=0;i<apps.length;i+=2)rows.push(apps.slice(i,i+2));return rows.map(row=>`<div class="app-row">${row.map(renderAppTile).join('')}</div>`).join('');}
     function renderReviewItems(reviews){return reviews.map(r=>`<div class="review-item"><div class="review-item__top"><span class="review-item__name">${r.name}</span><span class="review-item__badge"><span class="review-item__badge-text">${r.rating}</span></span></div><p class="review-item__text">${r.text}</p><span class="review-item__meta">${r.meta}</span></div>`).join('');}
     function padCountdown(n){return n<10?`0${n}`:String(n);}
@@ -463,33 +523,36 @@
     function mountContent(){
       const save=calcSave(selectedDays,quantity);
       document.getElementById('content').innerHTML=`
-        <div class="hero-card">
-          <img class="hero-card__bg" src="${PLAN.hero}?v=3" alt="" />
-          <div class="hero-card__body">
-            <div class="hero-card__row"><img class="hero-card__flag" src="${PLAN.flag}" alt="" /><div class="hero-card__title">${PLAN.title}</div></div>
-            <div class="hero-card__tags">${PLAN.features.map(f=>`<span class="hero-card__tag"><img src="${f.icon}" alt="" />${f.label}</span>`).join('')}</div>
-          </div>
+        <div class="product-header">
+          <div class="product-header__row"><img class="product-header__flag" src="${PLAN.flag}" alt="" /><div class="product-header__title">${PLAN.title}</div></div>
+          <div class="product-header__tags">${PLAN.features.map(f=>`<span class="product-header__tag"><img src="${f.icon}" alt="" />${f.label}</span>`).join('')}</div>
         </div>
         <div class="config-card"><div class="config-card__wrap"><div class="config-card__inner">
           <div class="config-section--days"><div class="config-head"><div class="config-label-row"><img src="images/detail/icon-calendar.svg" alt="" /><span class="config-label">使用天数</span></div><span class="config-badge">多天更划算</span></div>
           <div class="day-grid">${DAYS.slice(0,3).map(renderDayChip).join('')}</div>
           <div class="day-grid">${DAYS.slice(3).map(renderDayChip).join('')}</div>
           <button type="button" class="day-custom" id="day-custom-btn"><img src="images/detail/icon-calendar-edit.svg" alt="" /><span id="day-custom-label">自定义</span></button></div>
-          <div><div class="config-label-row" style="margin-bottom:12px"><img src="images/detail/icon-esim.svg?v=2" alt="" /><span class="config-label">eSIM数量</span></div>
+          <div><div class="config-label-row" style="margin-bottom:12px"><img src="images/detail/icon-travelers.svg" alt="" /><div class="config-section__qty-labels"><span class="config-label">出行人数</span><span class="config-section__qty-divider"></span><span class="config-label config-section__label--sub">eSIM数量</span></div></div>
           <div class="qty-stepper"><button type="button" class="qty-stepper__btn" id="qty-minus"><img src="images/detail/icon-minus.svg" alt="" /></button><div class="qty-stepper__value" id="qty-value">1</div><button type="button" class="qty-stepper__btn" id="qty-plus"><img src="images/detail/icon-plus.svg" alt="" /></button></div></div>
         </div>
         <div class="config-card__promo"><div class="config-card__promo-left"><div class="config-card__promo-daily"><span class="config-card__promo-daily-label">限时补贴低至日均</span><span class="config-card__promo-daily-currency">¥</span><span class="config-card__promo-daily-amount" id="promo-daily-amount">${save.daily}</span><span class="config-card__promo-daily-unit">/天</span></div><div class="config-card__promo-tags"><span class="config-card__promo-tag">原价¥${PLAN.originalDaily}起</span><span class="config-card__promo-tag" id="promo-save-label">${save.saveLabel}</span></div></div><div class="config-card__promo-countdown"><span class="config-card__promo-countdown-label">距离优惠结束</span><div class="config-card__promo-timer" id="promo-countdown"></div></div></div></div></div>
-        <div class="compat-card" id="compat-card"><img class="compat-card__icon" src="${PLAN.compatCard.icon}" alt="" /><div class="compat-card__content"><span class="compat-card__title">${PLAN.compatCard.title}</span><span class="compat-card__subtitle">${PLAN.compatCard.subtitle}</span></div><img class="compat-card__arrow" src="images/detail/icon-arrow-right.svg" alt="" /></div>
-        <div class="panel panel--promise"><span class="panel__title">Holafly服务承诺</span><div class="promise-strip"><div class="promise-grid">${PLAN.promises.map(p=>`<div class="promise-item"><img src="${p.icon}" alt="" /><div class="promise-item__text"><span>${p.lines[0]}</span><span>${p.lines[1]}</span></div></div>`).join('')}</div></div></div>
+        <div class="why-card">
+          <div class="why-card__hero"><img class="why-card__brand" src="images/home/why-brand-logo.svg" alt="Holafly" /><p class="why-card__tagline">出境旅行专属 eSIM，<em>走到哪，连到哪。</em></p></div>
+          <div class="why-card__body">
+            <div class="why-features">${WHY_CHOOSE.map(w=>`<div class="why-feature"><div class="why-feature__icon-wrap"><img class="why-feature__icon" src="${w.icon}" alt="" /></div><div class="why-feature__body"><span class="why-feature__title">${w.title}</span><span class="why-feature__desc">${w.desc}</span></div></div>`).join('')}</div>
+            <div class="why-promise"><span class="why-promise__title">Holafly服务承诺</span><div class="promise-strip"><div class="promise-grid">${PLAN.promises.map(p=>`<div class="promise-item"><img src="${p.icon}" alt="" /><div class="promise-item__text"><span>${p.lines[0]}</span><span>${p.lines[1]}</span></div></div>`).join('')}</div></div></div>
+          </div>
+        </div>
         <div class="panel panel--apps"><img class="panel__deco panel__deco--apps" src="images/detail/app-deco.png" alt="" /><div class="panel__intro"><span class="panel__title">畅连国内外APP</span><span class="panel__subtitle">${PLAN.appIntro}</span></div><div class="panel__divider"></div><div class="panel__apps-body">${PLAN.appSections.map(s=>`<span class="app-section__title">${s.title}</span>${renderAppRows(s.apps)}`).join('')}</div></div>
-        <div class="reviews-card"><div class="reviews-card__header"><div class="reviews-card__brand"><img class="reviews-card__logo" src="images/home/trustpilot-logo.svg" alt="Trustpilot" /><p class="reviews-card__count">来自 ${PLAN.reviewSummary.total} 位用户评价</p></div><div class="reviews-card__rating"><span class="reviews-card__score">${PLAN.reviewSummary.rating}</span><span class="reviews-card__max">/5</span><img class="reviews-card__arrow" src="images/home/icon-arrow-right.svg" alt="" /></div></div><div class="reviews-card__divider"></div><div class="reviews-list">${renderReviewItems(PLAN.reviews)}</div></div>
+        <div class="reviews-card"><div class="reviews-card__header"><div class="reviews-card__brand"><img class="reviews-card__logo" src="images/home/trustpilot-logo.svg" alt="Trustpilot" /><p class="reviews-card__count">来自 ${PLAN.reviewSummary.total} 位用户评价</p></div><div class="reviews-card__rating"><span class="reviews-card__score">${PLAN.reviewSummary.rating}</span><span class="reviews-card__max">/5</span><img class="reviews-card__arrow" src="images/home/icon-arrow-right.svg" alt="" /></div></div><div class="reviews-card__divider"></div><div class="reviews-scroll"><div class="reviews-list">${renderReviewItems(PLAN.reviews)}</div></div></div>
+        <div class="panel panel--compat"><span class="panel__title">我的设备支持吗？</span><div class="compat-card" id="compat-card"><img class="compat-card__icon" src="${PLAN.compatCard.icon}" alt="" /><div class="compat-card__content"><span class="compat-card__title">${PLAN.compatCard.title}</span><span class="compat-card__subtitle">${PLAN.compatCard.subtitle}</span></div><img class="compat-card__arrow" src="images/detail/icon-arrow-right.svg" alt="" /></div></div>
         <div class="panel"><div class="panel__head"><span class="panel__title">使用方法</span><span class="panel__link" id="usage-guide-link" role="button" tabindex="0">查看完整教程 <img src="images/detail/icon-arrow-right.svg" alt="" /></span></div><div class="usage-steps"><div class="usage-steps__connector usage-steps__connector--1"></div><div class="usage-steps__connector usage-steps__connector--2"></div>${PLAN.usageSteps.map(s=>`<div class="usage-step"><div class="usage-step__icon-wrap"><img class="usage-step__icon" src="${s.icon}" alt="" /></div><span class="usage-step__label">${s.label}</span></div>`).join('')}</div></div>
         <div class="panel"><span class="panel__title">网络服务</span>
           <div class="network-block"><div class="network-block__head"><img src="images/detail/icon-carrier.svg" alt="" /><span class="network-block__label">网络运营商</span></div><div class="network-block__carriers">${PLAN.networkCarriers.map(c=>`<img class="network-block__carrier-logo network-block__carrier-logo--${c.id}" src="${c.icon}" alt="" />`).join('')}</div></div>
           <div class="network-block"><div class="network-block__head"><img src="images/detail/icon-network.svg" alt="" /><span class="network-block__label">网速</span></div><span class="network-block__text">${PLAN.networkSpeedText}</span></div>
         </div>
-        <div class="panel" id="faq-panel"><span class="panel__title">常见问题</span><div class="faq-list faq-list--simple">
-          ${PLAN.faq.map(f=>`<div class="faq-item faq-item--simple ${expandedFaqId===f.id?'faq-item--open':''}" data-faq-id="${f.id}"><div class="faq-item__row"><span class="faq-item__title">${f.title}</span><img class="faq-item__arrow ${expandedFaqId===f.id?'faq-item__arrow--open':''}" src="images/detail/icon-arrow-right.svg" alt="" /></div>${f.answer?`<p class="faq-item__answer">${f.answer}</p>`:''}</div>`).join('')}
+        <div class="panel" id="faq-panel"><span class="panel__title">常见问题</span><div class="faq-tabs"><div class="faq-tabs__inner">${PLAN.faqTabs.map(t=>`<span class="faq-tab ${selectedFaqTab===t.id?'faq-tab--active':''}" data-faq-tab="${t.id}">${t.label}</span>`).join('')}</div></div><div class="faq-list faq-list--simple">
+          ${filterFaqByTab(selectedFaqTab).map(f=>`<div class="faq-item faq-item--simple ${expandedFaqId===f.id?'faq-item--open':''}" data-faq-id="${f.id}"><div class="faq-item__row"><span class="faq-item__title">${f.title}</span><img class="faq-item__arrow ${expandedFaqId===f.id?'faq-item__arrow--open':''}" src="images/detail/icon-arrow-right.svg" alt="" /></div>${f.answer?`<p class="faq-item__answer">${f.answer}</p>`:''}</div>`).join('')}
         </div></div>`;
       startCountdown();
     }
@@ -498,6 +561,8 @@
       const dailyLabel=Number.isInteger(save.daily)?String(save.daily):save.daily.toFixed(1);
       document.getElementById('footer-amount').textContent=dailyLabel;
       document.getElementById('footer-meta').textContent='/天';
+      document.getElementById('footer-days').textContent=`${selectedDays}天`;
+      document.getElementById('footer-qty').textContent=`× ${quantity} eSIM`;
       const promoDaily=document.getElementById('promo-daily-amount');
       if(promoDaily) promoDaily.textContent=dailyLabel;
       const promoSave=document.getElementById('promo-save-label');
@@ -515,7 +580,7 @@
     function renderFaq(){
       const panel=document.getElementById('faq-panel');
       if(!panel) return;
-      panel.innerHTML=`<span class="panel__title">常见问题</span><div class="faq-list faq-list--simple">${PLAN.faq.map(f=>`<div class="faq-item faq-item--simple ${expandedFaqId===f.id?'faq-item--open':''}" data-faq-id="${f.id}"><div class="faq-item__row"><span class="faq-item__title">${f.title}</span><img class="faq-item__arrow ${expandedFaqId===f.id?'faq-item__arrow--open':''}" src="images/detail/icon-arrow-right.svg" alt="" /></div>${f.answer?`<p class="faq-item__answer">${f.answer}</p>`:''}</div>`).join('')}</div>`;
+      panel.innerHTML=`<span class="panel__title">常见问题</span><div class="faq-tabs"><div class="faq-tabs__inner">${PLAN.faqTabs.map(t=>`<span class="faq-tab ${selectedFaqTab===t.id?'faq-tab--active':''}" data-faq-tab="${t.id}">${t.label}</span>`).join('')}</div></div><div class="faq-list faq-list--simple">${filterFaqByTab(selectedFaqTab).map(f=>`<div class="faq-item faq-item--simple ${expandedFaqId===f.id?'faq-item--open':''}" data-faq-id="${f.id}"><div class="faq-item__row"><span class="faq-item__title">${f.title}</span><img class="faq-item__arrow ${expandedFaqId===f.id?'faq-item__arrow--open':''}" src="images/detail/icon-arrow-right.svg" alt="" /></div>${f.answer?`<p class="faq-item__answer">${f.answer}</p>`:''}</div>`).join('')}</div>`;
     }
     function mountCompatSheet(){
       document.getElementById('compat-version-row').innerHTML=PLAN.compatVersions.map(v=>`<button type="button" class="compat-version compat-version--${v.id}" data-version="${v.id}"><img src="${v.icon}" alt="" /><span class="compat-version__text"><span class="compat-version__title">${v.title}</span><span class="compat-version__subtitle">${v.subtitle}</span></span></button>`).join('');
@@ -552,6 +617,13 @@
       document.getElementById('content').addEventListener('click',(e)=>{
         if(e.target.closest('#usage-guide-link')){location.href='install.html';return;}
         if(e.target.closest('#compat-card')){openCompatSheet();return;}
+        const faqTab=e.target.closest('[data-faq-tab]');
+        if(faqTab){
+          selectedFaqTab=faqTab.dataset.faqTab;
+          expandedFaqId='';
+          renderFaq();
+          return;
+        }
         const faqRow=e.target.closest('.faq-item__row');
         if(faqRow){
           const item=faqRow.closest('.faq-item');
@@ -598,9 +670,9 @@
       });
     }
     const sheetMask=document.getElementById('date-sheet-mask');
-    const sheetStartLabel=document.getElementById('sheet-start-label');
-    const sheetEndLabel=document.getElementById('sheet-end-label');
-    const sheetHint=document.getElementById('sheet-days-hint');
+    const sheetHeaderDivider=document.getElementById('sheet-header-divider');
+    const sheetHeaderDays=document.getElementById('sheet-header-days');
+    const sheetConfirmBtn=document.getElementById('date-sheet-confirm');
     const calWeekdaysEl=document.getElementById('cal-weekdays');
     const calEl=document.getElementById('date-calendar');
     let sheetMinDate=formatDateStr(new Date());
@@ -618,14 +690,16 @@
 
     function renderCalendar(){
       calEl.innerHTML=renderCalendarHtml(calendarMonths,sheetStartDate,sheetEndDate);
-      sheetStartLabel.textContent=`去: ${formatFooterDate(sheetStartDate)}`;
-      sheetEndLabel.textContent=`返: ${formatFooterDate(sheetEndDate)}`;
       if(sheetStartDate&&sheetEndDate){
-        sheetHint.textContent=`共 ${tripDays(sheetStartDate,sheetEndDate)} 天`;
-      }else if(sheetStartDate){
-        sheetHint.textContent='请选择返回日期';
+        const days=tripDays(sheetStartDate,sheetEndDate);
+        sheetHeaderDays.textContent=`${days}天`;
+        sheetHeaderDays.hidden=false;
+        sheetHeaderDivider.hidden=false;
+        sheetConfirmBtn.innerHTML=`${days}天<span class="date-sheet__confirm-sep">｜</span>确定`;
       }else{
-        sheetHint.textContent='';
+        sheetHeaderDays.hidden=true;
+        sheetHeaderDivider.hidden=true;
+        sheetConfirmBtn.textContent='确定';
       }
     }
 

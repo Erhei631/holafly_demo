@@ -98,20 +98,114 @@
 /* —— 优惠横幅 —— */
 .promo-card {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.promo-card__swiper {
+  width: 100%;
+  height: 156rpx;
+}
+
+.promo-card__banner {
+  width: 100%;
+  height: 156rpx;
+  display: block;
+  border-radius: var(--radius-2xl);
+}
+
+.promo-card__inner {
+  position: relative;
+  width: 100%;
+  min-height: 156rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8rpx 32rpx;
   border-radius: var(--radius-2xl);
   border: 2rpx solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 20rpx 40rpx rgba(0, 0, 0, 0.05);
+  background: linear-gradient(176.84deg, #f2fdeb 0%, #e0f4fd 100%);
   overflow: hidden;
   box-sizing: border-box;
 }
 
-.promo-card__content {
-  width: 100%;
+.promo-card__left {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  z-index: 2;
+  min-width: 0;
 }
 
-.promo-card__image {
-  width: 100%;
-  display: block;
+.promo-card__icon {
+  width: 124rpx;
+  height: 124rpx;
+  flex-shrink: 0;
+}
+
+.promo-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.promo-card__title {
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 44rpx;
+  color: var(--color-text-primary);
+}
+
+.promo-card__desc {
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: var(--color-text-tertiary);
+}
+
+.promo-card__copy {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 12rpx 40rpx;
+  border-radius: 48rpx;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: #fff;
+  background: linear-gradient(116.29deg, #e6485c 20.26%, #e12b57 74.93%);
+  z-index: 2;
+}
+
+.promo-card__copy::after {
+  border: none;
+}
+
+.promo-card__deco {
+  position: absolute;
+  right: -112rpx;
+  top: -54rpx;
+  width: 266rpx;
+  height: 244rpx;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.promo-card__dots {
+  display: flex;
+  gap: 8rpx;
+  align-items: center;
+}
+
+.promo-card__dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 20rpx;
+  background: rgba(39, 39, 41, 0.1);
+}
+
+.promo-card__dot--active {
+  width: 28rpx;
+  background: rgba(39, 39, 41, 0.3);
 }
 
 /* —— 实时动态 —— */
@@ -121,7 +215,7 @@
   gap: 20rpx;
   padding: 16rpx 32rpx;
   border-radius: var(--radius-xl);
-  background: linear-gradient(98deg, #c8ebfe 1%, #fcecfc 65%, var(--rose-50) 96%);
+  background: linear-gradient(97.68deg, #c8ebfe 0.93%, #fcecfc 64.67%, var(--yellow-50) 95.71%);
   overflow: hidden;
 }
 
@@ -195,17 +289,73 @@
 
 .search-card {
   width: 100%;
-  padding: 40rpx 40rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 40rpx;
+  padding: 32rpx 40rpx;
   background: var(--color-bg-base);
   border-radius: var(--radius-2xl);
   box-shadow: 0 20rpx 40rpx rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
 }
 
+@keyframes search-card-dest-border-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+.search-card__dest-box {
+  position: relative;
+  width: 100%;
+  padding: 32rpx 20rpx;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 239, 239, 0.2);
+  box-shadow: 0 4rpx 40rpx rgba(230, 72, 92, 0.12);
+  box-sizing: border-box;
+}
+
+.search-card__dest-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 4rpx;
+  background: linear-gradient(
+    90deg,
+    #bfebff,
+    #f9eef8,
+    #ffccb0,
+    #fcecfc,
+    #bfebff,
+    #f9eef8
+  );
+  background-size: 300% 100%;
+  animation: search-card-dest-border-flow 4s linear infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 .search-card__dest {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24rpx;
+  width: 100%;
+}
+
+.search-card__dest-main {
   display: flex;
   align-items: center;
   gap: 24rpx;
+  min-width: 0;
 }
 
 .search-card__icon {
@@ -214,18 +364,10 @@
   flex-shrink: 0;
 }
 
-.search-card__dest-row {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 24rpx;
-}
-
 .search-card__label {
-  font-size: var(--font-size-body);
+  font-size: 30rpx;
   color: var(--color-text-secondary);
-  line-height: 1.43;
+  line-height: 44rpx;
   white-space: nowrap;
 }
 
@@ -237,59 +379,36 @@
 }
 
 .search-card__value {
-  flex: 1;
-  font-size: var(--font-size-subtitle-2);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  line-height: 1.5;
+  font-size: 30rpx;
+  font-weight: 400;
+  color: var(--color-text-tertiary);
+  line-height: 44rpx;
+  white-space: nowrap;
 }
 
-.search-card__chevron {
+.search-card__value--selected {
+  color: var(--color-text-primary);
+}
+
+.search-card__arrow {
   width: 32rpx;
   height: 32rpx;
   flex-shrink: 0;
-  transform: rotate(90deg);
-}
-
-.search-card__divider {
-  height: 1rpx;
-  margin: 40rpx 0;
-  background: var(--color-divider);
-}
-
-.search-card__cta {
-  width: 100% !important;
-  height: 80rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-subtitle-2);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  background: var(--color-secondary);
-  border-radius: 20rpx;
-  border: none;
-  box-shadow: 0 4rpx 20rpx rgba(57, 224, 57, 0.24);
-}
-
-.search-card__cta::after {
-  border: none;
 }
 
 /* —— 热门推荐 —— */
 .popular-section {
-  margin-top: 40rpx;
   display: flex;
   flex-direction: column;
   gap: 24rpx;
+  width: 100%;
 }
 
 .popular-section__title {
-  font-size: var(--font-size-note);
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 44rpx;
   color: var(--color-text-secondary);
-  line-height: 1.33;
 }
 
 .popular-grid {
@@ -334,7 +453,14 @@
   width: 24rpx;
   height: 24rpx;
   flex-shrink: 0;
-  opacity: 0.6;
+}
+
+.popular-more {
+  width: 100%;
+  font-size: 28rpx;
+  line-height: 40rpx;
+  color: var(--color-text-tertiary);
+  text-align: center;
 }
 
 /* —— 教育卡片 —— */
@@ -475,19 +601,27 @@
   background: var(--color-divider);
 }
 
+.reviews-scroll {
+  width: 100%;
+}
+
 .reviews-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 24rpx;
+  padding-right: 8rpx;
 }
 
 .review-item {
   display: flex;
   flex-direction: column;
   gap: 16rpx;
+  width: 296rpx;
+  flex-shrink: 0;
   padding: 20rpx 32rpx;
   background: var(--neutral-100);
   border-radius: var(--radius-2xl);
+  box-shadow: 0 4rpx 4rpx rgba(0, 0, 0, 0.05);
 }
 
 .review-item__top {
@@ -530,66 +664,68 @@
   line-height: 1.33;
 }
 
-/* —— 为什么选择 Holafly —— */
+/* —— Holafly 价值板块 —— */
 .why-card {
-  padding: 32rpx 0 40rpx;
-  background: var(--color-bg-base);
+  padding: 40rpx 32rpx 32rpx;
+  background: linear-gradient(144.05deg, #fff3ec 21.15%, #fff 66.95%);
   border-radius: var(--radius-3xl);
   box-shadow: 0 20rpx 80rpx rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
   overflow: hidden;
 }
 
-.why-card__section {
+.why-card__hero {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
-  padding: 0 32rpx 32rpx;
+  gap: 8rpx;
 }
 
-.why-card__header {
-  display: flex;
-  align-items: center;
-  gap: 12rpx;
+.why-card__brand {
+  width: 174rpx;
+  height: 48rpx;
 }
 
-.why-card__heading {
-  font-size: 32rpx;
+.why-card__tagline {
+  font-size: 36rpx;
   font-weight: 500;
-  color: var(--color-text-primary);
   line-height: 48rpx;
+  color: var(--color-text-primary);
 }
 
-.why-card__logo {
-  width: 142rpx;
-  height: 40rpx;
+.why-card__tagline-em {
+  color: var(--color-primary);
+}
+
+.why-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 48rpx;
+  margin-top: 24rpx;
 }
 
 .why-features {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 8rpx;
 }
 
 .why-feature {
   display: flex;
   align-items: center;
-  gap: 12rpx;
-  padding: 16rpx;
-  background: var(--neutral-100);
-  border-radius: 20rpx;
+  gap: 24rpx;
+  padding: 16rpx 0;
 }
 
 .why-feature__icon-wrap {
   flex-shrink: 0;
-  padding: 12rpx;
-  background: var(--color-bg-base);
-  border-radius: 20rpx;
+  padding: 15rpx;
+  background: #fff;
+  border-radius: 25rpx;
 }
 
 .why-feature__icon {
-  width: 56rpx;
-  height: 56rpx;
+  width: 70rpx;
+  height: 70rpx;
   display: block;
 }
 
@@ -602,28 +738,73 @@
 }
 
 .why-feature__title {
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-weight: 500;
   color: var(--color-text-secondary);
-  line-height: 40rpx;
+  line-height: 44rpx;
 }
 
 .why-feature__desc {
   font-size: 24rpx;
   color: var(--color-text-secondary);
-  line-height: 32rpx;
+  line-height: 36rpx;
 }
 
-.compare-scroll {
-  width: 100%;
-  padding: 0 32rpx;
-  box-sizing: border-box;
-  white-space: nowrap;
+.why-esim {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.why-esim__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.why-esim__title {
+  font-size: 32rpx;
+  font-weight: 500;
+  line-height: 48rpx;
+  color: var(--color-text-primary);
+}
+
+.why-esim__link {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 28rpx;
+  line-height: 40rpx;
+  color: var(--color-text-secondary);
+}
+
+.why-esim__arrow {
+  width: 32rpx;
+  height: 32rpx;
+  flex-shrink: 0;
+}
+
+.why-esim__desc {
+  font-size: 28rpx;
+  line-height: 40rpx;
+  color: var(--color-text-secondary);
+}
+
+.why-esim__emph {
+  color: var(--color-primary);
+}
+
+.compare-wrap {
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 20rpx 40rpx rgba(0, 0, 0, 0.05);
+  background: #fff;
 }
 
 .compare-table {
   position: relative;
-  min-width: 1144rpx;
+  width: 100%;
 }
 
 .compare-highlight {
@@ -631,7 +812,7 @@
   left: 144rpx;
   top: 0;
   bottom: 0;
-  width: 200rpx;
+  width: calc((100% - 144rpx) / 3);
   border-radius: 20rpx;
   background: linear-gradient(124.135deg, #bfebff 21.92%, #f9eef8 53.4%, #ffccb0 131.92%);
   pointer-events: none;
@@ -686,7 +867,8 @@
 }
 
 .compare-col {
-  width: 200rpx;
+  flex: 1;
+  min-width: 0;
   padding: 0 16rpx;
 }
 
@@ -721,8 +903,69 @@
 }
 
 .compare-head__logo {
-  width: 108rpx;
-  height: 34rpx;
+  width: 134rpx;
+  height: 42rpx;
+}
+
+.why-compat {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.why-compat__title {
+  font-size: 32rpx;
+  font-weight: 500;
+  line-height: 48rpx;
+  color: var(--color-text-primary);
+}
+
+.why-compat__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24rpx;
+  padding: 36rpx 24rpx 40rpx 16rpx;
+  border-radius: 20rpx;
+  background: linear-gradient(139deg, var(--blue-50) 11.21%, var(--green-50) 89.26%);
+}
+
+.why-compat__left {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  min-width: 0;
+}
+
+.why-compat__icon {
+  width: 80rpx;
+  height: 80rpx;
+  flex-shrink: 0;
+}
+
+.why-compat__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.why-compat__name {
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 44rpx;
+  color: var(--color-text-primary);
+}
+
+.why-compat__desc {
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: var(--color-text-secondary);
+}
+
+.why-compat__arrow {
+  width: 32rpx;
+  height: 32rpx;
+  flex-shrink: 0;
 }
 
 .compare-head__title {

@@ -29,7 +29,6 @@
       <view class="detail-order-card">
         <view class="detail-order-card__head">
           <text class="detail-order-card__no">{{order.orderNo}}</text>
-          <text wx:if="{{!showQr}}" class="detail-order-card__badge detail-order-card__badge--{{badgeTone}}">{{badgeLabel}}</text>
         </view>
         <view class="detail-order-card__body">
           <view class="detail-order-card__left">
@@ -53,7 +52,6 @@
               />
             </view>
             <text class="detail-qr-panel__hint">一张 eSIM 仅限一台设备安装</text>
-            <text class="detail-qr-panel__badge detail-order-card__badge--{{esimBadgeTone}}">{{esimBadgeLabel}}</text>
           </view>
           <view class="detail-qr-panel__pager" wx:if="{{esimTotal > 1}}">
             <button

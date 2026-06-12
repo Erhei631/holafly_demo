@@ -107,36 +107,10 @@
   color: var(--color-text-secondary);
 }
 
-.order-card__badge {
+.order-card__arrow {
   flex-shrink: 0;
-  padding: 8rpx 16rpx;
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-note);
-  font-weight: 600;
-}
-
-.order-card__badge--warning {
-  background: var(--yellow-50);
-  color: var(--yellow-700);
-}
-
-.order-card__badge--success {
-  background: var(--green-50);
-  color: var(--green-700);
-}
-
-.order-card__badge--installed {
-  padding: 8rpx 12rpx;
-  border-radius: 8rpx;
-  font-weight: 400;
-  line-height: 36rpx;
-  background: #f8f8fb;
-  color: #7b7c7e;
-}
-
-.order-card__badge--muted {
-  background: var(--neutral-100);
-  color: var(--color-text-tertiary);
+  width: 32rpx;
+  height: 32rpx;
 }
 
 .order-card__esim {

@@ -39,12 +39,6 @@
     .detail-order-card{background:#fff;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.05);overflow:hidden}
     .detail-order-card__head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--neutral-200)}
     .detail-order-card__no{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--neutral-400)}
-    .detail-order-card__badge{padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500}
-    .detail-order-card__badge--pending{background:var(--yellow-100);color:var(--yellow-800)}
-    .detail-order-card__badge--active{background:var(--green-100);color:var(--green-700)}
-    .detail-order-card__badge--installed,
-    .detail-qr-panel__badge.detail-order-card__badge--installed{padding:4px 6px;font-weight:400;line-height:18px;background:var(--neutral-100);color:var(--neutral-400)}
-    .detail-order-card__badge--done{background:var(--neutral-200);color:var(--neutral-400)}
     .detail-order-card__body{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px}
     .detail-order-card__left{display:flex;align-items:center;gap:6px}
     .detail-order-card__flag{width:46px;height:46px;border-radius:50%;object-fit:cover}
@@ -58,10 +52,6 @@
     .detail-qr-panel__image{width:164px;height:165px;border-radius:12px;object-fit:cover;display:block;transition:opacity .2s ease}
     .detail-qr-panel__image--used{opacity:.28}
     .detail-qr-panel__hint{font-size:12px;color:var(--neutral-400);line-height:16px;text-align:center}
-    .detail-qr-panel__badge{margin-top:2px;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500}
-    .detail-qr-panel__badge.detail-order-card__badge--pending{background:var(--yellow-100);color:var(--yellow-800)}
-    .detail-qr-panel__badge.detail-order-card__badge--active{background:var(--green-100);color:var(--green-700)}
-    .detail-qr-panel__badge.detail-order-card__badge--done{background:var(--neutral-200);color:var(--neutral-400)}
     .detail-qr-panel__pager{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:10px}
     .detail-qr-panel__pager[hidden]{display:none!important}
     .detail-qr-panel__pager-btn{width:35px;height:35px;border-radius:9999px;border:1px solid var(--neutral-200);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0}
@@ -122,7 +112,6 @@
         <section class="detail-order-card">
           <div class="detail-order-card__head">
             <span class="detail-order-card__no" id="order-no">HF20260520183829</span>
-            <span class="detail-order-card__badge detail-order-card__badge--pending" id="order-badge" hidden>待激活</span>
           </div>
           <div class="detail-order-card__body">
             <div class="detail-order-card__left">
@@ -140,7 +129,6 @@
                 <img class="detail-qr-panel__image" id="qr-image" src="images/orders/esim-qr.png?v=2" alt="eSIM 二维码" />
               </div>
               <p class="detail-qr-panel__hint">一张 eSIM 仅限一台设备安装</p>
-              <span class="detail-qr-panel__badge" id="qr-badge">待激活</span>
             </div>
             <div class="detail-qr-panel__pager" id="qr-pager" hidden>
               <button class="detail-qr-panel__pager-btn detail-qr-panel__pager-btn--muted" type="button" id="qr-prev" aria-label="上一张">
@@ -266,9 +254,7 @@
     document.getElementById('info-paid').textContent = order.createdAt;
     document.getElementById('order-flag').src = order.flag;
 
-    const badge = document.getElementById('order-badge');
     const qrSection = document.getElementById('qr-section');
-    const qrBadge = document.getElementById('qr-badge');
     const qrPager = document.getElementById('qr-pager');
     const qrIndexEl = document.getElementById('qr-index');
     const qrTotalEl = document.getElementById('qr-total');
@@ -281,13 +267,11 @@
       if (order.esimSlots && order.esimSlots[index - 1]) {
         return order.esimSlots[index - 1];
       }
-      return { label: order.badge, tone: order.badgeTone, used: false };
+      return { used: false };
     }
 
     function syncEsimView() {
       const slot = getEsimSlot(esimIndex);
-      qrBadge.textContent = slot.label;
-      qrBadge.className = `detail-qr-panel__badge detail-order-card__badge--${slot.tone}`;
       qrImage.classList.toggle('detail-qr-panel__image--used', Boolean(slot.used));
     }
 
@@ -300,11 +284,8 @@
       syncEsimView();
     }
 
-    badge.textContent = order.badge;
-    badge.className = `detail-order-card__badge detail-order-card__badge--${order.badgeTone}`;
     if (order.showQr) {
       qrSection.hidden = false;
-      badge.hidden = true;
       if (order.qty > 1) {
         qrPager.hidden = false;
         syncQrPager();
@@ -314,7 +295,6 @@
       }
     } else {
       qrSection.hidden = true;
-      badge.hidden = false;
       qrPager.hidden = true;
     }
 

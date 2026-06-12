@@ -1,4 +1,5 @@
 const { getJapanPlan, buildDayChipOptions, calcPricing } = require('../../data/plan-detail');
+const { WHY_CHOOSE } = require('../../data/home');
 const {
   VERSION_OPTIONS,
   METHOD_OPTIONS,
@@ -54,6 +55,11 @@ Page({
     savePercent: 40,
     saveLabel: '官方立减40%省6元',
     footerMeta: ' / 7天',
+    footerDaysLabel: '7天',
+    footerQtyLabel: '× 1 eSIM',
+    whyChoose: WHY_CHOOSE,
+    selectedFaqTab: 'plan',
+    filteredFaqItems: [],
     countdownH: '02',
     countdownM: '49',
     countdownS: '16',
@@ -62,8 +68,6 @@ Page({
     endDate: '',
     startDateLabel: '请选择',
     endDateLabel: '请选择',
-    startFooterLabel: '请选择',
-    endFooterLabel: '请选择',
     minDate: '',
     maxDate: '',
     weekdayLabels: WEEKDAY_LABELS,
@@ -89,18 +93,22 @@ Page({
     const bounds = getDateBounds();
     const defaultDates = getDefaultTripDates(selectedDays);
 
+    const resolvedDays = dayOptions.includes(selectedDays) ? selectedDays : 7;
+    const resolvedQty = Math.max(1, Math.min(MAX_QUANTITY, Number(options.quantity) || 1));
+
     this.setData({
       statusBarHeight: getStatusBarHeight(),
       safeBottom: getSafeAreaBottom(),
       plan,
-      selectedDays: dayOptions.includes(selectedDays) ? selectedDays : 7,
-      quantity: Math.max(1, Math.min(MAX_QUANTITY, Number(options.quantity) || 1)),
+      selectedDays: resolvedDays,
+      quantity: resolvedQty,
       minDate: bounds.minDate,
       maxDate: bounds.maxDate,
       startDate: defaultDates.startDate,
       endDate: defaultDates.endDate,
       startDateLabel: formatShortLabel(defaultDates.startDate),
       endDateLabel: formatShortLabel(defaultDates.endDate),
+      filteredFaqItems: this.filterFaqItems(plan.faqItems, 'plan'),
       ...this.buildCalendarPatch(defaultDates.startDate, defaultDates.endDate, bounds),
     }, () => {
       this.syncPricing();
@@ -145,8 +153,6 @@ Page({
       endDate,
       startDateLabel: formatShortLabel(startDate),
       endDateLabel: formatShortLabel(endDate),
-      startFooterLabel: formatFooterDate(startDate),
-      endFooterLabel: formatFooterDate(endDate),
     };
   },
 
@@ -159,6 +165,9 @@ Page({
       plan.originalDaily,
     );
 
+    const days = overrides.selectedDays != null ? overrides.selectedDays : selectedDays;
+    const qty = overrides.quantity != null ? overrides.quantity : quantity;
+
     return {
       totalLabel: pricing.totalLabel,
       dailyAvgLabel: pricing.dailyAvgLabel,
@@ -166,7 +175,13 @@ Page({
       savePercent: pricing.savePercent,
       saveLabel: pricing.saveLabel,
       footerMeta: pricing.footerMeta,
+      footerDaysLabel: `${days}天`,
+      footerQtyLabel: `× ${qty} eSIM`,
     };
+  },
+
+  filterFaqItems(faqItems, tab) {
+    return (faqItems || []).filter((item) => item.tab === tab);
   },
 
   syncPricing() {
@@ -232,8 +247,6 @@ Page({
       startDate: next.startDate,
       endDate: next.endDate,
       calendarMonths,
-      startFooterLabel: formatFooterDate(next.startDate),
-      endFooterLabel: formatFooterDate(next.endDate),
       customDaysPreview,
     });
   },
@@ -303,6 +316,16 @@ Page({
 
   onCompatCardTap() {
     this.setData({ showCompatSheet: true });
+  },
+
+  onFaqTabTap(e) {
+    const { tab } = e.currentTarget.dataset;
+    if (!tab || tab === this.data.selectedFaqTab) return;
+    this.setData({
+      selectedFaqTab: tab,
+      expandedFaqId: '',
+      filteredFaqItems: this.filterFaqItems(this.data.plan.faqItems, tab),
+    });
   },
 
   onFaqTap(e) {

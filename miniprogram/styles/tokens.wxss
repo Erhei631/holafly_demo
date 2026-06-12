@@ -140,6 +140,7 @@ page {
   --gradient-banner-start: var(--blue-300);
   --gradient-banner-mid: var(--rose-50);
   --gradient-banner-end: var(--peach-200);
+  --Linear: linear-gradient(124.135deg, #bfebff 21.92%, #f9eef8 53.4%, #ffccb0 131.92%);
 
   /* Hero page background — soft peach → rose → white */
   --gradient-hero-bg: linear-gradient(

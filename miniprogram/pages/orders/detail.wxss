@@ -131,36 +131,6 @@
   color: var(--color-text-muted);
 }
 
-.detail-order-card__badge {
-  padding: 8rpx 16rpx;
-  border-radius: 8rpx;
-  font-size: 24rpx;
-  font-weight: 500;
-}
-
-.detail-order-card__badge--pending {
-  background: #ffeac0;
-  color: #92400e;
-}
-
-.detail-order-card__badge--active {
-  background: #d6ffe7;
-  color: #179b50;
-}
-
-.detail-order-card__badge--installed {
-  padding: 8rpx 12rpx;
-  font-weight: 400;
-  line-height: 36rpx;
-  background: #f8f8fb;
-  color: #7b7c7e;
-}
-
-.detail-order-card__badge--done {
-  background: var(--color-border-subtle);
-  color: var(--color-text-muted);
-}
-
 .detail-order-card__body {
   display: flex;
   align-items: center;
@@ -241,10 +211,6 @@
   color: var(--color-text-muted);
   line-height: 32rpx;
   text-align: center;
-}
-
-.detail-qr-panel__badge {
-  margin-top: 4rpx;
 }
 
 .detail-qr-panel__pager {

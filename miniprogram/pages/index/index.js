@@ -37,9 +37,10 @@ Page({
   data: {
     statusBarHeight: 20,
     safeBottom: 0,
-    destinationQuery: '香港',
-    destinationDisplay: '香港',
-    selectedDestinationId: 'hk',
+    destinationQuery: '',
+    destinationDisplay: '去选择',
+    destinationSelected: false,
+    selectedDestinationId: '',
     showDestinationDrawer: false,
     drawerKeyword: '',
     popularCountries: POPULAR_COUNTRIES,
@@ -61,6 +62,7 @@ Page({
     compatMethod: 'model',
     compatSearch: '',
     filteredCompatModels: POPULAR_MODELS,
+    promoIndex: 0,
   },
 
   onLoad() {
@@ -108,6 +110,7 @@ Page({
       selectedDestinationId: id,
       destinationQuery: name,
       destinationDisplay: name,
+      destinationSelected: true,
       showDestinationDrawer: false,
       drawerKeyword: '',
     });
@@ -121,11 +124,8 @@ Page({
       selectedDestinationId: baseId,
       destinationQuery: name,
       destinationDisplay: name,
+      destinationSelected: true,
     });
-    this.navigateToPlans();
-  },
-
-  onViewPlansTap() {
     this.navigateToPlans();
   },
 
@@ -133,6 +133,10 @@ Page({
     wx.navigateTo({
       url: '/pages/search/result?destination=日本&days=7',
     });
+  },
+
+  onPromoChange(e) {
+    this.setData({ promoIndex: e.detail.current });
   },
 
   onClaimPromoTap() {

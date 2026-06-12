@@ -17,21 +17,18 @@
     scroll-y
     enhanced
     show-scrollbar="{{false}}"
-    style="padding-bottom: calc(176rpx + {{safeBottom}}px);"
+    style="padding-bottom: calc(260rpx + {{safeBottom}}px);"
   >
     <view class="detail-content">
-      <view class="hero-card">
-        <image class="hero-card__bg" src="{{plan.hero}}" mode="aspectFill" />
-        <view class="hero-card__body">
-          <view class="hero-card__title-row">
-            <image class="hero-card__flag" src="{{plan.flag}}" mode="aspectFill" />
-            <text class="hero-card__title">{{plan.title}}</text>
-          </view>
-          <view class="hero-card__tags">
-            <view wx:for="{{plan.features}}" wx:key="id" class="hero-card__tag">
-              <image class="hero-card__tag-icon" src="{{item.icon}}" mode="aspectFit" />
-              <text class="hero-card__tag-text">{{item.label}}</text>
-            </view>
+      <view class="product-header">
+        <view class="product-header__row">
+          <image class="product-header__flag" src="{{plan.flag}}" mode="aspectFill" />
+          <text class="product-header__title">{{plan.title}}</text>
+        </view>
+        <view class="product-header__tags">
+          <view wx:for="{{plan.features}}" wx:key="id" class="product-header__tag">
+            <image class="product-header__tag-icon" src="{{item.icon}}" mode="aspectFit" />
+            <text class="product-header__tag-text">{{item.label}}</text>
           </view>
         </view>
       </view>
@@ -78,9 +75,13 @@
             </view>
 
             <view class="config-section">
-              <view class="config-section__label-wrap config-section__label-wrap--solo">
-                <image class="config-section__icon" src="/images/detail/icon-esim.svg" mode="aspectFit" />
-                <text class="config-section__label">eSIM数量</text>
+              <view class="config-section__label-wrap config-section__label-wrap--qty">
+                <image class="config-section__icon" src="/images/detail/icon-travelers.svg" mode="aspectFit" />
+                <view class="config-section__qty-labels">
+                  <text class="config-section__label">出行人数</text>
+                  <view class="config-section__qty-divider" />
+                  <text class="config-section__label config-section__label--sub">eSIM数量</text>
+                </view>
               </view>
               <view class="qty-stepper">
                 <view
@@ -131,24 +132,37 @@
         </view>
       </view>
 
-      <view class="compat-card" bindtap="onCompatCardTap">
-        <image class="compat-card__icon" src="{{plan.compatCard.icon}}" mode="aspectFit" />
-        <view class="compat-card__content">
-          <text class="compat-card__title">{{plan.compatCard.title}}</text>
-          <text class="compat-card__subtitle">{{plan.compatCard.subtitle}}</text>
+      <view class="why-card">
+        <view class="why-card__hero">
+          <image class="why-card__brand" src="/images/home/why-brand-logo.svg" mode="aspectFit" />
+          <view class="why-card__tagline">
+            <text>出境旅行专属 eSIM，</text>
+            <text class="why-card__tagline-em">走到哪，连到哪。</text>
+          </view>
         </view>
-        <image class="compat-card__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
-      </view>
-
-      <view class="panel panel--promise">
-        <text class="panel__title panel__title--inline">Holafly服务承诺</text>
-        <view class="promise-strip">
-          <view class="promise-grid">
-            <view wx:for="{{plan.servicePromises}}" wx:key="id" class="promise-item">
-              <image class="promise-item__icon" src="{{item.icon}}" mode="aspectFit" />
-              <view class="promise-item__text">
-                <text class="promise-item__line">{{item.lines[0]}}</text>
-                <text class="promise-item__line">{{item.lines[1]}}</text>
+        <view class="why-card__body">
+          <view class="why-features">
+            <view wx:for="{{whyChoose}}" wx:key="id" class="why-feature">
+              <view class="why-feature__icon-wrap">
+                <image class="why-feature__icon" src="{{item.icon}}" mode="aspectFill" />
+              </view>
+              <view class="why-feature__body">
+                <text class="why-feature__title">{{item.title}}</text>
+                <text class="why-feature__desc">{{item.desc}}</text>
+              </view>
+            </view>
+          </view>
+          <view class="why-promise">
+            <text class="why-promise__title">Holafly服务承诺</text>
+            <view class="promise-strip">
+              <view class="promise-grid">
+                <view wx:for="{{plan.servicePromises}}" wx:key="id" class="promise-item">
+                  <image class="promise-item__icon" src="{{item.icon}}" mode="aspectFit" />
+                  <view class="promise-item__text">
+                    <text class="promise-item__line">{{item.lines[0]}}</text>
+                    <text class="promise-item__line">{{item.lines[1]}}</text>
+                  </view>
+                </view>
               </view>
             </view>
           </view>
@@ -167,7 +181,9 @@
             <text class="app-section__title">{{item.title}}</text>
             <view wx:for="{{item.rows}}" wx:for-item="row" wx:key="*this" class="app-row">
               <view wx:for="{{row}}" wx:for-item="app" wx:key="id" class="app-tile">
-                <image class="app-tile__icon" src="{{app.icon}}" mode="aspectFit" />
+                <view class="app-tile__icon-wrap {{app.fullIcon || app.id === 'more-apps' || app.id === 'more-apps-domestic' ? 'app-tile__icon-wrap--full' : ''}}">
+                  <image class="app-tile__icon {{app.fullIcon || app.id === 'more-apps' || app.id === 'more-apps-domestic' ? 'app-tile__icon--full' : ''}}" src="{{app.icon}}" mode="aspectFit" />
+                </view>
                 <view class="app-tile__text">
                   <text class="app-tile__name">{{app.name}}</text>
                   <text class="app-tile__subtitle">{{app.subtitle}}</text>
@@ -191,17 +207,31 @@
           </view>
         </view>
         <view class="reviews-card__divider" />
-        <view class="reviews-list">
-          <view wx:for="{{plan.reviews}}" wx:key="id" class="review-item">
-            <view class="review-item__top">
-              <text class="review-item__name">{{item.name}}</text>
-              <view class="review-item__badge">
-                <text class="review-item__badge-text">{{item.rating}}</text>
+        <scroll-view class="reviews-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="reviews-list">
+            <view wx:for="{{plan.reviews}}" wx:key="id" class="review-item">
+              <view class="review-item__top">
+                <text class="review-item__name">{{item.name}}</text>
+                <view class="review-item__badge">
+                  <text class="review-item__badge-text">{{item.rating}}</text>
+                </view>
               </view>
+              <text class="review-item__text">{{item.text}}</text>
+              <text class="review-item__meta">{{item.meta}}</text>
             </view>
-            <text class="review-item__text">{{item.text}}</text>
-            <text class="review-item__meta">{{item.meta}}</text>
           </view>
+        </scroll-view>
+      </view>
+
+      <view class="panel panel--compat">
+        <text class="panel__title panel__title--inline">我的设备支持吗？</text>
+        <view class="compat-card" bindtap="onCompatCardTap">
+          <image class="compat-card__icon" src="{{plan.compatCard.icon}}" mode="aspectFit" />
+          <view class="compat-card__content">
+            <text class="compat-card__title">{{plan.compatCard.title}}</text>
+            <text class="compat-card__subtitle">{{plan.compatCard.subtitle}}</text>
+          </view>
+          <image class="compat-card__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
         </view>
       </view>
 
@@ -254,9 +284,22 @@
 
       <view class="panel panel--last">
         <text class="panel__title">常见问题</text>
+        <scroll-view class="faq-tabs" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="faq-tabs__inner">
+            <view
+              wx:for="{{plan.faqTabs}}"
+              wx:key="id"
+              class="faq-tab {{selectedFaqTab === item.id ? 'faq-tab--active' : ''}}"
+              data-tab="{{item.id}}"
+              bindtap="onFaqTabTap"
+            >
+              <text>{{item.label}}</text>
+            </view>
+          </view>
+        </scroll-view>
         <view class="faq-list faq-list--simple">
           <view
-            wx:for="{{plan.faqItems}}"
+            wx:for="{{filteredFaqItems}}"
             wx:key="id"
             class="faq-item faq-item--simple {{expandedFaqId === item.id ? 'faq-item--open' : ''}}"
           >
@@ -372,7 +415,11 @@
   <view wx:if="{{showDateRangeSheet}}" class="date-sheet-mask" bindtap="onCloseDateSheet">
     <view class="date-sheet" catchtap="noop">
       <view class="date-sheet__header">
-        <text class="date-sheet__title">选择出行日期</text>
+        <view class="date-sheet__header-left">
+          <text class="date-sheet__title">计算旅行天数</text>
+          <view wx:if="{{customDaysPreview}}" class="date-sheet__divider" />
+          <text wx:if="{{customDaysPreview}}" class="date-sheet__header-days">{{customDaysPreview}}天</text>
+        </view>
         <view class="date-sheet__close" bindtap="onCloseDateSheet" aria-label="关闭">×</view>
       </view>
       <view class="cal-weekdays">
@@ -405,29 +452,43 @@
         </view>
       </scroll-view>
       <view class="date-sheet__footer">
-        <view class="date-sheet__summary">
-          <view class="date-sheet__summary-dates">
-            <text>去: {{startFooterLabel}}</text>
-            <text>返: {{endFooterLabel}}</text>
-          </view>
-          <text wx:if="{{customDaysPreview}}" class="date-sheet__summary-days">共 {{customDaysPreview}} 天</text>
-          <text wx:elif="{{startDate && !endDate}}" class="date-sheet__summary-days">请选择返回日期</text>
-        </view>
-        <button class="date-sheet__confirm btn-primary" bindtap="onConfirmDateRange">确定</button>
+        <button class="date-sheet__confirm btn-primary" bindtap="onConfirmDateRange">
+          <block wx:if="{{customDaysPreview}}">
+            <text>{{customDaysPreview}}天</text>
+            <text class="date-sheet__confirm-sep">｜</text>
+            <text>确定</text>
+          </block>
+          <block wx:else>确定</block>
+        </button>
       </view>
     </view>
   </view>
 
   <view class="detail-footer" style="padding-bottom: {{safeBottom}}px;">
-    <view class="detail-footer__inner">
+    <view class="detail-footer__summary">
+      <view class="detail-footer__summary-left">
+        <view class="detail-footer__summary-item">
+          <image class="detail-footer__summary-icon" src="/images/detail/footer-calendar.svg" mode="aspectFit" />
+          <text>{{footerDaysLabel}}</text>
+        </view>
+        <view class="detail-footer__summary-item">
+          <image class="detail-footer__summary-icon" src="/images/detail/footer-esim.svg" mode="aspectFit" />
+          <text>{{footerQtyLabel}}</text>
+        </view>
+        <view class="detail-footer__summary-divider" />
+      </view>
+      <view class="detail-footer__price">
+        <view class="detail-footer__price-main">
+          <text class="detail-footer__currency">¥</text>
+          <text class="detail-footer__amount">{{dailyAvgLabel}}</text>
+        </view>
+        <text class="detail-footer__meta">/天</text>
+      </view>
+    </view>
+    <view class="detail-footer__actions">
       <view class="detail-footer__support" bindtap="onSupportTap">
         <image class="detail-footer__support-icon" src="/images/detail/footer-support.svg" mode="aspectFit" />
         <text class="detail-footer__support-label">客服</text>
-      </view>
-      <view class="detail-footer__price">
-        <text class="detail-footer__currency">¥</text>
-        <text class="detail-footer__amount">{{dailyAvgLabel}}</text>
-        <text class="detail-footer__meta">/天</text>
       </view>
       <button class="detail-footer__cta btn-primary" bindtap="onCheckout">去结算</button>
     </view>

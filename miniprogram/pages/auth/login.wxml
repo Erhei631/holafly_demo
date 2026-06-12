@@ -58,7 +58,7 @@
           open-type="getPhoneNumber"
           bindtap="onAgreeModalConfirm"
           bindgetphonenumber="onGetPhoneNumber"
-        >我已阅读</button>
+        >同意并继续</button>
       </view>
     </view>
   </view>

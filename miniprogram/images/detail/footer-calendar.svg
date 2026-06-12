@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16.0833 17.75" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Calendar">
+<path id="Line_200" d="M0.618876 6.71189H15.4722" stroke="var(--stroke-0, #292B2E)" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_201" d="M11.7434 9.96641H11.7511" stroke="var(--stroke-0, #292B2E)" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_202" d="M8.04549 9.96641H8.05321" stroke="var(--stroke-0, #292B2E)" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_203" d="M4.33989 9.96641H4.34761" stroke="var(--stroke-0, #292B2E)" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_204" d="M11.7434 13.2052H11.7511" stroke="var(--stroke-0, #292B2E)" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_205" d="M8.04549 13.2052H8.05321" stroke="var(--stroke-0, #292B2E)" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_206" d="M4.33989 13.2052H4.34761" stroke="var(--stroke-0, #292B2E)" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_207" d="M11.4114 0.541667V3.28398" stroke="var(--stroke-0, #292B2E)" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_208" d="M4.6796 0.541667V3.28398" stroke="var(--stroke-0, #292B2E)" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path" fill-rule="evenodd" clip-rule="evenodd" d="M11.5736 1.85766H4.51747C2.07023 1.85766 0.541667 3.22094 0.541667 5.72685V13.2682C0.541667 15.8135 2.07023 17.2083 4.51747 17.2083H11.5658C14.0208 17.2083 15.5416 15.8372 15.5416 13.3313V5.72685C15.5494 3.22094 14.0285 1.85766 11.5736 1.85766Z" stroke="var(--stroke-0, #292B2E)" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

@@ -13,9 +13,30 @@
   <scroll-view class="page-scroll home-scroll" scroll-y enhanced show-scrollbar="{{false}}">
   <view class="hero">
     <view class="home-main">
-      <view class="promo-card" bindtap="onClaimPromoTap">
-        <view class="promo-card__content">
-          <image class="promo-card__image" src="/images/home/promo-card.png" mode="widthFix" />
+      <view class="promo-card">
+        <swiper
+          class="promo-card__swiper"
+          circular
+          autoplay
+          interval="4000"
+          duration="400"
+          current="{{promoIndex}}"
+          bindchange="onPromoChange"
+        >
+          <swiper-item>
+            <image class="promo-card__banner" src="/images/home/promo-banner-2.png" mode="aspectFill" />
+          </swiper-item>
+          <swiper-item>
+            <image class="promo-card__banner" src="/images/home/promo-banner-1.png" mode="aspectFill" />
+          </swiper-item>
+          <swiper-item>
+            <image class="promo-card__banner" src="/images/home/promo-banner-3.png" mode="aspectFill" />
+          </swiper-item>
+        </swiper>
+        <view class="promo-card__dots" aria-hidden="true">
+          <view class="promo-card__dot {{promoIndex === 0 ? 'promo-card__dot--active' : ''}}" />
+          <view class="promo-card__dot {{promoIndex === 1 ? 'promo-card__dot--active' : ''}}" />
+          <view class="promo-card__dot {{promoIndex === 2 ? 'promo-card__dot--active' : ''}}" />
         </view>
       </view>
 
@@ -44,19 +65,17 @@
       <view class="search-block">
         <view class="search-block__shell">
           <view class="search-card">
-            <view class="search-card__dest" bindtap="openDestinationDrawer">
-              <image class="search-card__icon" src="/images/home/icon-airplane.svg" mode="aspectFit" />
-              <view class="search-card__dest-row">
-                <text class="search-card__label">目的地</text>
-                <view class="search-card__vsep" />
-                <text class="search-card__value">{{destinationDisplay}}</text>
-                <image class="search-card__chevron" src="/images/home/icon-chevron-down.svg" mode="aspectFit" />
+            <view class="search-card__dest-box">
+              <view class="search-card__dest" bindtap="openDestinationDrawer">
+                <view class="search-card__dest-main">
+                  <image class="search-card__icon" src="/images/home/icon-airplane.svg" mode="aspectFit" />
+                  <text class="search-card__label">目的地</text>
+                  <view class="search-card__vsep" />
+                  <text class="search-card__value {{destinationSelected ? 'search-card__value--selected' : ''}}">{{destinationDisplay}}</text>
+                </view>
+                <image class="search-card__arrow" src="/images/home/icon-arrow-right-dest.svg" mode="aspectFit" />
               </view>
             </view>
-
-            <view class="search-card__divider" />
-
-            <button class="search-card__cta" bindtap="onViewPlansTap">查看套餐</button>
 
             <view class="popular-section">
               <text class="popular-section__title">热门推荐</text>
@@ -73,43 +92,25 @@
                     <image class="popular-chip__flag" src="{{item.flag}}" mode="aspectFill" />
                     <text class="popular-chip__name">{{item.name}}</text>
                   </view>
-                  <image class="popular-chip__arrow" src="/images/home/icon-chevron-down.svg" mode="aspectFit" />
+                  <image class="popular-chip__arrow" src="/images/home/icon-arrow-right-bold.svg" mode="aspectFit" />
                 </view>
               </view>
-            </view>
-          </view>
-        </view>
-      </view>
-
-      <view class="edu-cards">
-        <view class="edu-card edu-card--esim" bindtap="onEsimCardTap">
-          <image class="edu-card__icon" src="/images/home/card-esim.svg" mode="aspectFit" />
-          <view class="edu-card__body">
-            <text class="edu-card__tag">eSIM</text>
-            <view class="edu-card__text-group">
-              <text class="edu-card__title">什么是eSIM</text>
-              <text class="edu-card__desc">无需换卡</text>
-            </view>
-          </view>
-        </view>
-        <view class="edu-card edu-card--compat" bindtap="onCompatCardTap">
-          <image class="edu-card__icon" src="/images/home/card-device.svg" mode="aspectFit" />
-          <view class="edu-card__body">
-            <text class="edu-card__tag">设备</text>
-            <view class="edu-card__text-group">
-              <text class="edu-card__title">兼容测试</text>
-              <text class="edu-card__desc">手机能用吗</text>
+              <view class="popular-more" bindtap="openDestinationDrawer">查看更多目的地</view>
             </view>
           </view>
         </view>
       </view>
 
       <view class="why-card">
-        <view class="why-card__section">
-          <view class="why-card__header">
-            <text class="why-card__heading">为什么选择</text>
-            <image class="why-card__logo" src="/images/home/why-logo.svg" mode="aspectFit" />
+        <view class="why-card__hero">
+          <image class="why-card__brand" src="/images/home/why-brand-logo.svg" mode="aspectFit" />
+          <view class="why-card__tagline">
+            <text>出境旅行专属 eSIM，</text>
+            <text class="why-card__tagline-em">走到哪，连到哪。</text>
           </view>
+        </view>
+
+        <view class="why-card__body">
           <view class="why-features">
             <view wx:for="{{whyChoose}}" wx:key="id" class="why-feature">
               <view class="why-feature__icon-wrap">
@@ -121,45 +122,76 @@
               </view>
             </view>
           </view>
-        </view>
-        <scroll-view class="compare-scroll" scroll-x enhanced show-scrollbar="{{false}}">
-          <view class="compare-table">
-            <view class="compare-highlight" />
-            <view class="compare-row compare-row--head">
-              <view class="compare-cell compare-cell--label compare-cell--head">权益</view>
-              <view
-                wx:for="{{compare.columns}}"
-                wx:key="id"
-                class="compare-cell compare-col {{item.primary ? 'compare-col--holafly' : ''}}"
-              >
-                <view wx:if="{{item.primary}}" class="compare-head">
-                  <image class="compare-head__logo" src="/images/home/logo.svg" mode="aspectFit" />
-                  <text class="compare-head__sub">{{item.sub}}</text>
-                </view>
-                <view wx:else class="compare-head">
-                  <text class="compare-head__title">{{item.name}}</text>
-                  <text class="compare-head__sub">{{item.sub}}</text>
-                </view>
+
+          <view class="why-esim">
+            <view class="why-esim__head">
+              <text class="why-esim__title">什么是 eSIM？</text>
+              <view class="why-esim__link" bindtap="onEsimCardTap">
+                <text>查看完整说明</text>
+                <image class="why-esim__arrow" src="/images/home/icon-arrow-right-dest.svg" mode="aspectFit" />
               </view>
             </view>
-            <view
-              wx:for="{{compare.rows}}"
-              wx:key="id"
-              class="compare-row {{index % 2 === 1 ? 'compare-row--alt' : ''}}"
-            >
-              <view class="compare-cell compare-cell--label">{{item.label}}</view>
-              <view
-                wx:for="{{item.cells}}"
-                wx:for-item="cell"
-                wx:for-index="colIndex"
-                wx:key="colIndex"
-                class="compare-cell compare-col {{colIndex === 0 ? 'compare-col--holafly' : ''}}"
-              >
-                <text class="compare-val compare-val--{{cell.tone}}">{{cell.text}}</text>
+            <view class="why-esim__desc">
+              <text>eSIM 是</text>
+              <text class="why-esim__emph">内嵌在手机里的数字 SIM 卡</text>
+              <text>。不用换卡、不用等快递，手机直接下载安装，</text>
+              <text class="why-esim__emph">30 秒激活</text>
+              <text>。</text>
+            </view>
+            <view class="compare-wrap">
+              <view class="compare-table">
+                <view class="compare-highlight" />
+                <view class="compare-row compare-row--head">
+                  <view class="compare-cell compare-cell--label compare-cell--head">权益</view>
+                  <view
+                    wx:for="{{compare.columns}}"
+                    wx:key="id"
+                    class="compare-cell compare-col {{item.primary ? 'compare-col--holafly' : ''}}"
+                  >
+                    <view wx:if="{{item.primary}}" class="compare-head">
+                      <image class="compare-head__logo" src="/images/home/compare-holafly-text.svg" mode="aspectFit" />
+                      <text class="compare-head__sub">{{item.sub}}</text>
+                    </view>
+                    <view wx:else class="compare-head">
+                      <text class="compare-head__title">{{item.name}}</text>
+                      <text class="compare-head__sub">{{item.sub}}</text>
+                    </view>
+                  </view>
+                </view>
+                <view
+                  wx:for="{{compare.rows}}"
+                  wx:key="id"
+                  class="compare-row {{index % 2 === 1 ? 'compare-row--alt' : ''}}"
+                >
+                  <view class="compare-cell compare-cell--label">{{item.label}}</view>
+                  <view
+                    wx:for="{{item.cells}}"
+                    wx:for-item="cell"
+                    wx:for-index="colIndex"
+                    wx:key="colIndex"
+                    class="compare-cell compare-col {{colIndex === 0 ? 'compare-col--holafly' : ''}}"
+                  >
+                    <text class="compare-val compare-val--{{cell.tone}}">{{cell.text}}</text>
+                  </view>
+                </view>
               </view>
             </view>
           </view>
-        </scroll-view>
+
+          <view class="why-compat">
+            <text class="why-compat__title">我的设备支持吗？</text>
+            <view class="why-compat__card" bindtap="onCompatCardTap">
+              <view class="why-compat__left">
+                <image class="why-compat__icon" src="/images/home/compat-check-icon.svg" mode="aspectFit" />
+                <view class="why-compat__text">
+                  <text class="why-compat__name">一键检测兼容性</text>
+                  <text class="why-compat__desc">支持大陆版与国际版机型查询</text>
+                </view>
+              </view>
+              <image class="why-compat__arrow" src="/images/home/icon-arrow-right-dest.svg" mode="aspectFit" />
+            </view>
+          </view>
+        </view>
       </view>
 
       <view class="reviews-card">
@@ -175,18 +207,20 @@
           </view>
         </view>
         <view class="reviews-card__divider" />
-        <view class="reviews-list">
-          <view wx:for="{{reviews}}" wx:key="id" class="review-item">
-            <view class="review-item__top">
-              <text class="review-item__name">{{item.name}}</text>
-              <view class="review-item__badge">
-                <text class="review-item__badge-text">{{item.rating}}</text>
+        <scroll-view class="reviews-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="reviews-list">
+            <view wx:for="{{reviews}}" wx:key="id" class="review-item">
+              <view class="review-item__top">
+                <text class="review-item__name">{{item.name}}</text>
+                <view class="review-item__badge">
+                  <text class="review-item__badge-text">{{item.rating}}</text>
+                </view>
               </view>
+              <text class="review-item__text">{{item.text}}</text>
+              <text class="review-item__meta">{{item.meta}}</text>
             </view>
-            <text class="review-item__text">{{item.text}}</text>
-            <text class="review-item__meta">{{item.meta}}</text>
           </view>
-        </view>
+        </scroll-view>
       </view>
     </view>
   </view>

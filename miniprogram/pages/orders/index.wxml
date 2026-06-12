@@ -37,7 +37,7 @@
               <text class="order-card__dest">{{item.destination}}</text>
               <text class="order-card__meta">{{item.dateRange}} · {{item.days}} 天</text>
             </view>
-            <text class="order-card__badge order-card__badge--{{item.statusTone}}">{{item.statusLabel}}</text>
+            <image class="order-card__arrow" src="/images/orders/icon-chevron-right.svg" mode="aspectFit" />
           </view>
 
           <view class="order-card__esim">

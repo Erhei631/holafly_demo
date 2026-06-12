@@ -1,24 +1,15 @@
 const { getOrderById } = require('../../utils/orders');
 const { getSafeAreaBottom, getStatusBarHeight } = require('../../utils/safe-area');
 
-const STATUS_DETAIL = {
-  pending_install: { label: '待激活', tone: 'pending' },
-  active: { label: '使用中', tone: 'active' },
-  expired: { label: '已完成', tone: 'done' },
-};
-
 function getEsimSlot(order, index) {
   const slots = order.esimSlots;
   if (slots && slots[index - 1]) return slots[index - 1];
-  const fallback = STATUS_DETAIL[order.status] || STATUS_DETAIL.pending_install;
-  return { label: fallback.label, tone: fallback.tone, used: false };
+  return { used: false };
 }
 
 function getEsimView(order, index) {
   const slot = getEsimSlot(order, index);
   return {
-    esimBadgeLabel: slot.label,
-    esimBadgeTone: slot.tone,
     esimQrUsed: Boolean(slot.used),
   };
 }
@@ -29,13 +20,9 @@ Page({
     safeBottom: 0,
     order: null,
     planLabel: '',
-    badgeLabel: '',
-    badgeTone: 'pending',
     showQr: false,
     esimIndex: 1,
     esimTotal: 1,
-    esimBadgeLabel: '',
-    esimBadgeTone: 'pending',
     esimQrUsed: false,
   },
 
@@ -47,7 +34,6 @@ Page({
       return;
     }
 
-    const detailStatus = STATUS_DETAIL[order.status] || STATUS_DETAIL.pending_install;
     const planLabel = `${order.destination}eSIM·${order.days}天`;
 
     const esimTotal = Math.max(1, order.quantity || 1);
@@ -56,8 +42,6 @@ Page({
       safeBottom: getSafeAreaBottom(),
       order,
       planLabel,
-      badgeLabel: detailStatus.label,
-      badgeTone: detailStatus.tone,
       showQr: order.status === 'pending_install' || order.status === 'active',
       esimIndex: 1,
       esimTotal,

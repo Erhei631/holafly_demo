@@ -30,26 +30,33 @@ const HOME_REVIEWS = [
     text: '到机场出关 30 秒装好就有信号，比租 Wifi 划算太多了，客服回得也快！',
     meta: '6小时前 | 日本7天',
   },
+  {
+    id: 'r3',
+    name: 'Tina',
+    rating: '4.7',
+    text: '到机场出关 30 秒装好就有信号，比租 Wifi 划算太多了，客服回得也快！',
+    meta: '6小时前 | 日本7天',
+  },
 ];
 
 const WHY_CHOOSE = [
   {
     id: 'data',
-    icon: '/images/home/why-infinity.png',
+    icon: '/images/home/why-data.png',
     title: '不限流量 · 不限速',
     desc: '4K、直播、导航全程不卡顿',
   },
   {
     id: 'support',
-    icon: '/images/home/why-headset.png',
+    icon: '/images/home/why-support.png',
     title: '中文客服 7×24h',
     desc: '真人在线，问题秒回',
   },
   {
-    id: 'coverage',
-    icon: '/images/home/why-globe.png',
-    title: '覆盖全球200+国家',
-    desc: '一次支付，畅行全程',
+    id: 'bind',
+    icon: '/images/home/why-bind.png',
+    title: '一次绑定，随时续购',
+    desc: '再次出行，买完直接用，无需重新安装',
   },
 ];
 
@@ -58,8 +65,6 @@ const HOME_COMPARE = {
     { id: 'holafly', name: 'Holafly', sub: 'eSIM', primary: true },
     { id: 'sim', name: '实体卡', sub: 'SIM' },
     { id: 'roaming', name: '漫游', sub: '运营商' },
-    { id: 'wifi', name: '随身', sub: 'WiFi' },
-    { id: 'other', name: '其他', sub: 'eSIM' },
   ],
   rows: [
     {
@@ -69,8 +74,6 @@ const HOME_COMPARE = {
         { text: '无限不限速', tone: 'primary' },
         { text: 'GB 限额', tone: 'muted' },
         { text: '降速', tone: 'muted' },
-        { text: '共享', tone: 'muted' },
-        { text: 'GB 限额', tone: 'muted' },
       ],
     },
     {
@@ -80,8 +83,6 @@ const HOME_COMPARE = {
         { text: '¥6/天起', tone: 'primary' },
         { text: '¥15+', tone: 'muted' },
         { text: '¥25-60', tone: 'muted' },
-        { text: '¥15-35', tone: 'muted' },
-        { text: '美元', tone: 'muted' },
       ],
     },
     {
@@ -91,8 +92,6 @@ const HOME_COMPARE = {
         { text: '30s', tone: 'primary' },
         { text: '物流', tone: 'muted' },
         { text: '电话', tone: 'muted' },
-        { text: '取还', tone: 'muted' },
-        { text: '扫码', tone: 'muted' },
       ],
     },
     {
@@ -101,8 +100,6 @@ const HOME_COMPARE = {
       cells: [
         { text: '保留', tone: 'primary' },
         { text: '换卡', tone: 'muted' },
-        { text: '保留', tone: 'muted' },
-        { text: '保留', tone: 'muted' },
         { text: '保留', tone: 'muted' },
       ],
     },
@@ -113,8 +110,6 @@ const HOME_COMPARE = {
         { text: '中文 7×24', tone: 'primary' },
         { text: '商家', tone: 'muted' },
         { text: '运营商', tone: 'muted' },
-        { text: '租赁商', tone: 'muted' },
-        { text: '英文', tone: 'muted' },
       ],
     },
   ],
