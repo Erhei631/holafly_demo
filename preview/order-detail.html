@@ -32,13 +32,20 @@
     .nav-capsule__icon{width:16px;height:16px}
     .nav-capsule__sep{width:1px;height:13px;margin:0 8px}
     .detail-scroll{position:absolute;top:91px;left:0;right:0;bottom:0;overflow-y:auto;padding:0 20px calc(20px + env(safe-area-inset-bottom,var(--safe-area-bottom)))}
-    .detail-tip{display:flex;align-items:flex-start;gap:6px;padding:12px;background:var(--blue-100);border-radius:10px;margin-bottom:16px}
-    .detail-tip__icon{width:20px;height:20px;flex-shrink:0}
-    .detail-tip__text{flex:1;font-size:14px;line-height:20px}
+    .detail-tip{display:flex;align-items:flex-start;gap:6px;padding:12px;background:linear-gradient(140deg,#edf9fe 0%,#ecfff4 100%);border:1px solid #fff;border-radius:10px;margin-bottom:16px}
+    .detail-tip__icon{width:30px;height:30px;flex-shrink:0}
+    .detail-tip__text-wrap{flex:1;min-width:0}
+    .detail-tip__text{font-size:14px;line-height:20px}
+    .detail-tip__highlight{font-size:14px;line-height:20px;color:var(--rose-500)}
     .detail-stack{display:flex;flex-direction:column;gap:16px}
     .detail-order-card{background:#fff;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.05);overflow:hidden}
     .detail-order-card__head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--neutral-200)}
-    .detail-order-card__no{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--neutral-400)}
+    .detail-order-card__date{font-size:15px;color:var(--neutral-400);line-height:22px}
+    .detail-share-banner{display:flex;align-items:center;gap:12px;padding:8px 16px;border-radius:10px;background:linear-gradient(177.51deg,#f2fdeb 0%,#e0f4fd 100%);box-shadow:0 10px 40px rgba(0,0,0,.05)}
+    .detail-share-banner__left{flex:1;min-width:0;display:flex;align-items:center;gap:12px}
+    .detail-share-banner__coin{width:26px;height:26.5px;flex-shrink:0}
+    .detail-share-banner__text{flex:1;font-size:14px;line-height:20px}
+    .detail-share-banner__btn{margin:0;padding:2px 10px;flex-shrink:0;border:1px solid var(--neutral-200);border-radius:24px;background:linear-gradient(114.86deg,var(--rose-500) 20.26%,#e12b57 74.93%);font-size:14px;color:#fff;line-height:20px;cursor:pointer;font-family:inherit}
     .detail-order-card__body{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px}
     .detail-order-card__left{display:flex;align-items:center;gap:6px}
     .detail-order-card__flag{width:46px;height:46px;border-radius:50%;object-fit:cover}
@@ -67,16 +74,14 @@
     .detail-qr-panel__btn--primary{border:none;background:var(--rose-500);color:#fff}
     .detail-info-panel{padding:16px;background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.05)}
     .detail-info-panel__title{display:block;font-size:16px;font-weight:500;line-height:24px;margin-bottom:12px}
-    .detail-info-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 0}
-    .detail-info-row+.detail-info-row{border-top:1px solid var(--neutral-200)}
+    .detail-info-list{display:flex;flex-direction:column;gap:12px}
+    .detail-info-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .detail-info-row__label{font-size:15px;color:var(--neutral-600);line-height:22px}
     .detail-info-row__value{font-size:15px;line-height:22px}
     .detail-info-row__value--strong{font-weight:500}
     .detail-info-row__right{display:flex;align-items:center;gap:6px}
-    .detail-info-row__copy{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;padding:0}
-    .detail-info-row__copy img{width:16px;height:16px}
-    .detail-info-row--link{cursor:pointer}
-    .detail-info-row__arrow{width:16px;height:16px}
+    .detail-info-row__sub{font-size:15px;color:var(--neutral-600);line-height:22px}
+    .detail-info-row__invoice{padding:2px 10px;border:1px solid var(--neutral-200);border-radius:24px;font-size:14px;line-height:20px;cursor:pointer}
     .detail-support-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:0;padding:12px 24px;font-family:inherit;background:#fff;border:1px solid #e4e6ea;border-radius:10px;box-sizing:border-box;cursor:pointer;-webkit-tap-highlight-color:transparent}
     .detail-support-btn__icon{width:24px;height:24px;flex-shrink:0}
     .detail-support-btn__text{font-size:15px;font-weight:500;line-height:22px;color:#7b7c7e}
@@ -105,13 +110,17 @@
     </div>
     <div class="detail-scroll">
       <div class="detail-tip">
-        <img class="detail-tip__icon" src="images/orders/icon-wifi-tip.svg" alt="" />
-        <p class="detail-tip__text">降落后，请连接机场 Wi-Fi 进行安装激活。</p>
+        <img class="detail-tip__icon" src="images/orders/icon-network-tip.svg" alt="" />
+        <p class="detail-tip__text-wrap">
+          <span class="detail-tip__text">请在有网络的环境下完成安装激活。(</span>
+          <span class="detail-tip__highlight">中国大陆设备</span>
+          <span class="detail-tip__text">请到达目的地，连接网络后再进行安装激活)。</span>
+        </p>
       </div>
       <div class="detail-stack">
         <section class="detail-order-card">
           <div class="detail-order-card__head">
-            <span class="detail-order-card__no" id="order-no">HF20260520183829</span>
+            <span class="detail-order-card__date" id="order-date">2026-05-20</span>
           </div>
           <div class="detail-order-card__body">
             <div class="detail-order-card__left">
@@ -146,36 +155,39 @@
             </div>
           </div>
         </section>
+        <div class="detail-share-banner">
+          <div class="detail-share-banner__left">
+            <img class="detail-share-banner__coin" src="images/orders/holapoint.svg" alt="" />
+            <span class="detail-share-banner__text">分享好友，赚取更多 HolaCoins，好友享专属折扣。</span>
+          </div>
+          <button class="detail-share-banner__btn" type="button" id="share-btn">分享</button>
+        </div>
         <section class="detail-info-panel">
           <h2 class="detail-info-panel__title">订单信息</h2>
-          <div class="detail-info-row">
-            <span class="detail-info-row__label">实付款</span>
-            <span class="detail-info-row__value detail-info-row__value--strong" id="info-price">¥63.00</span>
-          </div>
-          <div class="detail-info-row">
-            <span class="detail-info-row__label">订单号</span>
-            <div class="detail-info-row__right">
-              <span class="detail-info-row__value" id="info-order-no">HF20260520183829</span>
-              <button class="detail-info-row__copy" type="button" id="copy-btn" aria-label="复制订单号">
-                <img src="images/orders/icon-copy.svg" alt="" />
-              </button>
+          <div class="detail-info-list">
+            <div class="detail-info-row">
+              <span class="detail-info-row__label">实付款</span>
+              <div class="detail-info-row__right">
+                <span class="detail-info-row__sub">合计</span>
+                <span class="detail-info-row__value detail-info-row__value--strong" id="info-price">¥63.00</span>
+              </div>
             </div>
-          </div>
-          <div class="detail-info-row">
-            <span class="detail-info-row__label">下单时间</span>
-            <span class="detail-info-row__value" id="info-created">2026-05-20 18:38</span>
-          </div>
-          <div class="detail-info-row">
-            <span class="detail-info-row__label">支付时间</span>
-            <span class="detail-info-row__value" id="info-paid">2026-05-20 18:38</span>
-          </div>
-          <div class="detail-info-row">
-            <span class="detail-info-row__label">支付方式</span>
-            <span class="detail-info-row__value">微信支付</span>
-          </div>
-          <div class="detail-info-row detail-info-row--link" id="invoice-row">
-            <span class="detail-info-row__label">申请开票</span>
-            <img class="detail-info-row__arrow" src="images/detail/icon-arrow-right.svg" alt="" />
+            <div class="detail-info-row">
+              <span class="detail-info-row__label">下单时间</span>
+              <span class="detail-info-row__value" id="info-created">2026-05-20 18:38</span>
+            </div>
+            <div class="detail-info-row">
+              <span class="detail-info-row__label">支付方式</span>
+              <span class="detail-info-row__value">微信支付</span>
+            </div>
+            <div class="detail-info-row">
+              <span class="detail-info-row__label">支付时间</span>
+              <span class="detail-info-row__value" id="info-paid">2026-05-20 18:38</span>
+            </div>
+            <div class="detail-info-row">
+              <span class="detail-info-row__label">发票信息</span>
+              <span class="detail-info-row__invoice" id="invoice-btn" role="button" tabindex="0">申请开票</span>
+            </div>
           </div>
         </section>
         <button class="detail-support-btn" type="button" id="support-btn" aria-label="联系客服">
@@ -244,8 +256,7 @@
       toastTimer = setTimeout(() => toast.classList.remove('is-show'), 1800);
     }
 
-    document.getElementById('order-no').textContent = order.orderNo;
-    document.getElementById('info-order-no').textContent = order.orderNo;
+    document.getElementById('order-date').textContent = order.createdAt.slice(0, 10);
     document.getElementById('order-name').textContent = order.name;
     document.getElementById('order-price').textContent = order.price;
     document.getElementById('info-price').textContent = order.price;
@@ -314,13 +325,8 @@
       history.length > 1 ? history.back() : (location.href = 'orders.html');
     });
 
-    document.getElementById('copy-btn').addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(order.orderNo);
-        showToast('已复制');
-      } catch {
-        showToast('复制失败');
-      }
+    document.getElementById('share-btn').addEventListener('click', () => {
+      showToast('分享（待开发）');
     });
 
     async function saveQrImage() {
@@ -352,7 +358,7 @@
       showToast('安装教程（待开发）');
     });
 
-    document.getElementById('invoice-row').addEventListener('click', () => {
+    document.getElementById('invoice-btn').addEventListener('click', () => {
       showToast('申请开票（待开发）');
     });
 

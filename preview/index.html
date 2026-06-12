@@ -776,7 +776,7 @@
     .why-card__body {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 12px;
       margin-top: 12px;
     }
 
@@ -828,27 +828,39 @@
       line-height: 18px;
     }
 
-    .why-esim {
+    .esim-card {
+      padding: 16px;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .esim-card__section {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .why-esim__head {
+    .esim-card__head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 4px;
     }
 
-    .why-esim__title {
+    .esim-card__title {
       font-size: 16px;
       font-weight: 500;
       line-height: 24px;
       color: var(--neutral-900);
+      flex-shrink: 0;
     }
 
-    .why-esim__link {
+    .esim-card__link {
       display: flex;
       align-items: center;
       gap: 4px;
@@ -861,20 +873,119 @@
       cursor: pointer;
     }
 
-    .why-esim__arrow {
+    .esim-card__arrow {
       width: 16px;
       height: 16px;
       flex-shrink: 0;
     }
 
-    .why-esim__desc {
+    .esim-card__desc {
       font-size: 14px;
       line-height: 20px;
       color: #56575a;
     }
 
-    .why-esim__emph {
+    .esim-card__emph {
       color: var(--rose-500);
+    }
+
+    .esim-card__divider {
+      height: 1px;
+      background: var(--neutral-200);
+    }
+
+    .usage-steps {
+      display: flex;
+      align-items: flex-start;
+      padding: 8px 0;
+    }
+
+    .usage-steps__connector {
+      flex: 1;
+      align-self: flex-start;
+      min-width: 8px;
+      height: 0;
+      margin-top: 22px;
+      border-top: 1px dashed var(--neutral-300);
+    }
+
+    .usage-step {
+      width: 74px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .usage-step__icon-wrap {
+      padding: 10px;
+      background: var(--rose-50);
+      border-radius: 16px;
+    }
+
+    .usage-step__icon {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    .usage-step__label {
+      width: 74px;
+      min-height: 32px;
+      font-size: 12px;
+      color: #56575a;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .esim-compat-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 12px 20px 8px;
+      border-radius: 10px;
+      background: linear-gradient(139deg, var(--blue-50) 11.21%, var(--green-50) 89.26%);
+      cursor: pointer;
+    }
+
+    .esim-compat-card__left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .esim-compat-card__icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+
+    .esim-compat-card__text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .esim-compat-card__name {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 22px;
+      color: var(--neutral-900);
+    }
+
+    .esim-compat-card__desc {
+      font-size: 12px;
+      line-height: 18px;
+      color: #56575a;
+    }
+
+    .esim-compat-card__arrow {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
     }
 
     .compare-wrap {
@@ -996,68 +1107,6 @@
       object-fit: contain;
     }
 
-    .why-compat {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .why-compat__title {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
-      color: var(--neutral-900);
-    }
-
-    .why-compat__card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 18px 12px 20px 8px;
-      border-radius: 10px;
-      background: linear-gradient(139deg, var(--blue-50) 11.21%, var(--green-50) 89.26%);
-      cursor: pointer;
-    }
-
-    .why-compat__left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .why-compat__icon {
-      width: 40px;
-      height: 40px;
-      flex-shrink: 0;
-    }
-
-    .why-compat__text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .why-compat__name {
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 22px;
-      color: var(--neutral-900);
-    }
-
-    .why-compat__desc {
-      font-size: 12px;
-      line-height: 18px;
-      color: #56575a;
-    }
-
-    .why-compat__arrow {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
-
     .compare-head__title {
       font-size: 15px;
       font-weight: 500;
@@ -1086,6 +1135,11 @@
       font-weight: 500;
       line-height: 20px;
       color: #e6485c;
+    }
+
+    .compare-col--holafly .compare-val--primary {
+      font-size: 13px;
+      line-height: 19px;
     }
 
     .compare-val--muted {
@@ -1254,10 +1308,28 @@
     .compat-model__name { font-size: 15px; font-weight: 500; line-height: 22px; }
     .compat-model__badge { display: flex; align-items: center; gap: 4px; padding: 4px 6px; background: var(--green-100); border-radius: 4px; font-size: 12px; line-height: 16px; color: #179b50; flex-shrink: 0; }
     .compat-model__badge img { width: 14px; height: 14px; }
-    .compat-dial { display: none; flex-direction: column; align-items: center; gap: 8px; padding: 24px 12px; background: var(--neutral-100); border-radius: 16px; text-align: center; }
+    .compat-dial { display: none; flex-direction: column; gap: 16px; }
     .compat-dial.is-active { display: flex; }
-    .compat-dial__code { font-size: 24px; font-weight: 600; letter-spacing: 1px; }
-    .compat-dial__hint { font-size: 14px; color: var(--neutral-600); line-height: 1.43; }
+    .compat-dial__intro { display: flex; flex-direction: column; gap: 12px; padding: 12px; background: var(--neutral-100); border-radius: 10px; }
+    .compat-dial__intro-title { font-size: 16px; font-weight: 500; line-height: 24px; color: var(--neutral-900); }
+    .compat-dial__intro-text { font-size: 15px; line-height: 22px; color: var(--neutral-500); }
+    .compat-dial__code-inline { padding: 0 4px; border-radius: 4px; background: var(--rose-100); color: #e5174a; font-weight: 500; }
+    .compat-dial__phones { width: 100%; display: block; }
+    .compat-dial__steps { overflow: hidden; border: 1px solid var(--neutral-200); border-radius: 14px; background: #fff; }
+    .compat-dial__step { display: flex; align-items: center; gap: 12px; padding: 12px; border-bottom: 1px solid var(--neutral-200); }
+    .compat-dial__step:last-child { border-bottom: none; }
+    .compat-dial__step-num { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--rose-500); color: #fff; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .compat-dial__step-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .compat-dial__step-title { font-size: 15px; font-weight: 500; line-height: 22px; color: var(--neutral-900); }
+    .compat-dial__step-desc { font-size: 12px; line-height: 18px; color: var(--neutral-400); }
+    .compat-dial__results { display: flex; gap: 8px; }
+    .compat-dial__result { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 13px 11px; border-radius: 12px; border: 1px solid; cursor: pointer; font-family: inherit; background: transparent; }
+    .compat-dial__result--success { background: rgba(30,158,106,.1); border-color: #179b50; }
+    .compat-dial__result--neutral { background: #fff; border-color: #d7dae0; }
+    .compat-dial__result-title { font-size: 14px; font-weight: 500; line-height: 20px; text-align: center; }
+    .compat-dial__result-title--success { color: #179b50; }
+    .compat-dial__result-title--neutral { color: var(--neutral-500); }
+    .compat-dial__result-desc { font-size: 12px; line-height: 18px; color: var(--neutral-500); text-align: center; }
     .compat-model-panel { display: flex; flex-direction: column; gap: 16px; }
     .compat-model-panel.is-hidden { display: none; }
 
@@ -1495,7 +1567,7 @@
         <section class="why-card">
           <div class="why-card__hero">
             <img class="why-card__brand" src="images/home/why-brand-logo.svg" alt="Holafly" />
-            <p class="why-card__tagline">出境旅行专属 eSIM，<span class="why-card__tagline-em">走到哪，连到哪。</span></p>
+            <p class="why-card__tagline">旅途充满未知，连接<span class="why-card__tagline-em">始终可靠</span></p>
           </div>
           <div class="why-card__body">
             <div class="why-features">
@@ -1528,75 +1600,106 @@
               </div>
             </div>
 
-            <div class="why-esim">
-              <div class="why-esim__head">
-                <span class="why-esim__title">什么是 eSIM？</span>
-                <button class="why-esim__link" type="button" id="open-esim-link">
-                  <span>查看完整说明</span>
-                  <img class="why-esim__arrow" src="images/home/icon-arrow-right-dest.svg" alt="" />
-                </button>
-              </div>
-              <p class="why-esim__desc">eSIM 是<span class="why-esim__emph">内嵌在手机里的数字 SIM 卡</span>。不用换卡、不用等快递，手机直接下载安装，<span class="why-esim__emph">30 秒激活</span>。</p>
-              <div class="compare-wrap">
-                <div class="compare-table">
-                  <div class="compare-highlight" aria-hidden="true"></div>
-                  <div class="compare-row compare-row--head">
-                    <div class="compare-cell compare-cell--label compare-cell--head">权益</div>
-                    <div class="compare-cell compare-col compare-col--holafly">
-                      <div class="compare-head">
-                        <img class="compare-head__logo" src="images/home/compare-holafly-text.svg" alt="Holafly" />
-                        <span class="compare-head__sub">eSIM</span>
-                      </div>
+            <div class="compare-wrap">
+              <div class="compare-table">
+                <div class="compare-highlight" aria-hidden="true"></div>
+                <div class="compare-row compare-row--head">
+                  <div class="compare-cell compare-cell--label compare-cell--head">权益</div>
+                  <div class="compare-cell compare-col compare-col--holafly">
+                    <div class="compare-head">
+                      <img class="compare-head__logo" src="images/home/compare-holafly-text.svg" alt="Holafly" />
+                      <span class="compare-head__sub">eSIM</span>
                     </div>
-                    <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">实体卡</span><span class="compare-head__sub">SIM</span></div></div>
-                    <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">漫游</span><span class="compare-head__sub">运营商</span></div></div>
                   </div>
-                  <div class="compare-row">
-                    <div class="compare-cell compare-cell--label">流量</div>
-                    <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">无限不限速</span></div>
-                    <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">GB 限额</span></div>
-                    <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">降速</span></div>
-                  </div>
-                  <div class="compare-row compare-row--alt">
-                    <div class="compare-cell compare-cell--label">价格</div>
-                    <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">¥6/天起</span></div>
-                    <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">¥15+</span></div>
-                    <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">¥25-60</span></div>
-                  </div>
-                  <div class="compare-row">
-                    <div class="compare-cell compare-cell--label">激活</div>
-                    <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">30s</span></div>
-                    <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">物流</span></div>
-                    <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">电话</span></div>
-                  </div>
-                  <div class="compare-row compare-row--alt">
-                    <div class="compare-cell compare-cell--label">国内号</div>
-                    <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">保留</span></div>
-                    <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">换卡</span></div>
-                    <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">保留</span></div>
-                  </div>
-                  <div class="compare-row">
-                    <div class="compare-cell compare-cell--label">客服</div>
-                    <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">中文 7×24</span></div>
-                    <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">商家</span></div>
-                    <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">运营商</span></div>
-                  </div>
+                  <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">实体卡</span><span class="compare-head__sub">SIM</span></div></div>
+                  <div class="compare-cell compare-col"><div class="compare-head"><span class="compare-head__title">漫游</span><span class="compare-head__sub">运营商</span></div></div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-cell compare-cell--label">流量</div>
+                  <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">无限不限速</span></div>
+                  <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">GB 限额</span></div>
+                  <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">降速</span></div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-cell compare-cell--label">物流</div>
+                  <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">30s</span></div>
+                  <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">物流</span></div>
+                  <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">电话</span></div>
+                </div>
+                <div class="compare-row compare-row--alt">
+                  <div class="compare-cell compare-cell--label">国内号</div>
+                  <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">保留</span></div>
+                  <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">换卡</span></div>
+                  <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">保留</span></div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-cell compare-cell--label">客服</div>
+                  <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">中文 7×24</span></div>
+                  <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">商家</span></div>
+                  <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">运营商</span></div>
+                </div>
+                <div class="compare-row compare-row--alt">
+                  <div class="compare-cell compare-cell--label">价格</div>
+                  <div class="compare-cell compare-col compare-col--holafly"><span class="compare-val compare-val--primary">无附加费用</span></div>
+                  <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">¥15+</span></div>
+                  <div class="compare-cell compare-col"><span class="compare-val compare-val--muted">¥25-60</span></div>
                 </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            <div class="why-compat">
-              <span class="why-compat__title">我的设备支持吗？</span>
-              <div class="why-compat__card" id="open-compat-card" role="button" tabindex="0">
-                <div class="why-compat__left">
-                  <img class="why-compat__icon" src="images/home/compat-check-icon.svg" alt="" />
-                  <div class="why-compat__text">
-                    <span class="why-compat__name">一键检测兼容性</span>
-                    <span class="why-compat__desc">支持大陆版与国际版机型查询</span>
-                  </div>
+        <section class="esim-card">
+          <div class="esim-card__section">
+            <div class="esim-card__head">
+              <span class="esim-card__title">什么是eSIM？</span>
+              <button class="esim-card__link" type="button" id="open-esim-link">
+                <span>查看完整说明</span>
+                <img class="esim-card__arrow" src="images/home/icon-arrow-right-dest.svg" alt="" />
+              </button>
+            </div>
+            <p class="esim-card__desc">eSIM是<span class="esim-card__emph">内嵌在手机里的数字SIM 卡</span>。不用换卡、不用等快递，手机直接下载安装，<span class="esim-card__emph">30秒激活</span>。</p>
+          </div>
+          <div class="esim-card__divider"></div>
+          <div class="esim-card__section">
+            <div class="esim-card__head">
+              <span class="esim-card__title">使用方法</span>
+              <button class="esim-card__link" type="button" id="open-usage-link">
+                <span>查看完整教程</span>
+                <img class="esim-card__arrow" src="images/home/icon-arrow-right-dest.svg" alt="" />
+              </button>
+            </div>
+            <div class="usage-steps">
+              <div class="usage-step">
+                <div class="usage-step__icon-wrap">
+                  <img class="usage-step__icon" src="images/detail/usage-pay.svg" alt="" />
                 </div>
-                <img class="why-compat__arrow" src="images/home/icon-arrow-right-dest.svg" alt="" />
+                <span class="usage-step__label">微信购买一键支付</span>
               </div>
+              <div class="usage-steps__connector"></div>
+              <div class="usage-step">
+                <div class="usage-step__icon-wrap">
+                  <img class="usage-step__icon" src="images/detail/usage-wifi.svg" alt="" />
+                </div>
+                <span class="usage-step__label">落地连机场Wi-Fi</span>
+              </div>
+              <div class="usage-steps__connector"></div>
+              <div class="usage-step">
+                <div class="usage-step__icon-wrap">
+                  <img class="usage-step__icon" src="images/detail/usage-qr.svg" alt="" />
+                </div>
+                <span class="usage-step__label">订单页面扫码安装设置</span>
+              </div>
+            </div>
+            <div class="esim-compat-card" id="open-compat-card" role="button" tabindex="0">
+              <div class="esim-compat-card__left">
+                <img class="esim-compat-card__icon" src="images/home/compat-check-icon.svg" alt="" />
+                <div class="esim-compat-card__text">
+                  <span class="esim-compat-card__name">我的设备支持吗？</span>
+                  <span class="esim-compat-card__desc">支持大陆版与国际版机型查询</span>
+                </div>
+              </div>
+              <img class="esim-compat-card__arrow" src="images/home/icon-arrow-right-dest.svg" alt="" />
             </div>
           </div>
         </section>
@@ -1707,8 +1810,13 @@
             </div>
           </div>
           <div class="compat-dial" id="compat-dial-panel">
-            <span class="compat-dial__code">*#06#</span>
-            <span class="compat-dial__hint">在拨号界面输入 *#06#，若出现 EID 号码则通常支持 eSIM。不同版本机型结果可能不同，建议结合机型列表核对。</span>
+            <div class="compat-dial__intro">
+              <p class="compat-dial__intro-title">拨号查看 EID — 最准确的检测方法</p>
+              <p class="compat-dial__intro-text">在手机拨号界面输入 <span class="compat-dial__code-inline">*#06#</span> 如果屏幕列表中出现 EID 串号（约 32 位数字），则说明您的手机硬件支持 eSIM。</p>
+            </div>
+            <img class="compat-dial__phones" src="images/compat/dial-phones.png" alt="" />
+            <div class="compat-dial__steps" id="compat-dial-steps"></div>
+            <div class="compat-dial__results" id="compat-dial-results"></div>
           </div>
       </div>
     </div>
@@ -1826,6 +1934,15 @@
         { id: 'global', title: '海外/港版', subtitle: '国际版·全球版', icon: 'images/compat/flag-global.png' },
       ],
       methods: [{ id: 'model', label: '按机型' }, { id: 'dial', label: '拨号检查' }],
+      dialSteps: [
+        { title: '打开手机「拨号」应用', desc: 'iPhone 为「电话」，安卓为「拨号」 / 「电话」' },
+        { title: '输入 *#06#', desc: '不需点拨打，输完即会自动弹出设备信息' },
+        { title: '查看是否出现 EID', desc: '出现则支持；只有 IMEI / MEID 则不支持' },
+      ],
+      dialResults: [
+        { id: 'eid', title: '✓ 看到 EID', desc: '支持 eSIM', type: 'success' },
+        { id: 'imei', title: '✕ 只有 IMEI / MEID', desc: '未配备 eSIM 硬件', type: 'neutral' },
+      ],
       models: [
         { id: 'iphone-17e', name: 'iPhone 17e', supported: true },
         { id: 'iphone-air', name: 'iPhone Air', supported: true },
@@ -1866,6 +1983,24 @@
       document.getElementById('compat-dial-panel').classList.toggle('is-active', compatMethod === 'dial');
     }
 
+    function mountCompatDial() {
+      document.getElementById('compat-dial-steps').innerHTML = COMPAT.dialSteps.map((step, i) => `
+        <div class="compat-dial__step">
+          <span class="compat-dial__step-num">${i + 1}</span>
+          <div class="compat-dial__step-body">
+            <span class="compat-dial__step-title">${step.title}</span>
+            <span class="compat-dial__step-desc">${step.desc}</span>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('compat-dial-results').innerHTML = COMPAT.dialResults.map((item) => `
+        <button type="button" class="compat-dial__result compat-dial__result--${item.type}" data-dial-result="${item.id}">
+          <span class="compat-dial__result-title compat-dial__result-title--${item.type}">${item.title}</span>
+          <span class="compat-dial__result-desc">${item.desc}</span>
+        </button>
+      `).join('');
+    }
+
     function mountCompatSheet() {
       document.getElementById('compat-version-row').innerHTML = COMPAT.versions.map((v) => `
         <button type="button" class="compat-version compat-version--${v.id}" data-version="${v.id}">
@@ -1879,6 +2014,7 @@
       document.getElementById('compat-segment').innerHTML = COMPAT.methods.map((m) => `
         <button type="button" class="compat-segment__item" data-method="${m.id}">${m.label}</button>
       `).join('');
+      mountCompatDial();
       updateCompatSheetUI();
     }
 
@@ -1895,6 +2031,7 @@
 
     mountCompatSheet();
     document.getElementById('open-esim-link').addEventListener('click', () => { location.href = 'esim.html'; });
+    document.getElementById('open-usage-link').addEventListener('click', () => { alert('安装教程（待开发）'); });
     document.getElementById('open-compat-card').addEventListener('click', openCompatSheet);
     document.getElementById('compat-sheet-mask').addEventListener('click', closeCompatSheet);
     document.getElementById('compat-sheet-close').addEventListener('click', closeCompatSheet);
@@ -1913,6 +2050,13 @@
     document.getElementById('compat-search').addEventListener('input', (e) => {
       compatSearch = e.target.value;
       updateCompatModelsList();
+    });
+    document.getElementById('compat-dial-results').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-dial-result]');
+      if (!btn) return;
+      const message = btn.dataset.dialResult === 'eid' ? '您的设备支持 eSIM' : '您的设备可能不支持 eSIM';
+      alert(message);
+      closeCompatSheet();
     });
   </script>
 </body>

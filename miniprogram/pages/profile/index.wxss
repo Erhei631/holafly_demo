@@ -1,6 +1,6 @@
 .profile-page {
   position: relative;
-  background: var(--color-bg-base);
+  background: linear-gradient(180deg, var(--rose-50) 6.5%, var(--color-bg-base) 32%);
 }
 
 .profile-map {
@@ -15,6 +15,19 @@
 .profile-scroll {
   position: relative;
   z-index: 1;
+  height: 100%;
+}
+
+.profile-body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding-bottom: 64rpx;
+}
+
+.profile-main {
+  flex: 1;
 }
 
 .profile-user {
@@ -28,7 +41,7 @@
 .profile-user__avatar {
   width: 136rpx;
   height: 136rpx;
-  border-radius: 24rpx;
+  border-radius: 50%;
   flex-shrink: 0;
   display: block;
 }
@@ -51,7 +64,6 @@
   min-height: 88rpx;
   padding: 24rpx 64rpx;
   box-sizing: border-box;
-  background: var(--color-bg-base);
 }
 
 .profile-menu__left {
@@ -87,4 +99,75 @@
   width: 32rpx;
   height: 32rpx;
   flex-shrink: 0;
+}
+
+.profile-share-banner {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  margin: 48rpx 32rpx 0;
+  padding: 24rpx 32rpx;
+  border-radius: 20rpx;
+  background: linear-gradient(177.32deg, #f2fdeb 0%, #e0f4fd 100%);
+  box-shadow: 0 20rpx 80rpx rgba(0, 0, 0, 0.05);
+}
+
+.profile-share-banner__left {
+  flex: 1;
+  min-width: 0;
+  margin-right: 40rpx;
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.profile-share-banner__coin {
+  width: 52rpx;
+  height: 53rpx;
+  flex-shrink: 0;
+}
+
+.profile-share-banner__text {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--color-text-primary);
+  line-height: 40rpx;
+}
+
+.profile-share-banner__btn {
+  margin: 0;
+  padding: 4rpx 20rpx;
+  flex-shrink: 0;
+  border: 2rpx solid var(--color-border-base);
+  border-radius: 48rpx;
+  background: linear-gradient(114.86deg, var(--color-primary) 20.26%, #e12b57 74.93%);
+  font-size: 28rpx;
+  color: var(--color-text-on-primary);
+  line-height: 40rpx;
+}
+
+.profile-share-banner__btn::after {
+  border: none;
+}
+
+.profile-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 64rpx);
+  margin: 0 32rpx;
+  margin-top: auto;
+  flex-shrink: 0;
+  padding: 24rpx 48rpx;
+  border: 2rpx solid var(--color-border-base);
+  border-radius: 20rpx;
+  background: #fff;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  line-height: 44rpx;
+}
+
+.profile-logout::after {
+  border: none;
 }

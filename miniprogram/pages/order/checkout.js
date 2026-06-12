@@ -1,25 +1,29 @@
-const { getJapanPlan } = require('../../data/plan-detail');
+const { getJapanPlan, calcPricing } = require('../../data/plan-detail');
 const { formatYuan } = require('../../utils/trip');
 const { getSafeAreaBottom, getStatusBarHeight } = require('../../utils/safe-area');
 const { payAndCreateOrder } = require('../../utils/payment');
 
 const MAX_QUANTITY = 9;
+const PROMO_DISCOUNT_RATE = 0.2;
 
 Page({
   data: {
     statusBarHeight: 20,
     safeBottom: 0,
-    productTitle: '日本eSIM',
+    productTitle: '日本 eSIM·无限流量',
     productFlag: '',
     days: 7,
     quantity: 1,
-    maxQuantity: MAX_QUANTITY,
+    dailyAvgLabel: '0',
     originalTotalLabel: '¥0',
+    discountLabel: '暂无',
     totalPrice: 0,
     totalPriceLabel: '¥0',
     payLabel: '立即支付 ¥0',
-    showPromoDrawer: false,
     promoCode: '',
+    promoApplied: false,
+    promoDiscountLabel: '',
+    agreed: false,
   },
 
   onLoad(options) {
@@ -39,17 +43,21 @@ Page({
   },
 
   syncPricing() {
-    const { days, quantity } = this.data;
+    const { days, quantity, promoApplied } = this.data;
     const plan = this.plan;
-    const unitTotal = plan.prices[days]
-      || Math.round((plan.prices[7] / 7) * days);
-    const totalPrice = unitTotal * quantity;
-    const originalTotal = totalPrice;
-    const totalPriceLabel = formatYuan(totalPrice);
+    const pricing = calcPricing(plan.prices, days, quantity, plan.originalDaily);
+    const promoDiscount = promoApplied
+      ? Math.round(pricing.total * PROMO_DISCOUNT_RATE)
+      : 0;
+    const finalTotal = Math.max(0, pricing.total - promoDiscount);
+    const totalPriceLabel = formatYuan(finalTotal);
 
     this.setData({
-      originalTotalLabel: formatYuan(originalTotal),
-      totalPrice,
+      dailyAvgLabel: pricing.dailyAvgLabel,
+      originalTotalLabel: formatYuan(pricing.total),
+      discountLabel: promoApplied ? `-${formatYuan(promoDiscount)}` : '暂无',
+      promoDiscountLabel: promoApplied ? `-${formatYuan(promoDiscount)}` : '',
+      totalPrice: finalTotal,
       totalPriceLabel,
       payLabel: `立即支付 ${totalPriceLabel}`,
     });
@@ -63,18 +71,8 @@ Page({
     });
   },
 
-  noop() {},
-
-  onPromoTap() {
-    this.setData({ showPromoDrawer: true });
-  },
-
-  closePromoDrawer() {
-    this.setData({ showPromoDrawer: false });
-  },
-
   onPromoInput(e) {
-    this.setData({ promoCode: e.detail.value });
+    this.setData({ promoCode: e.detail.value, promoApplied: false }, () => this.syncPricing());
   },
 
   onApplyPromo() {
@@ -83,11 +81,22 @@ Page({
       wx.showToast({ title: '请输入折扣码', icon: 'none' });
       return;
     }
-    this.setData({ showPromoDrawer: false });
-    wx.showToast({ title: '折扣码已提交', icon: 'none' });
+    this.setData({ promoApplied: true }, () => this.syncPricing());
+  },
+
+  onRemovePromo() {
+    this.setData({ promoApplied: false, promoCode: '' }, () => this.syncPricing());
+  },
+
+  onToggleAgree() {
+    this.setData({ agreed: !this.data.agreed });
   },
 
   onConfirmPay() {
+    if (!this.data.agreed) {
+      wx.showToast({ title: '请先阅读并同意协议', icon: 'none' });
+      return;
+    }
     if (this.paying) return;
     this.paying = true;
 

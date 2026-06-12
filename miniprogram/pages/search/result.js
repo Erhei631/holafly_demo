@@ -4,7 +4,9 @@ const {
   VERSION_OPTIONS,
   METHOD_OPTIONS,
   POPULAR_MODELS,
-  DIAL_HINT,
+  DIAL_INTRO_TITLE,
+  DIAL_STEPS,
+  DIAL_RESULTS,
   DEVICE_INFO,
 } = require('../../data/compat-check');
 const { getSafeAreaBottom, getStatusBarHeight } = require('../../utils/safe-area');
@@ -78,7 +80,9 @@ Page({
     compatVersions: VERSION_OPTIONS,
     compatMethods: METHOD_OPTIONS,
     compatModels: POPULAR_MODELS,
-    compatDialHint: DIAL_HINT,
+    compatDialIntroTitle: DIAL_INTRO_TITLE,
+    compatDialSteps: DIAL_STEPS,
+    compatDialResults: DIAL_RESULTS,
     compatDevice: DEVICE_INFO,
     compatVersion: 'global',
     compatMethod: 'model',
@@ -361,6 +365,13 @@ Page({
       : POPULAR_MODELS;
 
     this.setData({ compatSearch, filteredCompatModels });
+  },
+
+  onCompatDialResultTap(e) {
+    const { result } = e.currentTarget.dataset;
+    const message = result === 'eid' ? '您的设备支持 eSIM' : '您的设备可能不支持 eSIM';
+    wx.showToast({ title: message, icon: 'none' });
+    this.setData({ showCompatSheet: false });
   },
 
   onReviewsAllTap() {

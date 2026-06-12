@@ -33,22 +33,25 @@
           bindtap="onOrderDetail"
         >
           <view class="order-card__head">
-            <view class="order-card__head-left">
-              <text class="order-card__dest">{{item.destination}}</text>
-              <text class="order-card__meta">{{item.dateRange}} · {{item.days}} 天</text>
-            </view>
+            <text class="order-card__time">{{item.createdAt}}</text>
             <image class="order-card__arrow" src="/images/orders/icon-chevron-right.svg" mode="aspectFit" />
+          </view>
+
+          <view class="order-card__body">
+            <view class="order-card__left">
+              <image class="order-card__flag" src="{{item.flag}}" mode="aspectFill" />
+              <text class="order-card__name">{{item.destination}}eSIM·{{item.days}}天</text>
+            </view>
+            <view class="order-card__price-wrap">
+              <text class="order-card__price">{{item.totalPriceLabel}}</text>
+              <text class="order-card__qty">共 {{item.quantity}} 张</text>
+            </view>
           </view>
 
           <view class="order-card__esim">
             <text class="order-card__esim-label">eSIM 信息</text>
             <text class="order-card__esim-plan">{{item.esim.planLabel}}</text>
             <text class="order-card__esim-iccid">ICCID {{item.esim.iccid}}</text>
-          </view>
-
-          <view class="order-card__foot">
-            <text class="order-card__price">{{item.totalPriceLabel}}</text>
-            <text class="order-card__no">订单号 {{item.orderNo}}</text>
           </view>
 
           <view class="order-card__actions" catchtap="stopBubble">

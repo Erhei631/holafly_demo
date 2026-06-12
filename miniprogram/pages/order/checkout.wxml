@@ -18,24 +18,31 @@
     scroll-y
     enhanced
     show-scrollbar="{{false}}"
-    style="padding-bottom: calc(160rpx + {{safeBottom}}px);"
+    style="padding-bottom: calc(220rpx + {{safeBottom}}px);"
   >
     <view class="checkout-stack">
       <view class="checkout-panel">
         <text class="checkout-panel__title">订单摘要</text>
         <view class="checkout-summary">
           <view class="checkout-product">
-            <image class="checkout-product__flag" src="{{productFlag}}" mode="aspectFill" />
-            <text class="checkout-product__name">{{productTitle}}</text>
+            <view class="checkout-product__left">
+              <image class="checkout-product__flag" src="{{productFlag}}" mode="aspectFill" />
+              <text class="checkout-product__name">{{productTitle}}</text>
+            </view>
+            <view class="checkout-product__price">
+              <view class="checkout-product__price-core">
+                <text class="checkout-product__price-symbol">¥</text>
+                <text class="checkout-product__price-amount">{{dailyAvgLabel}}</text>
+              </view>
+              <text class="checkout-product__price-unit">/天</text>
+            </view>
           </view>
           <view class="checkout-row">
             <view class="checkout-row__left">
               <image class="checkout-row__icon" src="/images/detail/icon-calendar.svg" mode="aspectFit" />
               <text class="checkout-row__label">使用天数</text>
             </view>
-            <view class="checkout-row__right">
-              <text class="checkout-row__value">{{days}}天</text>
-            </view>
+            <text class="checkout-row__value">{{days}}天</text>
           </view>
           <view class="checkout-row">
             <view class="checkout-row__left">
@@ -47,6 +54,41 @@
         </view>
       </view>
 
+      <view class="checkout-promo {{promoApplied ? 'checkout-promo--applied' : ''}}">
+        <block wx:if="{{!promoApplied}}">
+          <view class="checkout-promo__copy">
+            <text class="checkout-promo__title">输入折扣码</text>
+            <text class="checkout-promo__desc">填写后将在订单中自动抵扣</text>
+          </view>
+          <view class="checkout-promo__field">
+            <input
+              class="checkout-promo__input"
+              type="text"
+              placeholder="请输入折扣码"
+              placeholder-class="checkout-promo__placeholder"
+              value="{{promoCode}}"
+              bindinput="onPromoInput"
+              confirm-type="done"
+              bindconfirm="onApplyPromo"
+            />
+            <button class="checkout-promo__apply" bindtap="onApplyPromo" aria-label="使用折扣码">
+              <image class="checkout-promo__apply-icon" src="/images/checkout/promo-apply-arrow.svg" mode="aspectFit" />
+            </button>
+          </view>
+        </block>
+        <view wx:else class="checkout-promo-success">
+          <text class="checkout-promo-success__title">折扣码使用成功</text>
+          <view class="checkout-promo-success__actions">
+            <view class="checkout-promo-success__badge">
+              <text class="checkout-promo-success__badge-text">{{promoDiscountLabel}}</text>
+            </view>
+            <view class="checkout-promo-success__close" bindtap="onRemovePromo" aria-label="移除折扣码">
+              <image class="checkout-promo-success__close-icon" src="/images/checkout/promo-close-circle.svg" mode="aspectFit" />
+            </view>
+          </view>
+        </view>
+      </view>
+
       <view class="checkout-panel">
         <text class="checkout-panel__title">价格明细</text>
         <view class="checkout-price-list">
@@ -54,57 +96,47 @@
             <text class="checkout-price-row__label">商品总价</text>
             <text class="checkout-price-row__value">{{originalTotalLabel}}</text>
           </view>
-          <view class="checkout-price-row checkout-price-row--link" bindtap="onPromoTap">
-            <text class="checkout-price-row__label">折扣码</text>
-            <view class="checkout-price-row__right">
-              <image class="checkout-row__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
-            </view>
+          <view class="checkout-price-row">
+            <text class="checkout-price-row__label">折扣码优惠</text>
+            <text class="checkout-price-row__placeholder">{{discountLabel}}</text>
           </view>
         </view>
-        <view class="checkout-divider"></view>
+        <view class="checkout-divider" />
         <view class="checkout-price-row checkout-price-row--total">
           <text class="checkout-price-row__label checkout-price-row__label--strong">合计</text>
           <text class="checkout-price-row__total">{{totalPriceLabel}}</text>
         </view>
       </view>
+
+      <view class="checkout-trust">
+        <view class="checkout-trust__item">
+          <image class="checkout-trust__icon" src="/images/checkout/trust-payment.svg" mode="aspectFit" />
+          <text class="checkout-trust__text">支付保障</text>
+        </view>
+        <view class="checkout-trust__item">
+          <image class="checkout-trust__icon" src="/images/checkout/trust-ssl.svg" mode="aspectFit" />
+          <text class="checkout-trust__text">SSL 加密</text>
+        </view>
+        <view class="checkout-trust__item">
+          <image class="checkout-trust__icon" src="/images/checkout/trust-refund.svg" mode="aspectFit" />
+          <text class="checkout-trust__text">未激活可退</text>
+        </view>
+      </view>
     </view>
   </scroll-view>
 
-  <view class="checkout-footer" style="padding-bottom: calc(32rpx + {{safeBottom}}px);">
+  <view class="checkout-footer" style="padding-bottom: calc(16rpx + {{safeBottom}}px);">
     <button class="checkout-footer__pay btn-primary" bindtap="onConfirmPay">{{payLabel}}</button>
-  </view>
-
-  <view
-    class="promo-mask {{showPromoDrawer ? 'promo-mask--show' : ''}}"
-    bindtap="closePromoDrawer"
-    catchtouchmove="noop"
-  >
-    <view class="promo-drawer" catchtap="noop">
-      <view class="promo-drawer__handle-wrap">
-        <view class="promo-drawer__handle" />
+    <view class="checkout-agree" bindtap="onToggleAgree">
+      <view class="checkout-agree__check {{agreed ? 'checkout-agree__check--on' : ''}}">
+        <text wx:if="{{agreed}}" class="checkout-agree__tick">✓</text>
       </view>
-      <view class="promo-drawer__header">
-        <text class="promo-drawer__title">折扣码</text>
-        <view class="promo-drawer__close" bindtap="closePromoDrawer" aria-label="关闭">
-          <image class="promo-drawer__close-icon" src="/images/checkout/promo-close.svg" mode="aspectFit" />
-        </view>
-      </view>
-      <view class="promo-drawer__body">
-        <input
-          class="promo-drawer__input"
-          type="text"
-          placeholder="请输入折扣码"
-          placeholder-class="promo-drawer__input-placeholder"
-          value="{{promoCode}}"
-          bindinput="onPromoInput"
-          confirm-type="done"
-          bindconfirm="onApplyPromo"
-        />
-        <image class="promo-drawer__illus" src="/images/checkout/promo-illustration.png" mode="widthFix" />
-      </view>
-      <view class="promo-drawer__footer">
-        <button class="promo-drawer__apply btn-primary" bindtap="onApplyPromo">立即使用</button>
-      </view>
+      <text class="checkout-agree__text">
+        <text>我已阅读并同意</text>
+        <text class="checkout-agree__link">支付协议</text>
+        <text>及</text>
+        <text class="checkout-agree__link">购买须知</text>
+      </text>
     </view>
   </view>
 </view>

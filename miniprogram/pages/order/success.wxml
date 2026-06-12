@@ -22,7 +22,10 @@
   >
     <view class="success-hero">
       <image class="success-hero__icon" src="/images/success/icon-success.svg" mode="aspectFit" />
-      <text class="success-hero__title">{{successTitle}}</text>
+      <view class="success-hero__copy">
+        <text class="success-hero__title">{{successTitle}}</text>
+        <text class="success-hero__subtitle">日均 ¥{{dailyAvgLabel}}/天</text>
+      </view>
     </view>
 
     <view class="success-stack">
@@ -30,9 +33,10 @@
         <view class="success-esim-card__inner">
           <block wx:if="{{!esimReady}}">
             <view class="success-esim-head">
-              <text class="success-esim-head__status">正在为您准备 eSIM</text>
               <text class="success-esim-head__plan">{{planLabel}}</text>
+              <text class="success-esim-head__status">正在为您准备 eSIM</text>
             </view>
+            <image class="success-esim-illus" src="/images/success/esim-preparing.png" mode="aspectFit" />
             <view class="success-notice" bindtap="onEsimReady">
               <text class="success-notice__text">eSIM 正在向运营商申请开通，通常需要 1</text>
               <text class="success-notice__emph">–3</text>
@@ -43,18 +47,13 @@
               <image class="success-notify-btn__icon" src="/images/success/icon-wechat-notify.svg" mode="aspectFit" />
               <text>开启微信通知</text>
             </button>
-            <view class="success-divider"></view>
-            <view class="success-esim-actions">
-              <button class="success-esim-actions__btn success-esim-actions__btn--ghost" bindtap="onContinueBuy">继续购买</button>
-              <button class="success-esim-actions__btn success-esim-actions__btn--primary" bindtap="onGoOrders">订单列表</button>
-            </view>
           </block>
 
           <block wx:else>
             <view class="success-esim-top">
               <view class="success-esim-head">
-                <text class="success-esim-head__status success-esim-head__status--ready">您的eSIM已就绪</text>
                 <text class="success-esim-head__plan">{{planLabel}}</text>
+                <text class="success-esim-head__status success-esim-head__status--ready">您的eSIM已就绪</text>
               </view>
               <view class="success-esim-qr success-esim-qr--ready">
                 <image class="success-esim-qr__image" src="/images/success/esim-qr.png" mode="aspectFill" show-menu-by-longpress />
@@ -76,23 +75,32 @@
           </view>
           <text class="success-reward-head__title">恭喜您获得50HolaCoin</text>
         </view>
-        <view class="success-reward-body">
-          <text class="success-reward-body__text">每一笔Holafly消费都可以获得HolaCoin，下载</text>
-          <text class="success-reward-body__brand">Holafly APP</text>
-          <text class="success-reward-body__text">兑换以下权益：</text>
-          <view class="success-reward-grid">
-            <view class="success-reward-item">
-              <image class="success-reward-item__icon" src="/images/success/benefit-esim.svg" mode="aspectFit" />
-              <text class="success-reward-item__label">免费eSIM</text>
+        <view class="success-reward-panel">
+          <view class="success-reward-body">
+            <text class="success-reward-body__text">每一笔Holafly消费都可以获得HolaCoin，下载</text>
+            <text class="success-reward-body__brand">Holafly APP</text>
+            <text class="success-reward-body__text">兑换以下权益：</text>
+            <view class="success-reward-grid">
+              <view class="success-reward-item">
+                <image class="success-reward-item__icon" src="/images/success/benefit-install.svg" mode="aspectFit" />
+                <text class="success-reward-item__label">一键安装</text>
+              </view>
+              <view class="success-reward-item">
+                <image class="success-reward-item__icon" src="/images/success/benefit-discount.svg" mode="aspectFit" />
+                <text class="success-reward-item__label">折扣优惠</text>
+              </view>
+              <view class="success-reward-item">
+                <image class="success-reward-item__icon" src="/images/success/benefit-gift.svg" mode="aspectFit" />
+                <text class="success-reward-item__label">更多好礼</text>
+              </view>
             </view>
-            <view class="success-reward-item">
-              <image class="success-reward-item__icon" src="/images/success/benefit-discount.svg" mode="aspectFit" />
-              <text class="success-reward-item__label">折扣优惠</text>
+          </view>
+          <view class="success-share-banner">
+            <view class="success-share-banner__left">
+              <image class="success-share-banner__coin" src="/images/success/holapoint.svg" mode="aspectFit" />
+              <text class="success-share-banner__text">分享好友，赚取更多 HolaCoins，好友享专属折扣</text>
             </view>
-            <view class="success-reward-item">
-              <image class="success-reward-item__icon" src="/images/success/benefit-gift.svg" mode="aspectFit" />
-              <text class="success-reward-item__label">更多好礼</text>
-            </view>
+            <button class="success-share-banner__btn" bindtap="onShare">分享</button>
           </view>
         </view>
       </view>

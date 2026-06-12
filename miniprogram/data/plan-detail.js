@@ -8,12 +8,12 @@ const JAPAN_PLAN = {
   prices: { 1: 15, 3: 35, 5: 48, 7: 63, 10: 85, 15: 120 },
   originalDaily: 15,
   features: [
-    { id: 'speed', label: '高速稳网', icon: '/images/detail/tag-speed.svg' },
-    { id: 'roam', label: '无漫游费', icon: '/images/detail/tag-roam.svg' },
+    { id: 'data5g', label: '无限5G流量', icon: '/images/detail/tag-5g.svg' },
+    { id: 'refund', label: '退款无忧', icon: '/images/detail/tag-refund.svg' },
   ],
   compatCard: {
-    icon: '/images/home/compat-check-icon.svg',
-    title: '一键检测兼容性',
+    icon: '/images/detail/compat-device.svg',
+    title: '我的设备支持吗？',
     subtitle: '支持大陆版与国际版机型查询',
   },
   reviewSummary: {
@@ -67,7 +67,7 @@ const JAPAN_PLAN = {
       id: 'device-check',
       tab: 'device',
       title: '如何确认我的手机支持 eSIM？',
-      answer: '可在本页点击「一键检测兼容性」，按机型或拨号 *#06# 查询；若出现 EID 号码，通常表示设备支持 eSIM。',
+      answer: '可在本页点击「我的设备支持吗？」，按机型或拨号 *#06# 查询；若出现 EID 号码，通常表示设备支持 eSIM。',
     },
     {
       id: 'hotspot',
@@ -107,7 +107,7 @@ const JAPAN_PLAN = {
   ],
   usageSteps: [
     { id: 'pay', icon: '/images/detail/usage-pay.svg', label: '微信购买一键支付' },
-    { id: 'wifi', icon: '/images/detail/usage-wifi.svg', label: '落地连机场连Wi-Fi' },
+    { id: 'wifi', icon: '/images/detail/usage-wifi.svg', label: '落地连机场Wi-Fi' },
     { id: 'qr', icon: '/images/detail/usage-qr.svg', label: '订单页面扫码安装设置' },
   ],
   networkCarriers: [

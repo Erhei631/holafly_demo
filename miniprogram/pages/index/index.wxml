@@ -105,8 +105,8 @@
         <view class="why-card__hero">
           <image class="why-card__brand" src="/images/home/why-brand-logo.svg" mode="aspectFit" />
           <view class="why-card__tagline">
-            <text>出境旅行专属 eSIM，</text>
-            <text class="why-card__tagline-em">走到哪，连到哪。</text>
+            <text>旅途充满未知，连接</text>
+            <text class="why-card__tagline-em">始终可靠</text>
           </view>
         </view>
 
@@ -123,73 +123,95 @@
             </view>
           </view>
 
-          <view class="why-esim">
-            <view class="why-esim__head">
-              <text class="why-esim__title">什么是 eSIM？</text>
-              <view class="why-esim__link" bindtap="onEsimCardTap">
-                <text>查看完整说明</text>
-                <image class="why-esim__arrow" src="/images/home/icon-arrow-right-dest.svg" mode="aspectFit" />
-              </view>
-            </view>
-            <view class="why-esim__desc">
-              <text>eSIM 是</text>
-              <text class="why-esim__emph">内嵌在手机里的数字 SIM 卡</text>
-              <text>。不用换卡、不用等快递，手机直接下载安装，</text>
-              <text class="why-esim__emph">30 秒激活</text>
-              <text>。</text>
-            </view>
-            <view class="compare-wrap">
-              <view class="compare-table">
-                <view class="compare-highlight" />
-                <view class="compare-row compare-row--head">
-                  <view class="compare-cell compare-cell--label compare-cell--head">权益</view>
-                  <view
-                    wx:for="{{compare.columns}}"
-                    wx:key="id"
-                    class="compare-cell compare-col {{item.primary ? 'compare-col--holafly' : ''}}"
-                  >
-                    <view wx:if="{{item.primary}}" class="compare-head">
-                      <image class="compare-head__logo" src="/images/home/compare-holafly-text.svg" mode="aspectFit" />
-                      <text class="compare-head__sub">{{item.sub}}</text>
-                    </view>
-                    <view wx:else class="compare-head">
-                      <text class="compare-head__title">{{item.name}}</text>
-                      <text class="compare-head__sub">{{item.sub}}</text>
-                    </view>
+          <view class="compare-wrap">
+            <view class="compare-table">
+              <view class="compare-highlight" />
+              <view class="compare-row compare-row--head">
+                <view class="compare-cell compare-cell--label compare-cell--head">权益</view>
+                <view
+                  wx:for="{{compare.columns}}"
+                  wx:key="id"
+                  class="compare-cell compare-col {{item.primary ? 'compare-col--holafly' : ''}}"
+                >
+                  <view wx:if="{{item.primary}}" class="compare-head">
+                    <image class="compare-head__logo" src="/images/home/compare-holafly-text.svg" mode="aspectFit" />
+                    <text class="compare-head__sub">{{item.sub}}</text>
+                  </view>
+                  <view wx:else class="compare-head">
+                    <text class="compare-head__title">{{item.name}}</text>
+                    <text class="compare-head__sub">{{item.sub}}</text>
                   </view>
                 </view>
+              </view>
+              <view
+                wx:for="{{compare.rows}}"
+                wx:key="id"
+                class="compare-row {{item.alt ? 'compare-row--alt' : ''}}"
+              >
+                <view class="compare-cell compare-cell--label">{{item.label}}</view>
                 <view
-                  wx:for="{{compare.rows}}"
-                  wx:key="id"
-                  class="compare-row {{index % 2 === 1 ? 'compare-row--alt' : ''}}"
+                  wx:for="{{item.cells}}"
+                  wx:for-item="cell"
+                  wx:for-index="colIndex"
+                  wx:key="colIndex"
+                  class="compare-cell compare-col {{colIndex === 0 ? 'compare-col--holafly' : ''}}"
                 >
-                  <view class="compare-cell compare-cell--label">{{item.label}}</view>
-                  <view
-                    wx:for="{{item.cells}}"
-                    wx:for-item="cell"
-                    wx:for-index="colIndex"
-                    wx:key="colIndex"
-                    class="compare-cell compare-col {{colIndex === 0 ? 'compare-col--holafly' : ''}}"
-                  >
-                    <text class="compare-val compare-val--{{cell.tone}}">{{cell.text}}</text>
-                  </view>
+                  <text class="compare-val compare-val--{{cell.tone}}">{{cell.text}}</text>
                 </view>
               </view>
             </view>
           </view>
+        </view>
+      </view>
 
-          <view class="why-compat">
-            <text class="why-compat__title">我的设备支持吗？</text>
-            <view class="why-compat__card" bindtap="onCompatCardTap">
-              <view class="why-compat__left">
-                <image class="why-compat__icon" src="/images/home/compat-check-icon.svg" mode="aspectFit" />
-                <view class="why-compat__text">
-                  <text class="why-compat__name">一键检测兼容性</text>
-                  <text class="why-compat__desc">支持大陆版与国际版机型查询</text>
-                </view>
-              </view>
-              <image class="why-compat__arrow" src="/images/home/icon-arrow-right-dest.svg" mode="aspectFit" />
+      <view class="esim-card">
+        <view class="esim-card__section">
+          <view class="esim-card__head">
+            <text class="esim-card__title">什么是eSIM？</text>
+            <view class="esim-card__link" bindtap="onEsimCardTap">
+              <text>查看完整说明</text>
+              <image class="esim-card__arrow" src="/images/home/icon-arrow-right-dest.svg" mode="aspectFit" />
             </view>
+          </view>
+          <view class="esim-card__desc">
+            <text>eSIM是</text>
+            <text class="esim-card__emph">内嵌在手机里的数字SIM 卡</text>
+            <text>。不用换卡、不用等快递，手机直接下载安装，</text>
+            <text class="esim-card__emph">30秒激活</text>
+            <text>。</text>
+          </view>
+        </view>
+
+        <view class="esim-card__divider" />
+
+        <view class="esim-card__section">
+          <view class="esim-card__head">
+            <text class="esim-card__title">使用方法</text>
+            <view class="esim-card__link" bindtap="onUsageGuideTap">
+              <text>查看完整教程</text>
+              <image class="esim-card__arrow" src="/images/home/icon-arrow-right-dest.svg" mode="aspectFit" />
+            </view>
+          </view>
+          <view class="usage-steps">
+            <block wx:for="{{usageSteps}}" wx:key="id" wx:for-index="stepIndex">
+              <view class="usage-step">
+                <view class="usage-step__icon-wrap">
+                  <image class="usage-step__icon" src="{{item.icon}}" mode="aspectFit" />
+                </view>
+                <text class="usage-step__label">{{item.label}}</text>
+              </view>
+              <view wx:if="{{stepIndex < usageSteps.length - 1}}" class="usage-steps__connector" />
+            </block>
+          </view>
+          <view class="esim-compat-card" bindtap="onCompatCardTap">
+            <view class="esim-compat-card__left">
+              <image class="esim-compat-card__icon" src="/images/home/compat-check-icon.svg" mode="aspectFit" />
+              <view class="esim-compat-card__text">
+                <text class="esim-compat-card__name">我的设备支持吗？</text>
+                <text class="esim-compat-card__desc">支持大陆版与国际版机型查询</text>
+              </view>
+            </view>
+            <image class="esim-compat-card__arrow" src="/images/home/icon-arrow-right-dest.svg" mode="aspectFit" />
           </view>
         </view>
       </view>
@@ -314,8 +336,36 @@
           </view>
         </view>
         <view wx:else class="compat-dial">
-          <text class="compat-dial__code">*#06#</text>
-          <text class="compat-dial__hint">{{compatDialHint}}</text>
+          <view class="compat-dial__intro">
+            <text class="compat-dial__intro-title">{{compatDialIntroTitle}}</text>
+            <view class="compat-dial__intro-text">
+              <text>在手机拨号界面输入 </text>
+              <text class="compat-dial__code-inline">*#06#</text>
+              <text> 如果屏幕列表中出现 EID 串号（约 32 位数字），则说明您的手机硬件支持 eSIM。</text>
+            </view>
+          </view>
+          <image class="compat-dial__phones" src="/images/compat/dial-phones.png" mode="widthFix" />
+          <view class="compat-dial__steps">
+            <view wx:for="{{compatDialSteps}}" wx:key="title" class="compat-dial__step">
+              <view class="compat-dial__step-num"><text>{{index + 1}}</text></view>
+              <view class="compat-dial__step-body">
+                <text class="compat-dial__step-title">{{item.title}}</text>
+                <text class="compat-dial__step-desc">{{item.desc}}</text>
+              </view>
+            </view>
+          </view>
+          <view class="compat-dial__results">
+            <view
+              wx:for="{{compatDialResults}}"
+              wx:key="id"
+              class="compat-dial__result compat-dial__result--{{item.type}}"
+              data-result="{{item.id}}"
+              bindtap="onCompatDialResultTap"
+            >
+              <text class="compat-dial__result-title compat-dial__result-title--{{item.type}}">{{item.title}}</text>
+              <text class="compat-dial__result-desc">{{item.desc}}</text>
+            </view>
+          </view>
         </view>
     </scroll-view>
   </view>

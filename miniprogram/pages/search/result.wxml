@@ -223,19 +223,7 @@
         </scroll-view>
       </view>
 
-      <view class="panel panel--compat">
-        <text class="panel__title panel__title--inline">我的设备支持吗？</text>
-        <view class="compat-card" bindtap="onCompatCardTap">
-          <image class="compat-card__icon" src="{{plan.compatCard.icon}}" mode="aspectFit" />
-          <view class="compat-card__content">
-            <text class="compat-card__title">{{plan.compatCard.title}}</text>
-            <text class="compat-card__subtitle">{{plan.compatCard.subtitle}}</text>
-          </view>
-          <image class="compat-card__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
-        </view>
-      </view>
-
-      <view class="panel">
+      <view class="panel panel--usage">
         <view class="panel__head">
           <text class="panel__title panel__title--inline">使用方法</text>
           <view class="panel__link" bindtap="onUsageGuideTap">
@@ -244,14 +232,23 @@
           </view>
         </view>
         <view class="usage-steps">
-          <view class="usage-steps__connector usage-steps__connector--1" />
-          <view class="usage-steps__connector usage-steps__connector--2" />
-          <view wx:for="{{plan.usageSteps}}" wx:key="id" class="usage-step">
-            <view class="usage-step__icon-wrap">
-              <image class="usage-step__icon" src="{{item.icon}}" mode="aspectFit" />
+          <block wx:for="{{plan.usageSteps}}" wx:key="id" wx:for-index="stepIndex">
+            <view class="usage-step">
+              <view class="usage-step__icon-wrap">
+                <image class="usage-step__icon" src="{{item.icon}}" mode="aspectFit" />
+              </view>
+              <text class="usage-step__label">{{item.label}}</text>
             </view>
-            <text class="usage-step__label">{{item.label}}</text>
+            <view wx:if="{{stepIndex < plan.usageSteps.length - 1}}" class="usage-steps__connector" />
+          </block>
+        </view>
+        <view class="compat-card" bindtap="onCompatCardTap">
+          <image class="compat-card__icon" src="{{plan.compatCard.icon}}" mode="aspectFit" />
+          <view class="compat-card__content">
+            <text class="compat-card__title">{{plan.compatCard.title}}</text>
+            <text class="compat-card__subtitle">{{plan.compatCard.subtitle}}</text>
           </view>
+          <image class="compat-card__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
         </view>
       </view>
 
@@ -406,8 +403,36 @@
             </view>
           </view>
           <view wx:else class="compat-dial">
-            <text class="compat-dial__code">*#06#</text>
-            <text class="compat-dial__hint">{{compatDialHint}}</text>
+            <view class="compat-dial__intro">
+              <text class="compat-dial__intro-title">{{compatDialIntroTitle}}</text>
+              <view class="compat-dial__intro-text">
+                <text>在手机拨号界面输入 </text>
+                <text class="compat-dial__code-inline">*#06#</text>
+                <text> 如果屏幕列表中出现 EID 串号（约 32 位数字），则说明您的手机硬件支持 eSIM。</text>
+              </view>
+            </view>
+            <image class="compat-dial__phones" src="/images/compat/dial-phones.png" mode="widthFix" />
+            <view class="compat-dial__steps">
+              <view wx:for="{{compatDialSteps}}" wx:key="title" class="compat-dial__step">
+                <view class="compat-dial__step-num"><text>{{index + 1}}</text></view>
+                <view class="compat-dial__step-body">
+                  <text class="compat-dial__step-title">{{item.title}}</text>
+                  <text class="compat-dial__step-desc">{{item.desc}}</text>
+                </view>
+              </view>
+            </view>
+            <view class="compat-dial__results">
+              <view
+                wx:for="{{compatDialResults}}"
+                wx:key="id"
+                class="compat-dial__result compat-dial__result--{{item.type}}"
+                data-result="{{item.id}}"
+                bindtap="onCompatDialResultTap"
+              >
+                <text class="compat-dial__result-title compat-dial__result-title--{{item.type}}">{{item.title}}</text>
+                <text class="compat-dial__result-desc">{{item.desc}}</text>
+              </view>
+            </view>
           </view>
       </scroll-view>
   </view>
@@ -490,7 +515,7 @@
         <image class="detail-footer__support-icon" src="/images/detail/footer-support.svg" mode="aspectFit" />
         <text class="detail-footer__support-label">客服</text>
       </view>
-      <button class="detail-footer__cta btn-primary" bindtap="onCheckout">去结算</button>
+      <button class="detail-footer__cta btn-primary" bindtap="onCheckout">立即下单</button>
     </view>
   </view>
 </view>

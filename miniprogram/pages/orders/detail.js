@@ -14,12 +14,20 @@ function getEsimView(order, index) {
   };
 }
 
+function getOrderDate(createdAt) {
+  if (!createdAt) return '';
+  return String(createdAt).slice(0, 10);
+}
+
 Page({
   data: {
     statusBarHeight: 20,
     safeBottom: 0,
     order: null,
     planLabel: '',
+    orderDate: '',
+    priceLabel: '',
+    paidAt: '',
     showQr: false,
     esimIndex: 1,
     esimTotal: 1,
@@ -42,6 +50,9 @@ Page({
       safeBottom: getSafeAreaBottom(),
       order,
       planLabel,
+      orderDate: getOrderDate(order.createdAt),
+      priceLabel: order.totalPriceLabel || '¥0.00',
+      paidAt: order.paidAt || order.createdAt || '',
       showQr: order.status === 'pending_install' || order.status === 'active',
       esimIndex: 1,
       esimTotal,
@@ -113,13 +124,8 @@ Page({
     });
   },
 
-  onCopyOrderNo() {
-    const { order } = this.data;
-    if (!order) return;
-    wx.setClipboardData({
-      data: order.orderNo,
-      success: () => wx.showToast({ title: '已复制', icon: 'success' }),
-    });
+  onShare() {
+    wx.showToast({ title: '分享（待开发）', icon: 'none' });
   },
 
   onInvoice() {

@@ -11,7 +11,7 @@
       --rose-50:#ffefef; --rose-100:#ffe0e0; --rose-500:#e6485c;
       --green-50:#ecfff4; --green-100:#d6ffe7; --green-500:#48ec86; --green-700:#179b50;
       --blue-50:#edf9fe; --blue-100:#dcf4ff; --blue-500:#4db5e8;
-      --neutral-50:#fff; --neutral-100:#f8f8fb; --neutral-200:#e4e6ea;
+      --neutral-50:#fff; --neutral-100:#f8f8fb; --neutral-200:#e4e6ea; --neutral-300:#ccd0d7;
       --neutral-400:#7b7c7e; --neutral-600:#56575a; --neutral-900:#272729;
       --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
       --padding-12:12px; --padding-16:16px;
@@ -74,10 +74,10 @@
     .config-card__promo-timer{display:flex;align-items:center;gap:6px}
     .config-card__promo-timer-box{min-width:21px;padding:2px;background:rgba(0,0,0,.4);border-radius:4px;font-family:var(--font-mono);font-size:14px;color:#fff;text-align:center}
     .config-card__promo-timer-sep{font-family:var(--font-mono);font-size:14px;color:#fff}
-    .compat-card{display:flex;align-items:center;gap:12px;padding:18px 12px 20px 8px;border-radius:10px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(141.68deg,var(--blue-50) 11.21%,var(--green-50) 89.26%);cursor:pointer}
+    .compat-card{display:flex;align-items:center;gap:12px;padding:18px 12px 20px 8px;border-radius:10px;background:linear-gradient(139deg,var(--blue-50) 11.21%,var(--green-50) 89.26%);cursor:pointer}
     .compat-card__icon{width:40px;height:40px;flex-shrink:0}
     .compat-card__content{flex:1;min-width:0}
-    .compat-card__title{display:block;font-size:16px;font-weight:500;line-height:24px}
+    .compat-card__title{display:block;font-size:15px;font-weight:500;line-height:22px}
     .compat-card__subtitle{display:block;margin-top:2px;font-size:12px;color:var(--neutral-600)}
     .compat-card__arrow{width:16px;height:16px;flex-shrink:0}
     .config-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
@@ -230,10 +230,28 @@
     .compat-model__name{font-size:15px;font-weight:500;line-height:22px}
     .compat-model__badge{display:flex;align-items:center;gap:4px;padding:4px 6px;background:var(--green-100);border-radius:4px;font-size:12px;line-height:16px;color:#179b50;flex-shrink:0}
     .compat-model__badge img{width:14px;height:14px}
-    .compat-dial{display:none;flex-direction:column;align-items:center;gap:8px;padding:24px 12px;background:var(--neutral-100);border-radius:16px;text-align:center}
+    .compat-dial{display:none;flex-direction:column;gap:16px}
     .compat-dial.is-active{display:flex}
-    .compat-dial__code{font-size:24px;font-weight:600;letter-spacing:1px}
-    .compat-dial__hint{font-size:14px;color:var(--neutral-600);line-height:1.43}
+    .compat-dial__intro{display:flex;flex-direction:column;gap:12px;padding:12px;background:var(--neutral-100);border-radius:10px}
+    .compat-dial__intro-title{font-size:16px;font-weight:500;line-height:24px;color:var(--neutral-900)}
+    .compat-dial__intro-text{font-size:15px;line-height:22px;color:var(--neutral-500)}
+    .compat-dial__code-inline{padding:0 4px;border-radius:4px;background:var(--rose-100);color:#e5174a;font-weight:500}
+    .compat-dial__phones{width:100%;display:block}
+    .compat-dial__steps{overflow:hidden;border:1px solid var(--neutral-200);border-radius:14px;background:#fff}
+    .compat-dial__step{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--neutral-200)}
+    .compat-dial__step:last-child{border-bottom:none}
+    .compat-dial__step-num{display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--rose-500);color:#fff;font-size:12px;font-weight:700;flex-shrink:0}
+    .compat-dial__step-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+    .compat-dial__step-title{font-size:15px;font-weight:500;line-height:22px;color:var(--neutral-900)}
+    .compat-dial__step-desc{font-size:12px;line-height:18px;color:var(--neutral-400)}
+    .compat-dial__results{display:flex;gap:8px}
+    .compat-dial__result{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:13px 11px;border-radius:12px;border:1px solid;cursor:pointer;font-family:inherit;background:transparent}
+    .compat-dial__result--success{background:rgba(30,158,106,.1);border-color:#179b50}
+    .compat-dial__result--neutral{background:#fff;border-color:#d7dae0}
+    .compat-dial__result-title{font-size:14px;font-weight:500;line-height:20px;text-align:center}
+    .compat-dial__result-title--success{color:#179b50}
+    .compat-dial__result-title--neutral{color:var(--neutral-500)}
+    .compat-dial__result-desc{font-size:12px;line-height:18px;color:var(--neutral-500);text-align:center}
     .compat-model-panel{display:flex;flex-direction:column;gap:16px}
     .compat-model-panel.is-hidden{display:none}
     .info-block{padding:12px 16px;background:var(--neutral-100);border-radius:10px}
@@ -254,21 +272,17 @@
     .panel--apps .app-tile__text{display:flex;flex-direction:column;gap:2px;align-items:flex-start;text-align:left;min-width:0;flex:1}
     .panel--apps .app-tile__name{display:block;font-size:15px;font-weight:500;color:var(--neutral-600);line-height:22px}
     .panel--apps .app-tile__subtitle{display:block;font-size:12px;color:var(--neutral-600);line-height:18px}
-    .panel--compat{display:flex;flex-direction:column;gap:12px}
-    .panel--compat>.panel__title{margin-bottom:0}
-    .panel--compat .compat-card__title{font-size:15px;line-height:22px}
+    .panel--usage{display:flex;flex-direction:column;gap:12px}
     .faq-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:12px}
     .faq-tabs__inner{display:flex;gap:4px;border-bottom:1px solid var(--neutral-200)}
     .faq-tab{flex-shrink:0;padding:13px 8px;font-size:15px;font-weight:500;color:var(--neutral-600);cursor:pointer}
     .faq-tab--active{color:var(--rose-500);border-bottom:2px solid var(--rose-500);margin-bottom:-1px}
-    .usage-steps{position:relative;display:flex;align-items:flex-start;justify-content:space-between;padding:8px 0;border-radius:10px}
-    .usage-steps__connector{position:absolute;top:30px;height:0;width:57px;border-top:1px dashed var(--neutral-300);pointer-events:none;z-index:0}
-    .usage-steps__connector--1{left:69px}
-    .usage-steps__connector--2{left:195px}
-    .usage-step{position:relative;z-index:1;width:74px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+    .usage-steps{display:flex;align-items:flex-start;padding:8px 0;border-radius:10px}
+    .usage-steps__connector{flex:1;align-self:flex-start;min-width:8px;height:0;margin-top:22px;border-top:1px dashed var(--neutral-300)}
+    .usage-step{width:74px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px}
     .usage-step__icon-wrap{padding:10px;background:var(--rose-50);border-radius:16px}
     .usage-step__icon{width:24px;height:24px;display:block}
-    .usage-step__label{width:74px;min-height:32px;font-size:12px;color:var(--neutral-600);line-height:16px;text-align:center}
+    .usage-step__label{width:74px;min-height:32px;font-size:12px;color:var(--neutral-600);line-height:18px;text-align:center}
     .network-block{padding:var(--padding-12) var(--padding-16) var(--padding-16);background:var(--neutral-100);border-radius:10px}
     .network-block+.network-block{margin-top:12px}
     .network-block__head{display:flex;align-items:center;gap:8px;margin-bottom:var(--padding-16)}
@@ -344,7 +358,7 @@
       </div>
       <div class="detail-footer__actions">
         <button type="button" class="detail-footer__support" id="footer-support"><img src="images/detail/footer-support.svg" alt="" /><span>客服</span></button>
-        <button class="detail-footer__cta" type="button">去结算</button>
+        <button class="detail-footer__cta" type="button">立即下单</button>
       </div>
     </div>
     <div class="compat-sheet-mask" id="compat-sheet-mask"></div>
@@ -380,8 +394,13 @@
               </div>
             </div>
             <div class="compat-dial" id="compat-dial-panel">
-              <span class="compat-dial__code">*#06#</span>
-              <span class="compat-dial__hint">在拨号界面输入 *#06#，若出现 EID 号码则通常支持 eSIM。不同版本机型结果可能不同，建议结合机型列表核对。</span>
+              <div class="compat-dial__intro">
+                <p class="compat-dial__intro-title">拨号查看 EID — 最准确的检测方法</p>
+                <p class="compat-dial__intro-text">在手机拨号界面输入 <span class="compat-dial__code-inline">*#06#</span> 如果屏幕列表中出现 EID 串号（约 32 位数字），则说明您的手机硬件支持 eSIM。</p>
+              </div>
+              <img class="compat-dial__phones" src="images/compat/dial-phones.png" alt="" />
+              <div class="compat-dial__steps" id="compat-dial-steps"></div>
+              <div class="compat-dial__results" id="compat-dial-results"></div>
             </div>
         </div>
     </div>
@@ -414,10 +433,10 @@
       title:'日本 eSIM·无限流量', flag:'images/detail/flag-jp.png',
       prices:{1:15,3:35,5:48,7:63,10:85,15:120}, originalDaily:15,
       features:[
-        {label:'高速稳网',icon:'images/detail/tag-speed.svg'},
-        {label:'无漫游费',icon:'images/detail/tag-roam.svg'},
+        {label:'无限5G流量',icon:'images/detail/tag-5g.svg'},
+        {label:'退款无忧',icon:'images/detail/tag-refund.svg'},
       ],
-      compatCard:{icon:'images/home/compat-check-icon.svg',title:'一键检测兼容性',subtitle:'支持大陆版与国际版机型查询'},
+      compatCard:{icon:'images/detail/compat-device.svg',title:'我的设备支持吗？',subtitle:'支持大陆版与国际版机型查询'},
       reviewSummary:{rating:'4.7',total:'95,304'},
       reviews:[
         {id:'r1',name:'Tina',rating:'4.7',text:'到机场出关 30 秒装好就有信号，比租 Wifi 划算太多了，客服回得也快！',meta:'6小时前 | 日本7天'},
@@ -445,7 +464,7 @@
       ],
       usageSteps:[
         {icon:'images/detail/usage-pay.svg',label:'微信购买一键支付'},
-        {icon:'images/detail/usage-wifi.svg',label:'落地连机场连Wi-Fi'},
+        {icon:'images/detail/usage-wifi.svg',label:'落地连机场Wi-Fi'},
         {icon:'images/detail/usage-qr.svg',label:'订单页面扫码安装设置'},
       ],
       networkCarriers:[
@@ -465,6 +484,15 @@
         {id:'global',title:'海外/港版',subtitle:'国际版·全球版',icon:'images/compat/flag-global.png'},
       ],
       compatMethods:[{id:'model',label:'按机型'},{id:'dial',label:'拨号检查'}],
+      dialSteps:[
+        {title:'打开手机「拨号」应用',desc:'iPhone 为「电话」，安卓为「拨号」 / 「电话」'},
+        {title:'输入 *#06#',desc:'不需点拨打，输完即会自动弹出设备信息'},
+        {title:'查看是否出现 EID',desc:'出现则支持；只有 IMEI / MEID 则不支持'},
+      ],
+      dialResults:[
+        {id:'eid',title:'✓ 看到 EID',desc:'支持 eSIM',type:'success'},
+        {id:'imei',title:'✕ 只有 IMEI / MEID',desc:'未配备 eSIM 硬件',type:'neutral'},
+      ],
       compatModels:[
         {id:'iphone-17e',name:'iPhone 17e',supported:true},
         {id:'iphone-air',name:'iPhone Air',supported:true},
@@ -545,8 +573,7 @@
         </div>
         <div class="panel panel--apps"><img class="panel__deco panel__deco--apps" src="images/detail/app-deco.png" alt="" /><div class="panel__intro"><span class="panel__title">畅连国内外APP</span><span class="panel__subtitle">${PLAN.appIntro}</span></div><div class="panel__divider"></div><div class="panel__apps-body">${PLAN.appSections.map(s=>`<span class="app-section__title">${s.title}</span>${renderAppRows(s.apps)}`).join('')}</div></div>
         <div class="reviews-card"><div class="reviews-card__header"><div class="reviews-card__brand"><img class="reviews-card__logo" src="images/home/trustpilot-logo.svg" alt="Trustpilot" /><p class="reviews-card__count">来自 ${PLAN.reviewSummary.total} 位用户评价</p></div><div class="reviews-card__rating"><span class="reviews-card__score">${PLAN.reviewSummary.rating}</span><span class="reviews-card__max">/5</span><img class="reviews-card__arrow" src="images/home/icon-arrow-right.svg" alt="" /></div></div><div class="reviews-card__divider"></div><div class="reviews-scroll"><div class="reviews-list">${renderReviewItems(PLAN.reviews)}</div></div></div>
-        <div class="panel panel--compat"><span class="panel__title">我的设备支持吗？</span><div class="compat-card" id="compat-card"><img class="compat-card__icon" src="${PLAN.compatCard.icon}" alt="" /><div class="compat-card__content"><span class="compat-card__title">${PLAN.compatCard.title}</span><span class="compat-card__subtitle">${PLAN.compatCard.subtitle}</span></div><img class="compat-card__arrow" src="images/detail/icon-arrow-right.svg" alt="" /></div></div>
-        <div class="panel"><div class="panel__head"><span class="panel__title">使用方法</span><span class="panel__link" id="usage-guide-link" role="button" tabindex="0">查看完整教程 <img src="images/detail/icon-arrow-right.svg" alt="" /></span></div><div class="usage-steps"><div class="usage-steps__connector usage-steps__connector--1"></div><div class="usage-steps__connector usage-steps__connector--2"></div>${PLAN.usageSteps.map(s=>`<div class="usage-step"><div class="usage-step__icon-wrap"><img class="usage-step__icon" src="${s.icon}" alt="" /></div><span class="usage-step__label">${s.label}</span></div>`).join('')}</div></div>
+        <div class="panel panel--usage"><div class="panel__head"><span class="panel__title">使用方法</span><span class="panel__link" id="usage-guide-link" role="button" tabindex="0">查看完整教程 <img src="images/detail/icon-arrow-right.svg" alt="" /></span></div><div class="usage-steps">${PLAN.usageSteps.map((s,i)=>`<div class="usage-step"><div class="usage-step__icon-wrap"><img class="usage-step__icon" src="${s.icon}" alt="" /></div><span class="usage-step__label">${s.label}</span></div>${i<PLAN.usageSteps.length-1?'<div class="usage-steps__connector"></div>':''}`).join('')}</div><div class="compat-card" id="compat-card"><img class="compat-card__icon" src="${PLAN.compatCard.icon}" alt="" /><div class="compat-card__content"><span class="compat-card__title">${PLAN.compatCard.title}</span><span class="compat-card__subtitle">${PLAN.compatCard.subtitle}</span></div><img class="compat-card__arrow" src="images/detail/icon-arrow-right.svg" alt="" /></div></div>
         <div class="panel"><span class="panel__title">网络服务</span>
           <div class="network-block"><div class="network-block__head"><img src="images/detail/icon-carrier.svg" alt="" /><span class="network-block__label">网络运营商</span></div><div class="network-block__carriers">${PLAN.networkCarriers.map(c=>`<img class="network-block__carrier-logo network-block__carrier-logo--${c.id}" src="${c.icon}" alt="" />`).join('')}</div></div>
           <div class="network-block"><div class="network-block__head"><img src="images/detail/icon-network.svg" alt="" /><span class="network-block__label">网速</span></div><span class="network-block__text">${PLAN.networkSpeedText}</span></div>
@@ -582,9 +609,14 @@
       if(!panel) return;
       panel.innerHTML=`<span class="panel__title">常见问题</span><div class="faq-tabs"><div class="faq-tabs__inner">${PLAN.faqTabs.map(t=>`<span class="faq-tab ${selectedFaqTab===t.id?'faq-tab--active':''}" data-faq-tab="${t.id}">${t.label}</span>`).join('')}</div></div><div class="faq-list faq-list--simple">${filterFaqByTab(selectedFaqTab).map(f=>`<div class="faq-item faq-item--simple ${expandedFaqId===f.id?'faq-item--open':''}" data-faq-id="${f.id}"><div class="faq-item__row"><span class="faq-item__title">${f.title}</span><img class="faq-item__arrow ${expandedFaqId===f.id?'faq-item__arrow--open':''}" src="images/detail/icon-arrow-right.svg" alt="" /></div>${f.answer?`<p class="faq-item__answer">${f.answer}</p>`:''}</div>`).join('')}</div>`;
     }
+    function mountCompatDial(){
+      document.getElementById('compat-dial-steps').innerHTML=PLAN.dialSteps.map((step,i)=>`<div class="compat-dial__step"><span class="compat-dial__step-num">${i+1}</span><div class="compat-dial__step-body"><span class="compat-dial__step-title">${step.title}</span><span class="compat-dial__step-desc">${step.desc}</span></div></div>`).join('');
+      document.getElementById('compat-dial-results').innerHTML=PLAN.dialResults.map(item=>`<button type="button" class="compat-dial__result compat-dial__result--${item.type}" data-dial-result="${item.id}"><span class="compat-dial__result-title compat-dial__result-title--${item.type}">${item.title}</span><span class="compat-dial__result-desc">${item.desc}</span></button>`).join('');
+    }
     function mountCompatSheet(){
       document.getElementById('compat-version-row').innerHTML=PLAN.compatVersions.map(v=>`<button type="button" class="compat-version compat-version--${v.id}" data-version="${v.id}"><img src="${v.icon}" alt="" /><span class="compat-version__text"><span class="compat-version__title">${v.title}</span><span class="compat-version__subtitle">${v.subtitle}</span></span></button>`).join('');
       document.getElementById('compat-segment').innerHTML=PLAN.compatMethods.map(m=>`<button type="button" class="compat-segment__item" data-method="${m.id}">${m.label}</button>`).join('');
+      mountCompatDial();
       updateCompatSheetUI();
     }
     function updateCompatModelsList(){
@@ -661,6 +693,12 @@
       document.getElementById('compat-search').addEventListener('input',(e)=>{
         compatSearch=e.target.value;
         updateCompatModelsList();
+      });
+      document.getElementById('compat-dial-results').addEventListener('click',(e)=>{
+        const btn=e.target.closest('[data-dial-result]');
+        if(!btn) return;
+        alert(btn.dataset.dialResult==='eid'?'您的设备支持 eSIM':'您的设备可能不支持 eSIM');
+        closeCompatSheet();
       });
       document.querySelector('.detail-footer__cta')?.addEventListener('click',()=>{
         location.href=buildLoginUrl();

@@ -146,7 +146,7 @@
   font-size: 28rpx;
   font-weight: 500;
   color: var(--color-primary);
-  line-height: 1.29;
+  line-height: 36rpx;
 }
 
 /* —— 价值卡片 —— */
@@ -378,8 +378,7 @@
   gap: 24rpx;
   padding: 36rpx 24rpx 40rpx 16rpx;
   border-radius: 20rpx;
-  border: 2rpx solid rgba(255, 255, 255, 0.9);
-  background: linear-gradient(141.68deg, var(--blue-50) 11.21%, var(--green-50) 89.26%);
+  background: linear-gradient(139deg, var(--blue-50) 11.21%, var(--green-50) 89.26%);
 }
 
 .compat-card__icon {
@@ -396,26 +395,17 @@
   gap: 4rpx;
 }
 
-.panel--compat {
+.panel--usage {
   display: flex;
   flex-direction: column;
   gap: 24rpx;
 }
 
-.panel--compat > .panel__title {
-  margin-bottom: 0;
-}
-
-.panel--compat .compat-card__title {
-  font-size: 30rpx;
-  line-height: 44rpx;
-}
-
 .compat-card__title {
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: 500;
   color: var(--color-text-primary);
-  line-height: 48rpx;
+  line-height: 44rpx;
 }
 
 .compat-card__subtitle {
@@ -1412,35 +1402,22 @@
 
 /* —— 使用方法 —— */
 .usage-steps {
-  position: relative;
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
   padding: 16rpx 0;
   border-radius: 20rpx;
 }
 
 .usage-steps__connector {
-  position: absolute;
-  top: 60rpx;
+  flex: 1;
+  align-self: flex-start;
+  min-width: 16rpx;
   height: 0;
-  width: 114rpx;
+  margin-top: 44rpx;
   border-top: 2rpx dashed var(--neutral-300);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.usage-steps__connector--1 {
-  left: 138rpx;
-}
-
-.usage-steps__connector--2 {
-  left: 390rpx;
 }
 
 .usage-step {
-  position: relative;
-  z-index: 1;
   width: 148rpx;
   flex-shrink: 0;
   display: flex;
@@ -1466,7 +1443,7 @@
   min-height: 64rpx;
   font-size: 24rpx;
   color: var(--color-text-secondary);
-  line-height: 32rpx;
+  line-height: 36rpx;
   text-align: center;
 }
 
@@ -1817,25 +1794,142 @@
 .compat-dial {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16rpx;
-  padding: 48rpx 24rpx;
+  gap: 32rpx;
+}
+
+.compat-dial__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  padding: 24rpx;
   background: var(--neutral-100);
-  border-radius: 32rpx;
+  border-radius: 20rpx;
 }
 
-.compat-dial__code {
-  font-size: 48rpx;
-  font-weight: 600;
+.compat-dial__intro-title {
+  font-size: 32rpx;
+  font-weight: 500;
   color: var(--color-text-primary);
-  line-height: 1.2;
-  letter-spacing: 2rpx;
+  line-height: 48rpx;
 }
 
-.compat-dial__hint {
+.compat-dial__intro-text {
+  font-size: 30rpx;
+  color: var(--neutral-500);
+  line-height: 44rpx;
+}
+
+.compat-dial__code-inline {
+  padding: 0 8rpx;
+  border-radius: 8rpx;
+  background: var(--rose-100);
+  color: #e5174a;
+  font-weight: 500;
+}
+
+.compat-dial__phones {
+  width: 100%;
+  display: block;
+}
+
+.compat-dial__steps {
+  overflow: hidden;
+  border: 2rpx solid var(--color-border-base);
+  border-radius: 28rpx;
+  background: #fff;
+}
+
+.compat-dial__step {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 24rpx;
+  border-bottom: 2rpx solid var(--color-border-base);
+}
+
+.compat-dial__step:last-child {
+  border-bottom: none;
+}
+
+.compat-dial__step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.compat-dial__step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  min-width: 0;
+}
+
+.compat-dial__step-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 44rpx;
+}
+
+.compat-dial__step-desc {
+  font-size: 24rpx;
+  color: var(--neutral-400);
+  line-height: 36rpx;
+}
+
+.compat-dial__results {
+  display: flex;
+  gap: 16rpx;
+}
+
+.compat-dial__result {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+  padding: 26rpx 22rpx;
+  border-radius: 24rpx;
+  border: 2rpx solid;
+}
+
+.compat-dial__result--success {
+  background: rgba(30, 158, 106, 0.1);
+  border-color: var(--green-700);
+}
+
+.compat-dial__result--neutral {
+  background: #fff;
+  border-color: #d7dae0;
+}
+
+.compat-dial__result-title {
   font-size: 28rpx;
-  color: var(--color-text-secondary);
+  font-weight: 500;
   line-height: 40rpx;
+  text-align: center;
+}
+
+.compat-dial__result-title--success {
+  color: var(--green-700);
+}
+
+.compat-dial__result-title--neutral {
+  color: var(--neutral-500);
+}
+
+.compat-dial__result-desc {
+  font-size: 24rpx;
+  color: var(--neutral-500);
+  line-height: 36rpx;
   text-align: center;
 }
 

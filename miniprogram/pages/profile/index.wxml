@@ -1,30 +1,50 @@
 <view class="page page--tab profile-page" style="padding-top: {{statusBarHeight}}px;">
   <image class="profile-map" src="/images/profile/map-header.png" mode="aspectFill" />
   <scroll-view class="page-scroll profile-scroll" scroll-y enhanced show-scrollbar="{{false}}">
-    <view class="profile-user" bindtap="onUserTap">
-      <image class="profile-user__avatar" src="/images/profile/avatar.png?v=3" mode="aspectFill" />
-      <text class="profile-user__phone">{{phoneLabel}}</text>
-    </view>
-
-    <view class="profile-menu">
-      <view
-        wx:for="{{menuItems}}"
-        wx:key="id"
-        class="profile-menu__item"
-        data-id="{{item.id}}"
-        data-url="{{item.url}}"
-        data-tab="{{item.tab}}"
-        data-action="{{item.action}}"
-        bindtap="onMenuTap"
-      >
-        <view class="profile-menu__left">
-          <view class="profile-menu__icon-wrap">
-            <image class="profile-menu__icon" src="{{item.icon}}" mode="aspectFit" />
-          </view>
-          <text class="profile-menu__label">{{item.label}}</text>
-        </view>
-        <image class="profile-menu__arrow" src="/images/detail/icon-arrow-right.svg" mode="aspectFit" />
+    <view class="profile-body">
+      <view class="profile-main">
+      <view class="profile-user" bindtap="onUserTap">
+        <image class="profile-user__avatar" src="/images/profile/avatar.png" mode="aspectFill" />
+        <text class="profile-user__phone">{{phoneLabel}}</text>
       </view>
+
+      <view class="profile-menu">
+        <view
+          wx:for="{{menuItems}}"
+          wx:key="id"
+          class="profile-menu__item"
+          data-id="{{item.id}}"
+          data-url="{{item.url}}"
+          data-tab="{{item.tab}}"
+          data-action="{{item.action}}"
+          bindtap="onMenuTap"
+        >
+          <view class="profile-menu__left">
+            <view class="profile-menu__icon-wrap">
+              <image class="profile-menu__icon" src="{{item.icon}}" mode="aspectFit" />
+            </view>
+            <text class="profile-menu__label">{{item.label}}</text>
+          </view>
+          <image class="profile-menu__arrow" src="/images/home/icon-arrow-right-dest.svg" mode="aspectFit" />
+        </view>
+      </view>
+
+      <view class="profile-share-banner">
+        <view class="profile-share-banner__left">
+          <image class="profile-share-banner__coin" src="/images/profile/holapoint.svg" mode="aspectFit" />
+          <text class="profile-share-banner__text">分享好友，赚取更多 HolaCoins，好友享专属折扣</text>
+        </view>
+        <button class="profile-share-banner__btn" bindtap="onShare">分享</button>
+      </view>
+      </view>
+
+      <button
+        wx:if="{{isLoggedIn}}"
+        class="profile-logout"
+        bindtap="onLogout"
+      >
+        退出登录
+      </button>
     </view>
   </scroll-view>
 </view>

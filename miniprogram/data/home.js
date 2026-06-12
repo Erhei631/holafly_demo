@@ -70,6 +70,7 @@ const HOME_COMPARE = {
     {
       id: 'data',
       label: '流量',
+      alt: false,
       cells: [
         { text: '无限不限速', tone: 'primary' },
         { text: 'GB 限额', tone: 'muted' },
@@ -77,17 +78,9 @@ const HOME_COMPARE = {
       ],
     },
     {
-      id: 'price',
-      label: '价格',
-      cells: [
-        { text: '¥6/天起', tone: 'primary' },
-        { text: '¥15+', tone: 'muted' },
-        { text: '¥25-60', tone: 'muted' },
-      ],
-    },
-    {
-      id: 'activation',
-      label: '激活',
+      id: 'logistics',
+      label: '物流',
+      alt: false,
       cells: [
         { text: '30s', tone: 'primary' },
         { text: '物流', tone: 'muted' },
@@ -97,6 +90,7 @@ const HOME_COMPARE = {
     {
       id: 'number',
       label: '国内号',
+      alt: true,
       cells: [
         { text: '保留', tone: 'primary' },
         { text: '换卡', tone: 'muted' },
@@ -106,14 +100,31 @@ const HOME_COMPARE = {
     {
       id: 'support',
       label: '客服',
+      alt: false,
       cells: [
         { text: '中文 7×24', tone: 'primary' },
         { text: '商家', tone: 'muted' },
         { text: '运营商', tone: 'muted' },
       ],
     },
+    {
+      id: 'price',
+      label: '价格',
+      alt: true,
+      cells: [
+        { text: '无附加费用', tone: 'primary' },
+        { text: '¥15+', tone: 'muted' },
+        { text: '¥25-60', tone: 'muted' },
+      ],
+    },
   ],
 };
+
+const HOME_USAGE_STEPS = [
+  { id: 'pay', icon: '/images/detail/usage-pay.svg', label: '微信购买一键支付' },
+  { id: 'wifi', icon: '/images/detail/usage-wifi.svg', label: '落地连机场Wi-Fi' },
+  { id: 'qr', icon: '/images/detail/usage-qr.svg', label: '订单页面扫码安装设置' },
+];
 
 module.exports = {
   HOME_POPULAR,
@@ -121,4 +132,5 @@ module.exports = {
   HOME_REVIEWS,
   WHY_CHOOSE,
   HOME_COMPARE,
+  HOME_USAGE_STEPS,
 };

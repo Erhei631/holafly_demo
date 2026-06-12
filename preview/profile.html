@@ -6,7 +6,10 @@
   <title>我的 · Holafly</title>
   <style>
     :root {
+      --rose-50:#ffefef;
       --rose-500:#e6485c;
+      --neutral-200:#e4e6ea;
+      --neutral-400:#7b7c7e;
       --neutral-600:#56575a;
       --neutral-900:#272729;
       --mp-width:393px; --mp-height:852px; --safe-area-bottom:34px;
@@ -16,20 +19,28 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;background:#e8e8ec;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--neutral-900)}
     .preview-label{font-size:14px;color:var(--neutral-600);margin-bottom:16px}
-    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:#fff}
+    .device{width:var(--mp-width);height:var(--mp-height);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);background:linear-gradient(180deg,var(--rose-50) 6.5%,#fff 32%)}
     .status-bar{position:absolute;top:0;left:0;right:0;z-index:20;height:47px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:17px;font-weight:600;pointer-events:none}
     .profile-map{position:absolute;top:0;left:0;width:100%;height:140px;object-fit:cover;pointer-events:none}
-    .profile-scroll{position:absolute;top:47px;left:0;right:0;bottom:var(--tab-bar);overflow-y:auto}
-    .profile-user{display:flex;align-items:center;gap:16px;padding:24px 24px 0;margin-top:20px}
-    .profile-user__avatar{width:68px;height:68px;border-radius:12px;object-fit:cover;flex-shrink:0;display:block}
+    .profile-scroll{position:absolute;top:47px;left:0;right:0;bottom:var(--tab-bar);overflow-y:auto;display:flex;flex-direction:column}
+    .profile-body{flex:1;min-height:100%;display:flex;flex-direction:column;padding-bottom:32px;box-sizing:border-box}
+    .profile-main{flex:1}
+    .profile-user{display:flex;align-items:center;gap:16px;padding:24px 24px 0;margin-top:20px;cursor:pointer}
+    .profile-user__avatar{width:68px;height:68px;border-radius:50%;object-fit:cover;flex-shrink:0;display:block}
     .profile-user__phone{font-size:18px;font-weight:500;line-height:24px;color:var(--neutral-900)}
     .profile-menu{margin-top:24px}
-    .profile-menu__item{display:flex;align-items:center;justify-content:space-between;min-height:44px;padding:12px 32px;background:#fff;cursor:pointer}
+    .profile-menu__item{display:flex;align-items:center;justify-content:space-between;min-height:44px;padding:12px 32px;cursor:pointer}
     .profile-menu__left{display:flex;align-items:center;gap:8px;min-width:0}
     .profile-menu__icon-wrap{width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .profile-menu__icon{width:16px;height:16px;object-fit:contain;display:block}
     .profile-menu__label{font-size:15px;line-height:22px;color:var(--neutral-900)}
     .profile-menu__arrow{width:16px;height:16px;object-fit:contain;flex-shrink:0}
+    .profile-share-banner{display:flex;align-items:center;gap:12px;margin:24px 16px 0;padding:12px 16px;border-radius:10px;background:linear-gradient(177.32deg,#f2fdeb 0%,#e0f4fd 100%);box-shadow:0 10px 40px rgba(0,0,0,.05)}
+    .profile-share-banner__left{flex:1;min-width:0;margin-right:20px;display:flex;align-items:center;gap:12px}
+    .profile-share-banner__coin{width:25.87px;height:26.3px;flex-shrink:0}
+    .profile-share-banner__text{flex:1;font-size:14px;line-height:20px;color:var(--neutral-900)}
+    .profile-share-banner__btn{margin:0;padding:2px 10px;flex-shrink:0;border:1px solid var(--neutral-200);border-radius:24px;background:linear-gradient(114.86deg,var(--rose-500) 20.26%,#e12b57 74.93%);color:#fff;font-size:14px;line-height:20px;cursor:pointer;font-family:inherit}
+    .profile-logout{display:flex;align-items:center;justify-content:center;width:calc(100% - 64px);margin:0 32px;margin-top:auto;flex-shrink:0;padding:12px 24px;border:1px solid var(--neutral-200);border-radius:10px;background:#fff;font-size:15px;font-weight:500;color:var(--neutral-400);line-height:22px;cursor:pointer;font-family:inherit}
     .tab-bar{position:absolute;left:0;right:0;bottom:0;z-index:10;display:flex;flex-direction:column;background:rgba(248,248,248,.8);backdrop-filter:blur(30px);box-shadow:0 -2px 12px rgba(0,0,0,.04)}
     .tab-bar__inner{display:flex;min-height:var(--tab-bar-content);flex-shrink:0}
     .tab-bar__safe{flex-shrink:0;width:100%;height:env(safe-area-inset-bottom,var(--safe-area-bottom));background:inherit}
@@ -46,11 +57,23 @@
     <div class="status-bar">9:41</div>
     <img class="profile-map" src="images/profile/map-header.png" alt="" />
     <div class="profile-scroll">
-      <div class="profile-user" id="profile-user">
-        <img class="profile-user__avatar" src="images/profile/avatar.png?v=3" alt="" />
-        <span class="profile-user__phone" id="profile-phone">138****8888</span>
+      <div class="profile-body">
+        <div class="profile-main">
+        <div class="profile-user" id="profile-user">
+          <img class="profile-user__avatar" src="images/profile/avatar.png" alt="" />
+          <span class="profile-user__phone" id="profile-phone">138****8888</span>
+        </div>
+        <nav class="profile-menu" id="profile-menu"></nav>
+        <div class="profile-share-banner">
+          <div class="profile-share-banner__left">
+            <img class="profile-share-banner__coin" src="images/profile/holapoint.svg" alt="" />
+            <span class="profile-share-banner__text">分享好友，赚取更多 HolaCoins，好友享专属折扣</span>
+          </div>
+          <button class="profile-share-banner__btn" type="button" id="share-btn">分享</button>
+        </div>
+        </div>
+        <button class="profile-logout" type="button" id="logout-btn">退出登录</button>
       </div>
-      <nav class="profile-menu" id="profile-menu"></nav>
     </div>
     <nav class="tab-bar">
       <div class="tab-bar__inner">
@@ -72,7 +95,7 @@
   </div>
   <script>
     const MENU = [
-      { id: 'support', label: '联系客服', icon: 'images/profile/icon-support.svg?v=2', href: 'login.html' },
+      { id: 'support', label: '联系客服', icon: 'images/profile/icon-support.svg', href: 'login.html' },
       { id: 'terms', label: '服务条款', icon: 'images/profile/icon-terms.svg' },
       { id: 'privacy', label: '隐私政策', icon: 'images/profile/icon-privacy.svg' },
     ];
@@ -84,7 +107,7 @@
           </div>
           <span class="profile-menu__label">${item.label}</span>
         </div>
-        <img class="profile-menu__arrow" src="images/detail/icon-arrow-right.svg" alt="" />
+        <img class="profile-menu__arrow" src="images/home/icon-arrow-right-dest.svg" alt="" />
       </div>
     `).join('');
     document.getElementById('profile-menu').addEventListener('click', (e) => {
@@ -97,6 +120,14 @@
     });
     document.getElementById('profile-user').addEventListener('click', () => {
       location.href = 'login.html';
+    });
+    document.getElementById('share-btn').addEventListener('click', () => {
+      alert('分享（待开发）');
+    });
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      if (confirm('确定要退出当前账号吗？')) {
+        alert('已退出登录');
+      }
     });
   </script>
 </body>

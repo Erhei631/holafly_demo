@@ -1,16 +1,16 @@
-const { getJapanPlan } = require('../../data/plan-detail');
+const { getJapanPlan, calcPricing } = require('../../data/plan-detail');
 const { getSafeAreaBottom, getStatusBarHeight } = require('../../utils/safe-area');
 
 Page({
   data: {
     statusBarHeight: 20,
     safeBottom: 0,
-    productTitle: '日本eSIM',
     days: 7,
     quantity: 1,
     totalPriceLabel: '¥63',
     planLabel: '日本eSIM·7天',
     successTitle: '支付成功 ¥63',
+    dailyAvgLabel: '9',
     esimReady: false,
   },
 
@@ -19,17 +19,17 @@ Page({
     const days = Math.max(1, Number(options.days) || 7);
     const quantity = Math.max(1, Number(options.quantity) || 1);
     const totalPriceLabel = decodeURIComponent(options.totalPriceLabel || '¥63');
-    const productTitle = decodeURIComponent(options.productTitle || plan.title);
+    const pricing = calcPricing(plan.prices, days, quantity, plan.originalDaily);
 
     this.setData({
       statusBarHeight: getStatusBarHeight(),
       safeBottom: getSafeAreaBottom(),
-      productTitle,
       days,
       quantity,
       totalPriceLabel,
-      planLabel: `${productTitle}·${days}天`,
+      planLabel: `${plan.name}eSIM·${days}天`,
       successTitle: `支付成功 ${totalPriceLabel}`,
+      dailyAvgLabel: pricing.dailyAvgLabel,
     });
   },
 
@@ -49,12 +49,8 @@ Page({
     this.setData({ esimReady: true });
   },
 
-  onContinueBuy() {
-    wx.switchTab({ url: '/pages/index/index' });
-  },
-
-  onGoOrders() {
-    wx.switchTab({ url: '/pages/orders/index' });
+  onShare() {
+    wx.showToast({ title: '分享功能开发中', icon: 'none' });
   },
 
   onSaveQr() {

@@ -2,7 +2,7 @@ const MENU_ITEMS = [
   {
     id: 'support',
     label: '联系客服',
-    icon: '/images/profile/icon-support.svg?v=2',
+    icon: '/images/profile/icon-support.svg',
     url: '/pages/support/index',
   },
   {

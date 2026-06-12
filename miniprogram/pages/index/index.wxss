@@ -699,7 +699,7 @@
 .why-card__body {
   display: flex;
   flex-direction: column;
-  gap: 48rpx;
+  gap: 24rpx;
   margin-top: 24rpx;
 }
 
@@ -750,27 +750,39 @@
   line-height: 36rpx;
 }
 
-.why-esim {
+.esim-card {
+  padding: 32rpx;
+  background: #fff;
+  border-radius: var(--radius-3xl);
+  box-shadow: 0 20rpx 80rpx rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 40rpx;
+}
+
+.esim-card__section {
   display: flex;
   flex-direction: column;
   gap: 24rpx;
 }
 
-.why-esim__head {
+.esim-card__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16rpx;
+  gap: 8rpx;
 }
 
-.why-esim__title {
+.esim-card__title {
   font-size: 32rpx;
   font-weight: 500;
   line-height: 48rpx;
   color: var(--color-text-primary);
+  flex-shrink: 0;
 }
 
-.why-esim__link {
+.esim-card__link {
   display: flex;
   align-items: center;
   gap: 8rpx;
@@ -779,20 +791,118 @@
   color: var(--color-text-secondary);
 }
 
-.why-esim__arrow {
+.esim-card__arrow {
   width: 32rpx;
   height: 32rpx;
   flex-shrink: 0;
 }
 
-.why-esim__desc {
+.esim-card__desc {
   font-size: 28rpx;
   line-height: 40rpx;
   color: var(--color-text-secondary);
 }
 
-.why-esim__emph {
+.esim-card__emph {
   color: var(--color-primary);
+}
+
+.esim-card__divider {
+  height: 1rpx;
+  background: var(--color-border-subtle);
+}
+
+.usage-steps {
+  display: flex;
+  align-items: flex-start;
+  padding: 16rpx 0;
+}
+
+.usage-steps__connector {
+  flex: 1;
+  align-self: flex-start;
+  min-width: 16rpx;
+  height: 0;
+  margin-top: 44rpx;
+  border-top: 2rpx dashed var(--neutral-300);
+}
+
+.usage-step {
+  width: 148rpx;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.usage-step__icon-wrap {
+  padding: 20rpx;
+  background: var(--rose-50);
+  border-radius: var(--radius-2xl);
+}
+
+.usage-step__icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: block;
+}
+
+.usage-step__label {
+  width: 148rpx;
+  min-height: 64rpx;
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  line-height: 36rpx;
+  text-align: center;
+}
+
+.esim-compat-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24rpx;
+  padding: 36rpx 24rpx 40rpx 16rpx;
+  border-radius: 20rpx;
+  background: linear-gradient(139deg, var(--blue-50) 11.21%, var(--green-50) 89.26%);
+}
+
+.esim-compat-card__left {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  min-width: 0;
+}
+
+.esim-compat-card__icon {
+  width: 80rpx;
+  height: 80rpx;
+  flex-shrink: 0;
+}
+
+.esim-compat-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.esim-compat-card__name {
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 44rpx;
+  color: var(--color-text-primary);
+}
+
+.esim-compat-card__desc {
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: var(--color-text-secondary);
+}
+
+.esim-compat-card__arrow {
+  width: 32rpx;
+  height: 32rpx;
+  flex-shrink: 0;
 }
 
 .compare-wrap {
@@ -907,67 +1017,6 @@
   height: 42rpx;
 }
 
-.why-compat {
-  display: flex;
-  flex-direction: column;
-  gap: 24rpx;
-}
-
-.why-compat__title {
-  font-size: 32rpx;
-  font-weight: 500;
-  line-height: 48rpx;
-  color: var(--color-text-primary);
-}
-
-.why-compat__card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24rpx;
-  padding: 36rpx 24rpx 40rpx 16rpx;
-  border-radius: 20rpx;
-  background: linear-gradient(139deg, var(--blue-50) 11.21%, var(--green-50) 89.26%);
-}
-
-.why-compat__left {
-  display: flex;
-  align-items: center;
-  gap: 24rpx;
-  min-width: 0;
-}
-
-.why-compat__icon {
-  width: 80rpx;
-  height: 80rpx;
-  flex-shrink: 0;
-}
-
-.why-compat__text {
-  display: flex;
-  flex-direction: column;
-  gap: 4rpx;
-}
-
-.why-compat__name {
-  font-size: 30rpx;
-  font-weight: 500;
-  line-height: 44rpx;
-  color: var(--color-text-primary);
-}
-
-.why-compat__desc {
-  font-size: 24rpx;
-  line-height: 36rpx;
-  color: var(--color-text-secondary);
-}
-
-.why-compat__arrow {
-  width: 32rpx;
-  height: 32rpx;
-  flex-shrink: 0;
-}
-
 .compare-head__title {
   font-size: 30rpx;
   font-weight: 500;
@@ -996,6 +1045,11 @@
   font-weight: 500;
   line-height: 40rpx;
   color: #e6485c;
+}
+
+.compare-col--holafly .compare-val--primary {
+  font-size: 26rpx;
+  line-height: 38rpx;
 }
 
 .compare-val--muted {
@@ -1303,24 +1357,141 @@
 .compat-dial {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16rpx;
-  padding: 48rpx 24rpx;
+  gap: 32rpx;
+}
+
+.compat-dial__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  padding: 24rpx;
   background: var(--neutral-100);
-  border-radius: 32rpx;
+  border-radius: 20rpx;
 }
 
-.compat-dial__code {
-  font-size: 48rpx;
-  font-weight: 600;
+.compat-dial__intro-title {
+  font-size: 32rpx;
+  font-weight: 500;
   color: var(--color-text-primary);
-  line-height: 1.2;
-  letter-spacing: 2rpx;
+  line-height: 48rpx;
 }
 
-.compat-dial__hint {
+.compat-dial__intro-text {
+  font-size: 30rpx;
+  color: var(--neutral-500);
+  line-height: 44rpx;
+}
+
+.compat-dial__code-inline {
+  padding: 0 8rpx;
+  border-radius: 8rpx;
+  background: var(--rose-100);
+  color: #e5174a;
+  font-weight: 500;
+}
+
+.compat-dial__phones {
+  width: 100%;
+  display: block;
+}
+
+.compat-dial__steps {
+  overflow: hidden;
+  border: 2rpx solid var(--color-border-base);
+  border-radius: 28rpx;
+  background: #fff;
+}
+
+.compat-dial__step {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 24rpx;
+  border-bottom: 2rpx solid var(--color-border-base);
+}
+
+.compat-dial__step:last-child {
+  border-bottom: none;
+}
+
+.compat-dial__step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.compat-dial__step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  min-width: 0;
+}
+
+.compat-dial__step-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 44rpx;
+}
+
+.compat-dial__step-desc {
+  font-size: 24rpx;
+  color: var(--neutral-400);
+  line-height: 36rpx;
+}
+
+.compat-dial__results {
+  display: flex;
+  gap: 16rpx;
+}
+
+.compat-dial__result {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+  padding: 26rpx 22rpx;
+  border-radius: 24rpx;
+  border: 2rpx solid;
+}
+
+.compat-dial__result--success {
+  background: rgba(30, 158, 106, 0.1);
+  border-color: var(--green-700);
+}
+
+.compat-dial__result--neutral {
+  background: #fff;
+  border-color: #d7dae0;
+}
+
+.compat-dial__result-title {
   font-size: 28rpx;
-  color: var(--color-text-secondary);
+  font-weight: 500;
   line-height: 40rpx;
+  text-align: center;
+}
+
+.compat-dial__result-title--success {
+  color: var(--green-700);
+}
+
+.compat-dial__result-title--neutral {
+  color: var(--neutral-500);
+}
+
+.compat-dial__result-desc {
+  font-size: 24rpx;
+  color: var(--neutral-500);
+  line-height: 36rpx;
   text-align: center;
 }
